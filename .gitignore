@@ -70,6 +70,7 @@ Temporary Items
 #Eclipse
 .project
 .metadata
+.recommenders
 bin/
 tmp/
 *.tmp

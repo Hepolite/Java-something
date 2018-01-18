@@ -1,0 +1,16 @@
+fall:
+  damage:
+    start: 4.5
+    end: 23.0
+    scale: 20.0
+  water:
+    dragFraction: 0.25
+    dragFixed: 0.15
+movement:
+  speed:
+    walk: 0.20
+    fly: 0.05
+permission:
+  flight:
+    admin: 'coreutility.flight.admin'
+    basic: 'coreutility.flight.basic'
