@@ -4,23 +4,32 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
+import com.hepolite.api.cmd.CmdDispatcher;
 import com.hepolite.api.plugin.IPlugin;
 import com.hepolite.api.plugin.PluginCore;
 import com.hepolite.api.task.SynchronizedTask;
 import com.hepolite.api.units.Time;
+import com.hepolite.coreutil.cmd.CmdCoreUtil;
 import com.hepolite.coreutil.movement.MovementHandler;
 
 public final class CoreUtilPlugin extends PluginCore implements IPlugin
 {
+	public static CoreUtilPlugin INSTANCE;
+
 	private final Collection<IPlugin> plugins = new ArrayList<>();
+	private final CmdCoreUtil cmd = new CmdCoreUtil();
 
 	private int currentTick = 0;
 
 	@Override
 	public void onEnable()
 	{
+		INSTANCE = this;
+
 		// Ensure that all plugins are found and updated every tick
 		getLogger().info("Setting up tasks...");
 		if (!new SynchronizedTask(this, this::findPlugins).start(Time.fromInstant()))
@@ -33,9 +42,20 @@ public final class CoreUtilPlugin extends PluginCore implements IPlugin
 		handler.register(new MovementHandler(this));
 	}
 	@Override
+	public void onReload()
+	{
+		handler.onReload();
+	}
+	@Override
 	public void onTick(final int tick)
 	{
 		handler.onTick(tick);
+	}
+	@Override
+	public final boolean onCommand(final CommandSender sender, final Command command, final String label,
+			final String[] args)
+	{
+		return CmdDispatcher.dispatch(sender, cmd, args);
 	}
 
 	// ...

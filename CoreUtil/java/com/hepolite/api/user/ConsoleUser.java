@@ -3,7 +3,7 @@ package com.hepolite.api.user;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.apache.commons.lang.NotImplementedException;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
@@ -40,7 +40,7 @@ public final class ConsoleUser implements IUser
 	@Override
 	public void sendMessage(final Message message)
 	{
-		throw new NotImplementedException();
+		Bukkit.getLogger().info(message.toCleaned());
 	}
 
 	@Override

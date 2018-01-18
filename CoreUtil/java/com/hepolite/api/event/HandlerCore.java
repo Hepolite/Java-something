@@ -27,6 +27,12 @@ public class HandlerCore implements IHandler
 		for (final IHandler handler : handlers)
 			handler.onTick(tick);
 	}
+	@Override
+	public void onReload()
+	{
+		for (final IHandler handler : handlers)
+			handler.onReload();
+	}
 
 	@Override
 	public <T extends IHandler> T register(final T handler)

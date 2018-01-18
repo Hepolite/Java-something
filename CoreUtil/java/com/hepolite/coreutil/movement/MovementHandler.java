@@ -41,6 +41,11 @@ public final class MovementHandler extends HandlerCore
 		playerMoveDetector.onTick(tick);
 		playerImpactDetector.onTick();
 	}
+	@Override
+	public void onReload()
+	{
+		config.loadFromDisk();
+	}
 
 	// ...
 

@@ -12,6 +12,12 @@ public interface IPlugin
 	 */
 	public void onDisable();
 	/**
+	 * Invoked when the plugin is reloaded; make sure that persistent data is saved and that
+	 * relevant data is reloaded
+	 */
+	public void onReload();
+
+	/**
 	 * Invoked each and every tick for as long as the server is running
 	 * 
 	 * @param tick The current tick number

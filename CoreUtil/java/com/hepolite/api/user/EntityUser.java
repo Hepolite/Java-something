@@ -59,7 +59,8 @@ public final class EntityUser implements IUser
 	@Override
 	public void sendMessage(final Message message)
 	{
-		throw new NotImplementedException();
+		final Optional<Player> opPlayer = getPlayer();
+		opPlayer.ifPresent((player) -> player.spigot().sendMessage(message.spigot()));
 	}
 
 	@Override

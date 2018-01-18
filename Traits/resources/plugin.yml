@@ -1,0 +1,7 @@
+name: Traits
+authors: [Hepolite]
+main: com.hepolite.traits.TraitsPlugin
+version: 0.0.1
+description: >
+             Provides various abilities and traits to players
+

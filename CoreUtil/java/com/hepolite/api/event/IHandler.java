@@ -11,6 +11,10 @@ public interface IHandler extends Listener
 	 * @param tick The current tick of the plugin
 	 */
 	public void onTick(int tick);
+	/**
+	 * Invoked when the plugin is being reloaded
+	 */
+	public void onReload();
 
 	/**
 	 * Adds the given child handler to this handler

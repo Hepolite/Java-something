@@ -6,3 +6,12 @@ depend: [PermissionsEx]
 description: >
              Provides core utility functions for various stuff
 
+commands:
+  coreutil:
+    description: The base entry point to all CoreUtility commands
+    usage: /coreutil <arguments>
+    permission: coreutil
+    permission-message: Sorry, you don't have permission to use this command
+permissions:
+  coreutil:
+    description: Gives access to the Core Utility commands
