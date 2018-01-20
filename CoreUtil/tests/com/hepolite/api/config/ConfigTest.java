@@ -4,16 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
 import org.junit.jupiter.api.Test;
-
-import com.hepolite.api.config.Config;
-import com.hepolite.api.config.IConfig;
-import com.hepolite.api.config.IProperty;
-import com.hepolite.api.config.IValue;
-import com.hepolite.api.config.Property;
 
 class ConfigTest
 {
@@ -31,9 +26,9 @@ class ConfigTest
 	@Test
 	void testIsVirtual()
 	{
-		Config configA = new Config();
-		Config configB = new Config(new File("tests"), "name");
-		
+		final Config configA = new Config();
+		final Config configB = new Config(new File("tests"), "name");
+
 		assertTrue(configA.isVirtual());
 		assertFalse(configB.isVirtual());
 	}
@@ -95,7 +90,26 @@ class ConfigTest
 	}
 
 	@Test
-	void setSimple()
+	void testGetProperties()
+	{
+		final IProperty root = new Property("root");
+		final IProperty propertyA = root.child("propertyA");
+		final IProperty propertyB = root.child("propertyB");
+		final IProperty propertyC = root.child("propertyC");
+		final Config config = new Config();
+		config.add(propertyA, 0);
+		config.add(propertyB, 0);
+		config.add(propertyC, 0);
+
+		final Collection<IProperty> properties = config.getProperties(root);
+		assertEquals(3, properties.size());
+		assertTrue(properties.contains(propertyA));
+		assertTrue(properties.contains(propertyB));
+		assertTrue(properties.contains(propertyC));
+	}
+
+	@Test
+	void testSetGetSimple()
 	{
 		final Property property = new Property("property");
 		final Config config = new Config();
@@ -111,7 +125,7 @@ class ConfigTest
 		assertTrue(compare(config, property, config::getString, "Hello World!"));
 	}
 	@Test
-	void testSimpleLists()
+	void testSetGetLists()
 	{
 		final Property property = new Property("property");
 		final Config config = new Config();
@@ -127,7 +141,7 @@ class ConfigTest
 		assertTrue(compare(config, property, config::getStrings, Arrays.asList("Hello", "tester", "do test")));
 	}
 	@Test
-	void testAdvanced()
+	void testSetGetValue()
 	{
 		final Property property = new Property("property");
 		final Config config = new Config();

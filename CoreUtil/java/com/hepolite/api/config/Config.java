@@ -3,8 +3,11 @@ package com.hepolite.api.config;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -115,6 +118,19 @@ public final class Config implements IConfig
 	}
 
 	// ...
+
+	@Override
+	public Collection<IProperty> getProperties(final IProperty property)
+	{
+		final HashSet<IProperty> properties = new HashSet<>();
+		final ConfigurationSection section = config.getConfigurationSection(property.getPath());
+		if (section == null)
+			return properties;
+
+		for (final String key : section.getKeys(false))
+			properties.add(property.child(key));
+		return properties;
+	}
 
 	@Override
 	public <T extends IValue> T getValue(final IProperty property, final T value)

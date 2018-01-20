@@ -109,7 +109,7 @@ public final class PlayerImpactDetector implements IListener
 			return;
 
 		final Material type = block.getType();
-		if (type != Material.LADDER && type != Material.VINE && !player.isFlying())
+		if (type != Material.LADDER && type != Material.VINE && type != Material.WEB && !player.isFlying())
 			Bukkit.getServer().getPluginManager().callEvent(new PlayerImpactGroundEvent(player, actualDistance));
 		setFallDistance(player, 0.0f);
 	}

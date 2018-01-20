@@ -95,6 +95,11 @@ public final class Property implements IProperty
 		return getPath();
 	}
 	@Override
+	public int hashCode()
+	{
+		return getPath().hashCode();
+	}
+	@Override
 	public final boolean equals(final Object other)
 	{
 		if (other instanceof IProperty)

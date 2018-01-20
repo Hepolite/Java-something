@@ -10,11 +10,15 @@ import com.hepolite.traits.cmd.CmdTraits;
 
 public final class TraitsPlugin extends PluginCore implements IPlugin
 {
+	private static TraitsPlugin INSTANCE;
+
 	private final CmdTraits cmd = new CmdTraits();
 
 	@Override
 	public void onEnable()
-	{}
+	{
+		INSTANCE = this;
+	}
 	@Override
 	public void onDisable()
 	{}
@@ -31,5 +35,12 @@ public final class TraitsPlugin extends PluginCore implements IPlugin
 			final String[] args)
 	{
 		return CmdDispatcher.dispatch(sender, cmd, args);
+	}
+
+	// ...
+
+	public static TraitsPlugin getInstance()
+	{
+		return INSTANCE;
 	}
 }

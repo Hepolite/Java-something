@@ -1,5 +1,6 @@
 package com.hepolite.api.config;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -74,6 +75,14 @@ public interface IConfig
 	public boolean remove(IProperty property);
 
 	// ...
+
+	/**
+	 * Retrieves all properties that are children of the given property.
+	 * 
+	 * @param property The property to find all children properties under
+	 * @return A collection of all child properties under the given property
+	 */
+	public Collection<IProperty> getProperties(IProperty property);
 
 	/**
 	 * Attempts to retrieve a generic value from the configuration, by storing the data in the given
