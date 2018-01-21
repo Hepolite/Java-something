@@ -84,8 +84,10 @@ public final class ReflectionHandler
 		/// @formatter:off
 		RNBTTag.Base.nmsClass = getNMSClass("NBTBase");
 		RNBTTag.Byte.nmsClass = getNMSClass("NBTTagByte");
+		RNBTTag.Byte.nmsConstructor = getConstructor(RNBTTag.Byte.nmsClass, byte.class);
 		RNBTTag.Byte.nmsAsByte = getNMSMethod(RNBTTag.Byte.nmsClass, "asByte");
 		RNBTTag.ByteArray.nmsClass = getNMSClass("NBTTagByteArray");
+		RNBTTag.ByteArray.nmsConstructor = getConstructor(RNBTTag.ByteArray.nmsClass, byte[].class);
 		RNBTTag.ByteArray.nmsAsByteArray = getNMSMethod(RNBTTag.ByteArray.nmsClass, "asByteArray");
 		RNBTTag.Compound.nmsClass = getNMSClass("NBTTagCompound");
 		RNBTTag.Compound.nmsGetByte = getNMSMethod(RNBTTag.Compound.nmsClass, "getByte", String.class);
@@ -113,12 +115,16 @@ public final class ReflectionHandler
 		RNBTTag.Compound.nmsSetString = getNMSMethod(RNBTTag.Compound.nmsClass, "setString", String.class, String.class);
 		RNBTTag.Compound.nmsSetTag = getNMSMethod(RNBTTag.Compound.nmsClass, "setTag", String.class, RNBTTag.Base.nmsClass.handle);
 		RNBTTag.Double.nmsClass = getNMSClass("NBTTagDouble");
+		RNBTTag.Double.nmsConstructor = getConstructor(RNBTTag.Double.nmsClass, double.class);
 		RNBTTag.Double.nmsAsDouble = getNMSMethod(RNBTTag.Double.nmsClass, "asDouble");
 		RNBTTag.Float.nmsClass = getNMSClass("NBTTagFloat");
+		RNBTTag.Float.nmsConstructor = getConstructor(RNBTTag.Float.nmsClass, float.class);
 		RNBTTag.Float.nmsAsFloat = getNMSMethod(RNBTTag.Float.nmsClass, "asFloat");
 		RNBTTag.Int.nmsClass = getNMSClass("NBTTagInt");
+		RNBTTag.Int.nmsConstructor = getConstructor(RNBTTag.Int.nmsClass, int.class);
 		RNBTTag.Int.nmsAsInt = getNMSMethod(RNBTTag.Int.nmsClass, "asInt");
 		RNBTTag.IntArray.nmsClass = getNMSClass("NBTTagIntArray");
+		RNBTTag.IntArray.nmsConstructor = getConstructor(RNBTTag.IntArray.nmsClass, int[].class);
 		RNBTTag.IntArray.nmsAsIntArray = getNMSMethod(RNBTTag.IntArray.nmsClass, "asIntArray");
 		RNBTTag.List.nmsClass = getNMSClass("NBTTagList");
 		RNBTTag.List.nmsAdd = getNMSMethod(RNBTTag.List.nmsClass, "add", RNBTTag.Base.nmsClass.handle);
@@ -126,10 +132,13 @@ public final class ReflectionHandler
 		RNBTTag.List.nmsRemove = getNMSMethod(RNBTTag.List.nmsClass, "remove", int.class);
 		RNBTTag.List.nmsSize = getNMSMethod(RNBTTag.List.nmsClass, "size");
 		RNBTTag.Long.nmsClass = getNMSClass("NBTTagLong");
+		RNBTTag.Long.nmsConstructor = getConstructor(RNBTTag.Long.nmsClass, long.class);
 		RNBTTag.Long.nmsAsLong = getNMSMethod(RNBTTag.Long.nmsClass, "asLong");
 		RNBTTag.Short.nmsClass = getNMSClass("NBTTagShort");
+		RNBTTag.Short.nmsConstructor = getConstructor(RNBTTag.Short.nmsClass, short.class);
 		RNBTTag.Short.nmsAsShort = getNMSMethod(RNBTTag.Short.nmsClass, "asShort");
 		RNBTTag.String.nmsClass = getNMSClass("NBTTagString");
+		RNBTTag.String.nmsConstructor = getConstructor(RNBTTag.String.nmsClass, String.class);
 		RNBTTag.String.nmsAsString = getNMSMethod(RNBTTag.String.nmsClass, "asString");
 		/// @formatter:on
 	}
@@ -320,7 +329,7 @@ public final class ReflectionHandler
 	{
 		try
 		{
-			return new ReflectedConstructor(base.handle.getConstructor(args));
+			return new ReflectedConstructor(base, base.handle.getConstructor(args));
 		}
 		catch (NoSuchMethodException | SecurityException e)
 		{
@@ -329,11 +338,17 @@ public final class ReflectionHandler
 							"Constructor with signature '%s' was not found in %s. Is the signature correct?",
 							signature(args), base));
 		}
-		return new ReflectedConstructor(null);
+		return new ReflectedConstructor(base, null);
 	}
 
 	// ...
 
+	/**
+	 * Returns the string version of the signature that is composed of the provided classes
+	 * 
+	 * @param args The classes forming the signature
+	 * @return A string representation of the signature
+	 */
 	private String signature(final Class<?>... args)
 	{
 		final StringBuilder builder = new StringBuilder();

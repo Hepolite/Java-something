@@ -2,6 +2,8 @@ package com.hepolite.coreutil.util.reflection;
 
 import java.lang.reflect.Field;
 
+import com.hepolite.coreutil.CoreUtilPlugin;
+
 public final class ReflectedField
 {
 	private final Field handle;
@@ -13,12 +15,41 @@ public final class ReflectedField
 		this.handle = handle;
 	}
 
+	/**
+	 * Attempts to retrieve the value stored in the field under the given instance
+	 * 
+	 * @param instance The instance to read from
+	 * @return The value or null
+	 */
 	public Object get(final Object instance)
 	{
-		return null;
+		try
+		{
+			return handle.get(instance);
+		}
+		catch (IllegalArgumentException | IllegalAccessException e)
+		{
+			CoreUtilPlugin.INSTANCE.getLogger().warning("Failed to read field " + name);
+			return null;
+		}
 	}
+	/**
+	 * Attempts to assign the field value under the provided instance
+	 * 
+	 * @param instance The instance to write to
+	 * @param value The value to write
+	 */
 	public void set(final Object instance, final Object value)
-	{}
+	{
+		try
+		{
+			handle.set(instance, value);
+		}
+		catch (IllegalArgumentException | IllegalAccessException e)
+		{
+			CoreUtilPlugin.INSTANCE.getLogger().warning(String.format("Failed to set field '%s' to '%s'", name, value));
+		}
+	}
 
 	// ...
 

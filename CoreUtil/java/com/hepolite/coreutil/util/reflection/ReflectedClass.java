@@ -1,5 +1,7 @@
 package com.hepolite.coreutil.util.reflection;
 
+import com.hepolite.coreutil.CoreUtilPlugin;
+
 public final class ReflectedClass
 {
 	public final Class<?> handle;
@@ -11,13 +13,22 @@ public final class ReflectedClass
 		this.name = name;
 	}
 
+	/**
+	 * Attempts to create a new instance of the underlying class
+	 * 
+	 * @return The instance if it was created, null otherwise
+	 */
 	public Object newInstance()
 	{
-		return null;
-	}
-	public Object newInstance(final Object... params)
-	{
-		return null;
+		try
+		{
+			return handle.newInstance();
+		}
+		catch (InstantiationException | IllegalAccessException e)
+		{
+			CoreUtilPlugin.INSTANCE.getLogger().info("Failed to instantiate class " + name);
+			return null;
+		}
 	}
 
 	// ...

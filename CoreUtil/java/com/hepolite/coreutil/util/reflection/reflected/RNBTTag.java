@@ -1,6 +1,7 @@
 package com.hepolite.coreutil.util.reflection.reflected;
 
 import com.hepolite.coreutil.util.reflection.ReflectedClass;
+import com.hepolite.coreutil.util.reflection.ReflectedConstructor;
 import com.hepolite.coreutil.util.reflection.ReflectedMethod;
 
 public class RNBTTag
@@ -13,12 +14,14 @@ public class RNBTTag
 	public static class Byte
 	{
 		public static ReflectedClass nmsClass;
+		public static ReflectedConstructor nmsConstructor;
 		public static ReflectedMethod nmsAsByte;
 	}
 
 	public static class ByteArray
 	{
 		public static ReflectedClass nmsClass;
+		public static ReflectedConstructor nmsConstructor;
 		public static ReflectedMethod nmsAsByteArray;
 	}
 
@@ -54,24 +57,28 @@ public class RNBTTag
 	public static class Double
 	{
 		public static ReflectedClass nmsClass;
+		public static ReflectedConstructor nmsConstructor;
 		public static ReflectedMethod nmsAsDouble;
 	}
 
 	public static class Float
 	{
 		public static ReflectedClass nmsClass;
+		public static ReflectedConstructor nmsConstructor;
 		public static ReflectedMethod nmsAsFloat;
 	}
 
 	public static class Int
 	{
 		public static ReflectedClass nmsClass;
+		public static ReflectedConstructor nmsConstructor;
 		public static ReflectedMethod nmsAsInt;
 	}
 
 	public static class IntArray
 	{
 		public static ReflectedClass nmsClass;
+		public static ReflectedConstructor nmsConstructor;
 		public static ReflectedMethod nmsAsIntArray;
 	}
 
@@ -87,18 +94,21 @@ public class RNBTTag
 	public static class Long
 	{
 		public static ReflectedClass nmsClass;
+		public static ReflectedConstructor nmsConstructor;
 		public static ReflectedMethod nmsAsLong;
 	}
 
 	public static class Short
 	{
 		public static ReflectedClass nmsClass;
+		public static ReflectedConstructor nmsConstructor;
 		public static ReflectedMethod nmsAsShort;
 	}
 
 	public static class String
 	{
 		public static ReflectedClass nmsClass;
+		public static ReflectedConstructor nmsConstructor;
 		public static ReflectedMethod nmsAsString;
 	}
 }
