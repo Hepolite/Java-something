@@ -38,7 +38,7 @@ public class ConfigFactory
 		final File file = new File(plugin.getDataFolder() + "/" + path + ".yml");
 		if (file.exists())
 		{
-			plugin.getLogger().info("Found existing config file " + path + ", using it...");
+			plugin.getLogger().info("Found existing config file " + path);
 			return;
 		}
 

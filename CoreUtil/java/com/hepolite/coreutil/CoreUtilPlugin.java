@@ -15,6 +15,7 @@ import com.hepolite.api.task.SynchronizedTask;
 import com.hepolite.api.units.Time;
 import com.hepolite.coreutil.cmd.CmdCoreUtil;
 import com.hepolite.coreutil.movement.MovementHandler;
+import com.hepolite.coreutil.util.reflection.ReflectionHandler;
 
 public final class CoreUtilPlugin extends PluginCore implements IPlugin
 {
@@ -37,6 +38,9 @@ public final class CoreUtilPlugin extends PluginCore implements IPlugin
 		if (!new SynchronizedTask(this, this::tickPlugins).start(Time.fromInstant(), Time.fromTicks(1)))
 			getLogger().severe("!!FATAL!! Could not start updater task!");
 		getLogger().info("Done setting up tasks!");
+
+		// Set up utilities
+		new ReflectionHandler(this);
 
 		// Ensure that all sub-systems are ready to roll
 		handler.register(new MovementHandler(this));

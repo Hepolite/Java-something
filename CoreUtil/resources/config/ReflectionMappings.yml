@@ -1,0 +1,329 @@
+v1_12_R1:
+  AxisAlignedBB:
+    class: AxisAlignedBB
+    field:
+      minX: a
+      minY: b
+      minZ: c
+      maxX: d
+      maxY: e
+      maxZ: f
+  Entity:
+    class: Entity
+    method:
+      getBoundingBox: getBoundingBox
+      save: save
+      load: f
+  ItemStack:
+    class: ItemStack
+    method:
+      setTag: setTag
+      getTag: getTag
+      hasTag: hasTag
+  MovingObjectPosition:
+    class: MovingObjectPosition
+    field:
+      pos: pos
+  NBTBase:
+    class: NBTBase
+  NBTTagByte:
+    class: NBTTagByte
+    method:
+      asByte: g
+  NBTTagByteArray:
+    class: NBTTagByteArray
+    method:
+      asByteArray: c
+  NBTTagCompound:
+    class: NBTTagCompound
+    method:
+      getByte: getByte
+      getByteArray: getByteArray
+      getCompound: getCompound
+      getDouble: getDouble
+      getFloat: getFloat
+      getInt: getInt
+      getIntArray: getIntArray
+      getKeys: c
+      getLong: getLong
+      getShort: getShort
+      getString: getString
+      getTag: get
+      hasKey: hasKey
+      remove: remove
+      setByte: setByte
+      setByteArray: setByteArray
+      setDouble: setDouble
+      setFloat: setFloat
+      setInt: setInt
+      setIntArray: setIntArray
+      setLong: setLong
+      setShort: setShort
+      setString: setString
+      setTag: set
+  NBTTagDouble:
+    class: NBTTagDouble
+    method:
+      asDouble: asDouble
+  NBTTagFloat:
+    class: NBTTagFloat
+    method:
+      asFloat: i
+  NBTTagInt:
+    class: NBTTagInt
+    method:
+      asInt: e
+  NBTTagIntArray:
+    class: NBTTagIntArray
+    method:
+      asInt: asIntArray
+      asIntArray: d
+  NBTTagList:
+    class: NBTTagList
+    method:
+      add: add
+      get: i
+      remove: remove
+      size: size
+  NBTTagLong:
+    class: NBTTagLong
+    method:
+      asLong: d
+  NBTTagShort:
+    class: NBTTagShort
+    method:
+      asShort: f
+  NBTTagString:
+    class: NBTTagString
+    method:
+      asString: c_
+  Vec3D:
+    class: Vec3D
+    field:
+      x: x
+      y: y
+      z: z
+  World:
+    class: World
+    method:
+      rayTrace: rayTrace
+
+v1_11_R1:
+  AxisAlignedBB:
+    class: AxisAlignedBB
+    field:
+      minX: a
+      minY: b
+      minZ: c
+      maxX: d
+      maxY: e
+      maxZ: f
+  Entity:
+    class: Entity
+    method:
+      getBoundingBox: getBoundingBox
+      save: e
+      load: f
+  ItemStack:
+    class: ItemStack
+    method:
+      setTag: setTag
+      getTag: getTag
+      hasTag: hasTag
+  MovingObjectPosition:
+    class: MovingObjectPosition
+    field:
+      pos: pos
+  NBTBase:
+    class: NBTBase
+  NBTTagByte:
+    class: NBTTagByte
+    method:
+      asByte: g
+  NBTTagByteArray:
+    class: NBTTagByteArray
+    method:
+      asByteArray: c
+  NBTTagCompound:
+    class: NBTTagCompound
+    method:
+      getByte: getByte
+      getByteArray: getByteArray
+      getCompound: getCompound
+      getDouble: getDouble
+      getFloat: getFloat
+      getInt: getInt
+      getIntArray: getIntArray
+      getKeys: c
+      getLong: getLong
+      getShort: getShort
+      getString: getString
+      getTag: get
+      hasKey: hasKey
+      remove: remove
+      setByte: setByte
+      setByteArray: setByteArray
+      setDouble: setDouble
+      setFloat: setFloat
+      setInt: setInt
+      setIntArray: setIntArray
+      setLong: setLong
+      setShort: setShort
+      setString: setString
+      setTag: set
+  NBTTagDouble:
+    class: NBTTagDouble
+    method:
+      asDouble: asDouble
+  NBTTagFloat:
+    class: NBTTagFloat
+    method:
+      asFloat: i
+  NBTTagInt:
+    class: NBTTagInt
+    method:
+      asInt: e
+  NBTTagIntArray:
+    class: NBTTagIntArray
+    method:
+      asInt: asIntArray
+      asIntArray: d
+  NBTTagList:
+    class: NBTTagList
+    method:
+      add: add
+      get: h
+      remove: remove
+      size: size
+  NBTTagLong:
+    class: NBTTagLong
+    method:
+      asLong: d
+  NBTTagShort:
+    class: NBTTagShort
+    method:
+      asShort: f
+  NBTTagString:
+    class: NBTTagString
+    method:
+      asString: c_
+  Vec3D:
+    class: Vec3D
+    field:
+      x: x
+      y: y
+      z: z
+  World:
+    class: World
+    method:
+      rayTrace: rayTrace
+
+default:
+  AxisAlignedBB:
+    class: AxisAlignedBB
+    field:
+      minX: minX
+      minY: minY
+      minZ: minZ
+      maxX: maxX
+      maxY: maxY
+      maxZ: maxZ
+  Entity:
+    class: Entity
+    method:
+      getBoundingBox: getBoundingBox
+      save: save
+      load: load
+  ItemStack:
+    class: ItemStack
+    method:
+      setTag: setTag
+      getTag: getTag
+      hasTag: hasTag
+  MovingObjectPosition:
+    class: MovingObjectPosition
+    field:
+      pos: pos
+  NBTBase:
+    class: NBTBase
+  NBTTagByte:
+    class: NBTTagByte
+    method:
+      asByte: asByte
+  NBTTagByteArray:
+    class: NBTTagByteArray
+    method:
+      asByteArray: asByteArray
+  NBTTagCompound:
+    class: NBTTagCompound
+    method:
+      getByte: getByte
+      getByteArray: getByteArray
+      getCompound: getCompound
+      getDouble: getDouble
+      getFloat: getFloat
+      getInt: getInt
+      getIntArray: getIntArray
+      getKeys: getKeys
+      getLong: getLong
+      getShort: getShort
+      getString: getString
+      getTag: getTag
+      hasKey: hasKey
+      remove: remove
+      setByte: setByte
+      setByteArray: setByteArray
+      setDouble: setDouble
+      setFloat: setFloat
+      setInt: setInt
+      setIntArray: setIntArray
+      setLong: setLong
+      setShort: setShort
+      setString: setString
+      setTag: setTag
+  NBTTagDouble:
+    class: NBTTagDouble
+    method:
+      asDouble: asDouble
+  NBTTagFloat:
+    class: NBTTagFloat
+    method:
+      asFloat: asFloat
+  NBTTagInt:
+    class: NBTTagInt
+    method:
+      asInt: asInt
+  NBTTagIntArray:
+    class: NBTTagIntArray
+    method:
+      asInt: asIntArray
+      asIntArray: asIntArray
+  NBTTagList:
+    class: NBTTagList
+    method:
+      add: add
+      get: get
+      remove: remove
+      size: size
+  NBTTagLong:
+    class: NBTTagLong
+    method:
+      asLong: asLong
+  NBTTagShort:
+    class: NBTTagShort
+    method:
+      asShort: asShort
+  NBTTagString:
+    class: NBTTagString
+    method:
+      asString: asString
+  Vec3D:
+    class: Vec3D
+    field:
+      x: x
+      y: y
+      z: z
+  World:
+    class: World
+    method:
+      rayTrace: rayTrace
