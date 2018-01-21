@@ -8,9 +8,11 @@ property:
 # When leveling up, the values are *added* to the fields
 Level:
   1:
+  	cooldown: 8.0
     damage: 2.5
     range: 4.0
   2:
+    cooldown: -1.0
     damage: 1.5
   ...
   N:

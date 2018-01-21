@@ -24,6 +24,7 @@ public class FieldMap extends HashMap<String, Field> implements IValue
 	@Override
 	public void load(final IConfig config, final IProperty property)
 	{
+		clear();
 		for (final IProperty p : config.getProperties(property))
 			put(p.getName(), config.getValue(p, new Field()));
 	}
