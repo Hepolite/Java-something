@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.hepolite.api.config.ConfigFactory;
 import com.hepolite.api.config.IConfig;
 import com.hepolite.api.config.Property;
+import com.hepolite.api.event.HandlerCore;
 import com.hepolite.coreutil.util.reflection.reflected.RAxisAlignedBB;
 import com.hepolite.coreutil.util.reflection.reflected.REntity;
 import com.hepolite.coreutil.util.reflection.reflected.RItemStack;
@@ -15,22 +16,22 @@ import com.hepolite.coreutil.util.reflection.reflected.RNBTTag;
 import com.hepolite.coreutil.util.reflection.reflected.RVec3D;
 import com.hepolite.coreutil.util.reflection.reflected.RWorld;
 
-public final class ReflectionHandler
+public final class ReflectionHandler extends HandlerCore
 {
 	private final String version;
 	private final IConfig config;
-	private final JavaPlugin plugin;
 
 	public ReflectionHandler(final JavaPlugin plugin)
 	{
+		super(plugin);
 		this.version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
 		this.config = ConfigFactory.create(plugin, "ReflectionMappings");
-		this.plugin = plugin;
 
-		initialize();
+		onReload();
 	}
 
-	private void initialize()
+	@Override
+	public void onReload()
 	{
 		plugin.getLogger().info("Loading reflection utilities for " + version + "...");
 

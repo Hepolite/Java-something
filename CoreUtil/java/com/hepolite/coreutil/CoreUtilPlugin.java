@@ -14,6 +14,7 @@ import com.hepolite.api.plugin.PluginCore;
 import com.hepolite.api.task.SynchronizedTask;
 import com.hepolite.api.units.Time;
 import com.hepolite.coreutil.cmd.CmdCoreUtil;
+import com.hepolite.coreutil.hunger.HungerHandler;
 import com.hepolite.coreutil.movement.MovementHandler;
 import com.hepolite.coreutil.util.reflection.ReflectionHandler;
 
@@ -23,6 +24,9 @@ public final class CoreUtilPlugin extends PluginCore implements IPlugin
 
 	private final Collection<IPlugin> plugins = new ArrayList<>();
 	private final CmdCoreUtil cmd = new CmdCoreUtil();
+
+	public HungerHandler hungerHandler;
+	public MovementHandler movementHandler;
 
 	private int currentTick = 0;
 
@@ -40,10 +44,11 @@ public final class CoreUtilPlugin extends PluginCore implements IPlugin
 		getLogger().info("Done setting up tasks!");
 
 		// Set up utilities
-		new ReflectionHandler(this);
+		handler.register(new ReflectionHandler(this));
 
 		// Ensure that all sub-systems are ready to roll
-		handler.register(new MovementHandler(this));
+		hungerHandler = handler.register(new HungerHandler(this));
+		movementHandler = handler.register(new MovementHandler(this));
 	}
 	@Override
 	public void onReload()

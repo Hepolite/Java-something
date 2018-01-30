@@ -88,24 +88,47 @@ class ConfigTest
 		assertFalse(config.remove(property));
 		assertFalse(config.has(property));
 	}
-
+	
 	@Test
-	void testGetProperties()
+	void testClear()
 	{
-		final IProperty root = new Property("root");
-		final IProperty propertyA = root.child("propertyA");
-		final IProperty propertyB = root.child("propertyB");
-		final IProperty propertyC = root.child("propertyC");
+		final IProperty propertyA = new Property("propertyA");
+		final IProperty propertyB = new Property("propertyB");
+		final IProperty propertyC = propertyB.child("propertyC");
 		final Config config = new Config();
 		config.add(propertyA, 0);
 		config.add(propertyB, 0);
 		config.add(propertyC, 0);
+		config.clear();
+		
+		assertFalse(config.has(propertyA));
+		assertFalse(config.has(propertyB));
+		assertFalse(config.has(propertyC));
+	}
 
-		final Collection<IProperty> properties = config.getProperties(root);
-		assertEquals(3, properties.size());
-		assertTrue(properties.contains(propertyA));
-		assertTrue(properties.contains(propertyB));
-		assertTrue(properties.contains(propertyC));
+	@Test
+	void testGetProperties()
+	{
+		final IProperty rootA = new Property("rootA");
+		final IProperty rootB = new Property("rootB");
+		final IProperty propertyA = rootA.child("propertyA");
+		final IProperty propertyB = rootA.child("propertyB");
+		final IProperty propertyC = rootA.child("propertyC");
+		final Config config = new Config();
+		config.add(rootB, 0);
+		config.add(propertyA, 0);
+		config.add(propertyB, 0);
+		config.add(propertyC, 0);
+
+		final Collection<IProperty> propertiesA = config.getProperties();
+		final Collection<IProperty> propertiesB = config.getProperties(rootA);
+		assertEquals(2, propertiesA.size());
+		assertEquals(3, propertiesB.size());
+		assertTrue(propertiesA.contains(rootA));
+		assertTrue(propertiesA.contains(rootB));
+		assertTrue(propertiesB.contains(propertyA));
+		assertTrue(propertiesB.contains(propertyB));
+		assertTrue(propertiesB.contains(propertyC));
 	}
 
 	@Test

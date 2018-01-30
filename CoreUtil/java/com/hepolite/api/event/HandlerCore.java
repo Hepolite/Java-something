@@ -14,7 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class HandlerCore implements IHandler
 {
 	private final Collection<IHandler> handlers = new ArrayList<>();
-	private final JavaPlugin plugin;
+	protected final JavaPlugin plugin;
 
 	public HandlerCore(final JavaPlugin plugin)
 	{

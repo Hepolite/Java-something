@@ -7,15 +7,14 @@ import com.hepolite.api.cmd.GenericArgs;
 import com.hepolite.api.cmd.ICmdContext;
 import com.hepolite.api.user.IUser;
 
-public class CmdCoreUtil extends Cmd
+public class CmdDebug extends Cmd
 {
-	public CmdCoreUtil()
+	public CmdDebug()
 	{
 		/// @formatter:off
-		super("coreutil",
+		super("debug",
 			GenericArgs.children(
-				new CmdDebug(),
-				new CmdReload()
+				new CmdDebugFood()
 		));
 		/// @formatter:on
 	}

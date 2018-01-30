@@ -1,0 +1,13 @@
+Default:
+  brown_mushroom:
+    categories: fungi
+  egg:
+    categories: protein
+  milk_bucket:
+    categories: dairy
+  red_mushroom:
+    categories: fungi
+  sugar:
+    categories: sweets
+  wheat:
+    categories: grain

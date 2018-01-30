@@ -1,0 +1,210 @@
+Default:
+  apple:
+    categories: fruit
+    food: 20.0
+    ratio: 0.6
+  baked_potato:
+    ingredients: potato_item
+    food: 25.0
+    ratio: 1.2
+  beetroot:
+    categories: vegetable
+    food: 5.0
+    ratio: 1.2
+  beetroot_soup:
+    ingredients: beetroot
+    food: 30.0
+    ratio: 1.2
+  bread:
+    ingredients: wheat
+    food: 25.0
+    ratio: 1.2
+  cake_slice:
+    ingredients: egg wheat sugar milk_bucket
+    food: 10.0
+    ratio: 0.2
+  carrot_item:
+    categories: vegetable
+    food: 15.0
+    ratio: 1.2
+  chorus_fruit:
+    categories: fruit
+    food: 20.0
+    ratio: 0.6
+  cooked_beef:
+    ingredients: raw_beef
+    food: 40.0
+    ratio: 1.6
+  cooked_chicken:
+    ingredients: raw_chicken
+    food: 30.0
+    ratio: 1.2
+  cooked_fish:
+    ingredients: raw_fish
+    food: 25.0
+    ratio: 1.2
+  cooked_fish-1:
+    ingredients: raw_fish-1
+    food: 30.0
+    ratio: 1.6
+  cooked_mutton:
+    ingredients: mutton
+    food: 30.0
+    ratio: 1.6
+  cooked_rabbit:
+    ingredients: rabbit
+    food: 30.0
+    ratio: 1.2
+  cookie:
+    ingredients: wheat sugar
+    food: 10.0
+    ratio: 0.2
+  golden_apple:
+    categories: fruit
+    food: 20.0
+    ratio: 2.4
+    effects:
+      Effect 0:
+        type: regeneration
+        duration: 100
+        amplifier: 2
+      Effect 1:
+        type: absorption
+        duration: 2400
+        amplifier: 4
+  golden_apple-1:
+    categories: fruit
+    food: 20.0
+    ratio: 2.4
+    effects:
+      Effect 0:
+        type: regeneration
+        duration: 400
+        amplifier: 2
+      Effect 1:
+        type: absorption
+        duration: 2400
+        amplifier: 4
+      Effect 2:
+        type: damage_resistance
+        duration: 6000
+        amplifier: 1
+      Effect 3:
+        type: fire_resistance
+        duration: 6000
+        amplifier: 1
+  golden_carrot:
+    categories: vegetable
+    food: 20.0
+    ratio: 2.4
+  grilled_pork:
+    ingredients: porks
+    food: 40.0
+    ratio: 1.6
+  melon:
+    categories: berry
+    food: 10.0
+    ratio: 0.6
+  mushroom_soup:
+    ingredients: brown_mushroom
+    food: 30.0
+    ratio: 1.2
+  mutton:
+    categories: meat
+    food: 10.0
+    ratio: 0.6
+  poisonous_potato:
+    ingredients: potato_item
+    food: 10.0
+    ratio: 0.6
+    chance: 0.6
+    effects:
+      Effect 0:
+        type: poison
+        duration: 80
+        amplifier: 1
+  pork:
+    categories: meat
+    food: 15.0
+    ratio: 0.6
+  potato_item:
+    categories: vegetable
+    food: 5.0
+    ratio: 0.6
+  potion:
+    categories: potion
+  pumpkin_pie:
+    ingredients: egg sugar
+    categories: berry
+    food: 40.0
+    ratio: 0.6
+  rabbit:
+    categories: meat
+    food: 15.0
+    ratio: 0.6
+  rabbit_stew:
+    ingredients: cooked_rabbit carrot_item baked_potato brown_mushroom
+    food: 50.0
+    ratio: 1.2
+  raw_beef:
+    categories: meat
+    food: 15.0
+    ratio: 0.6
+  raw_chicken:
+    categories: meat
+    food: 10.0
+    ratio: 0.6
+    chance: 0.3
+    effects:
+      Effect 0:
+        type: hunger
+        duration: 600
+        amplifier: 1
+  raw_fish:
+    categories: meat
+    food: 10.0
+    ratio: 0.2
+  raw_fish-1:
+    categories: meat
+    food: 10.0
+    ratio: 0.2
+  raw_fish-2:
+    categories: meat
+    food: 5.0
+    ratio: 0.2
+  raw_fish-3:
+    categories: meat
+    food: 5.0
+    ratio: 0.2
+    effects:
+      Effect 0:
+        type: hunger
+        duration: 300
+        amplifier: 3
+      Effect 1:
+        type: confusion
+        duration: 300
+        amplifier: 2
+      Effect 2:
+        type: poison
+        duration: 1200
+        amplifier: 4
+  rotten_flesh:
+    categories: meat
+    food: 20.0
+    ratio: 0.2
+    chance: 0.8
+    effects:
+      Effect 0:
+        type: hunger
+        duration: 600
+        amplifier: 1
+  spider_eye:
+    categories: meat
+    food: 10.0
+    ratio: 1.6
+    effects:
+      Effect 0:
+        type: poison
+        duration: 80
+        amplifier: 1

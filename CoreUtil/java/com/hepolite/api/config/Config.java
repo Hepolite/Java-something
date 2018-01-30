@@ -30,6 +30,19 @@ public final class Config implements IConfig
 	 * automatically; the user has to manually save the config before server shuts down if the data
 	 * should be persistent. The config will be automatically loaded from file if the file exists.
 	 * 
+	 * @param file The file to load/store the config from/to. The file should not include the file
+	 *            type in its path
+	 */
+	public Config(final File file)
+	{
+		this.file = new File(file.getPath() + (file.getPath().contains(".yml") ? "" : ".yml"));
+		this.config = YamlConfiguration.loadConfiguration(this.file);
+	}
+	/**
+	 * Creates a new config instance that can be saved/loaded to/from disk. It will not be saved
+	 * automatically; the user has to manually save the config before server shuts down if the data
+	 * should be persistent. The config will be automatically loaded from file if the file exists.
+	 * 
 	 * @param directory The directory which contains the config file
 	 * @param name The name of the config file; do not specify the file type in the name
 	 */
@@ -117,8 +130,22 @@ public final class Config implements IConfig
 		return true;
 	}
 
+	@Override
+	public void clear()
+	{
+		config = new YamlConfiguration();
+	}
+
 	// ...
 
+	@Override
+	public Collection<IProperty> getProperties()
+	{
+		final HashSet<IProperty> properties = new HashSet<>();
+		for (final String key : config.getKeys(false))
+			properties.add(new Property(key));
+		return properties;
+	}
 	@Override
 	public Collection<IProperty> getProperties(final IProperty property)
 	{

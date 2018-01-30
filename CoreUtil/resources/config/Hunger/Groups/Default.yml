@@ -1,0 +1,38 @@
+Message:
+  cannotConsume: '&bYou are unable to consume that'
+  inedibles: '&cFood contains inedibles:&f'
+  starved:
+  - '&f<player>&f starved to death'
+  - '&f<player>&f was unable to find food in time'
+  - '&f<player>&f went too long without food'
+Sound:
+  eat:
+    enable: true
+    sound: entity_generic_eat
+    volume: 1.0
+    pitch: 1.0
+Exhaustion:
+  rateOfChange: 0.95
+  rateOfHunger: 0.25
+  restpoint:
+    floating: 30.0
+    flying: 250.0
+    gliding: 185.0
+    hovering: 210.0
+    running: 180.0
+    sneaking: 30.0
+    standing: 15.0
+    swimming: 150.0
+    walking: 50.0
+Healing:
+  enable: true
+  frequency: 10
+  start: 0.3
+  heal: 0.75
+  cost: 2.5
+Starvation:
+  enable: true
+  frequency: 3
+  damage: 1.0
+Food:
+  forbidden: ''

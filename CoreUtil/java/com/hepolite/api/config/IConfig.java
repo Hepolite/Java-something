@@ -74,8 +74,19 @@ public interface IConfig
 	 */
 	public boolean remove(IProperty property);
 
+	/**
+	 * Removes all properties from this config, erasing all data
+	 */
+	public void clear();
+
 	// ...
 
+	/**
+	 * Retrieves all properties that exists in the config
+	 * 
+	 * @return A collection of all properties in the config
+	 */
+	public Collection<IProperty> getProperties();
 	/**
 	 * Retrieves all properties that are children of the given property.
 	 * 
