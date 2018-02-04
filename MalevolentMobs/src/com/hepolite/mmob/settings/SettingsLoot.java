@@ -78,6 +78,7 @@ public class SettingsLoot
 		setting.addDefault("level.high", 32);
 		setting.addDefault("level.epic", 48);
 		setting.addDefault("level.legendary", 70);
+		setting.addDefault("level.godlike", 9001);
 
 		setting.save();
 	}
@@ -93,11 +94,19 @@ public class SettingsLoot
 		// Definitions
 		setting.addDefault("colors.weak", "&f");
 		setting.addDefault("colors.low", "&f");
-		setting.addDefault("colors.medium", "&9");
-		setting.addDefault("colors.high", "&5");
-		setting.addDefault("colors.epic", "&6");
-		setting.addDefault("colors.legendary", "&c");
-		setting.addDefault("item", new String[] { "&9#special.@group", "&9#adjective.@group #object.@group", "&9#object.@group of #context.@group", "&9The #owner.prefix #object.@group", "&9#object.@group of the #owner.postfix", "&9#owner.people #adjective.@group #object.@group" });
+		setting.addDefault("colors.medium", "&b");
+		setting.addDefault("colors.high", "&b");
+		setting.addDefault("colors.epic", "&9");
+		setting.addDefault("colors.legendary", "&9");
+		setting.addDefault("colors.godlike", "&9");
+		setting.addDefault("rarities.weak", "&f[&bMundane #type&f]");
+		setting.addDefault("rarities.low", "&f[&bCommon #type&f]");
+		setting.addDefault("rarities.medium", "&f[&bUncommon #type&f]");
+		setting.addDefault("rarities.high", "&f[&bRare #type&f]");
+		setting.addDefault("rarities.epic", "&f[&bEpic #type&f]");
+		setting.addDefault("rarities.legendary", "&f[&bLegendary #type&f]");
+		setting.addDefault("rarities.godlike", "&f[&bGodlike #type&f]");
+		setting.addDefault("item", new String[] { "#special.@group", "#adjective.@group #object.@group", "#object.@group of #context.@group", "The #owner.prefix #object.@group", "#object.@group of the #owner.postfix", "#owner.people #adjective.@group #object.@group" });
 
 		setting.addDefault("owner.postfix", new String[] { "Conqueror", "Dragon", "Elders", "Foe", "Forgotten", "Guard", "Mage", "Phoenix", "Princess", "Queen", "Shepherd", "Troll", "Wicked" });
 		setting.addDefault("owner.prefix", new String[] { "Angel's", "Basilisk's", "Drone's", "Goddesses'", "Gryphon's", "Fool's", "Forgotten's", "Fortune's", "Hag's", "Liar's", "Peasant's", "Phoenix'", "Seer's", "Serpent's", "Unicorn's", "Warden's", "Warrior's" });
@@ -391,6 +400,47 @@ public class SettingsLoot
 		writeItemEffect(setting, name + i++, "Tunneler");
 		writeItemEffect(setting, name + i++, "Wither", "i4", "i60/75");
 
+		// Godlike item effects
+		i = 0;
+		name = "godlike.effect";
+		writeItemEffect(setting, name + i++, "Armor_Shredder", "i100", "i2500/2500");
+		writeItemEffect(setting, name + i++, "Bulwark", "i100");
+		writeItemEffect(setting, name + i++, "Charged", "i400/500", "i10/15", "i120/150");
+		writeItemEffect(setting, name + i++, "Duplicator", "i1000", "#0", "i100");
+		writeItemEffect(setting, name + i++, "Duplicator", "i10000", "#0", "i30");
+		writeItemEffect(setting, name + i++, "Earthmover");
+		writeItemEffect(setting, name + i++, "Entropy_Limit", "i100");
+		writeItemEffect(setting, name + i++, "Explosive_Arrows", "i1000/1200", "i100/150");
+		writeItemEffect(setting, name + i++, "Fiery", "i1800/2000");
+		writeItemEffect(setting, name + i++, "Fireward", "i100");
+		writeItemEffect(setting, name + i++, "Fireworks", "i9000/10000", "#0", "i200/250", "i100/120", "i50/60", "i300/350", "i100/150");
+		writeItemEffect(setting, name + i++, "Frost", "i90", "i100/150", "i0");
+		writeItemEffect(setting, name + i++, "Growth");
+		writeItemEffect(setting, name + i++, "Harvest");
+		writeItemEffect(setting, name + i++, "Heated");
+		writeItemEffect(setting, name + i++, "Lacerate", "i90/120", "i0");
+		writeItemEffect(setting, name + i++, "Lacerate", "i0", "i150/200");
+		writeItemEffect(setting, name + i++, "Levity", "b1", "i60/80");
+		writeItemEffect(setting, name + i++, "Levity", "b0", "i160/200");
+		writeItemEffect(setting, name + i++, "Magic_Mirror", "i70/80");
+		writeItemEffect(setting, name + i++, "Magic_Shield", "i100");
+		writeItemEffect(setting, name + i++, "Poison", "i4", "i100/120");
+		writeItemEffect(setting, name + i++, "Powerline", "i19000/20000", "#0", "i300/350", "i50/60", "i200/250", "i35/50");
+		writeItemEffect(setting, name + i++, "Relic", "i150/250", "godlike", "i100", "negative");
+		writeItemEffect(setting, name + i++, "Repair", "i250/350");
+		writeItemEffect(setting, name + i++, "Runic_Shield", "i250/300", "#0", "i75/100");
+		writeItemEffect(setting, name + i++, "Runic_Shield", "i750/900", "#0", "i10/15");
+		writeItemEffect(setting, name + i++, "Saturation", "i75/90", "i40/50");
+		writeItemEffect(setting, name + i++, "Sharpness", "i60/80", "i18/30", "i0", "i0");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i0", "i20/25", "i5/6");
+		writeItemEffect(setting, name + i++, "Shock_Absorber", "i100");
+		writeItemEffect(setting, name + i++, "Shroud", "i150/200");
+		writeItemEffect(setting, name + i++, "Thaumic_Bolt", "i15000/16000", "#0", "i450/480", "i80/100", "i70/80");
+		writeItemEffect(setting, name + i++, "Timber", "i100/120");
+		writeItemEffect(setting, name + i++, "Treasure", "i8000/10000");
+		writeItemEffect(setting, name + i++, "Tunneler");
+		writeItemEffect(setting, name + i++, "Wither", "i4", "i90/120");
+		
 		// Negative item effects
 		i = 0;
 		name = "negative.effect";
@@ -457,7 +507,7 @@ public class SettingsLoot
 		}
 
 		// High, epic and legendary items
-		groups = new String[] { "high", "epic", "legendary" };
+		groups = new String[] { "high", "epic", "legendary", "godlike" };
 		for (String group : groups)
 		{
 			name = group + ".item";

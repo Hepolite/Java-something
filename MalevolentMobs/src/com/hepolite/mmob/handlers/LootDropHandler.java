@@ -30,7 +30,9 @@ public class LootDropHandler
 	// Control variables
 	private final static HashMap<String, NameSection> randomNames = new HashMap<String, NameSection>();
 	private final static String nameGroups[] = new String[] { "helmet", "chestplate", "leggings", "boots", "sword", "bow", "misc", "tool", "wand" };
-
+	private final static HashMap<String, String> nameColors = new HashMap<String, String>();
+	private final static HashMap<String, String> rarityTags = new HashMap<String, String>();
+	
 	private final static Random random = new Random();
 
 	/** Performs a drop for the malevolent mob */
@@ -175,7 +177,8 @@ public class LootDropHandler
 			ItemStack item = NBTAPI.getItemStack(material, amount, metadata);
 
 			applyBaseNBTData(item, settings, property);
-			applyNameAndLore(item, settings, property);
+			applyNameAndLore(item, settings, property, levelGroup);
+			applyRarity(item, levelGroup);
 			if (!applyItemEffects(item, settings, property, levelGroup))
 				return null;
 			applyHistory(item, settings, property);
@@ -197,13 +200,13 @@ public class LootDropHandler
 			NBTAPI.setTag(item, settings.getTagCompound(property + ".nbt"));
 	}
 
-	private static void applyNameAndLore(ItemStack item, Settings settings, String property)
+	private static void applyNameAndLore(ItemStack item, Settings settings, String property, String levelGroup)
 	{
 		ItemMeta meta = item.getItemMeta();
 		if (settings.hasProperty(property + ".name"))
 		{
 			String name = settings.getString(property + ".name");
-			meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "#random".equals(name) ? getRandomName(item) : name));
+			meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "#random".equals(name) ? getRandomName(item, levelGroup) : name));
 		}
 		if (settings.hasProperty(property + ".lore"))
 		{
@@ -328,6 +331,18 @@ public class LootDropHandler
 		item.setItemMeta(meta);
 	}
 
+	private static void applyRarity(ItemStack item, String levelGroup)
+	{
+		if (rarityTags.containsKey(levelGroup))
+		{
+			ItemMeta meta = item.getItemMeta();
+			List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
+			lore.add(ChatColor.translateAlternateColorCodes('&', rarityTags.get(levelGroup).replaceAll("#type", getGroupOfItem(item))));
+			meta.setLore(lore);
+			item.setItemMeta(meta);
+		}
+	}
+	
 	private static void applyEnchantments(ItemStack item, Settings settings, String property)
 	{
 		Set<String> enchantments = settings.getKeys(property + ".enchantments");
@@ -536,11 +551,23 @@ public class LootDropHandler
 	private static void loadRandomNamesFromConfig(Settings settings)
 	{
 		randomNames.clear();
+		nameColors.clear();
+		rarityTags.clear();
+		
+		// Load colors
+		for (String group : settings.getKeys("colors"))
+			nameColors.put(group, settings.getString("colors." + group));
+		// Load rarity tags
+		for (String group : settings.getKeys("rarities"))
+			rarityTags.put(group, settings.getString("rarities." + group));
 
 		// Load up all sections in the settings file
 		Set<String> sections = settings.getKeys("");
 		for (String section : sections)
 		{
+			if (section.equalsIgnoreCase("colors") || section.equalsIgnoreCase("rarities"))
+				continue;
+			
 			Set<String> lists = settings.getKeys(section);
 			if (lists.isEmpty())
 				randomNames.put(section, new NameSection(section));
@@ -602,13 +629,16 @@ public class LootDropHandler
 	}
 
 	/** Returns a random name for the given item */
-	private static String getRandomName(ItemStack item)
+	private static String getRandomName(ItemStack item, String levelGroup)
 	{
+		// Grab an item color
+		String color = nameColors.containsKey(levelGroup) ? nameColors.get(levelGroup) : "&f";
+		
 		// Grab a random item name
 		String group = getGroupOfItem(item);
 		NameSection section = randomNames.get(group);
 		if (section == null)
 			return "(GROUP NOT FOUND)";
-		return section.getRandomName(group).replaceAll("@name", Common.toTitleCase(item.getType().toString().replaceAll("_", " ")));
+		return color + section.getRandomName(group).replaceAll("@name", Common.toTitleCase(item.getType().toString().replaceAll("_", " ")));
 	}
 }
