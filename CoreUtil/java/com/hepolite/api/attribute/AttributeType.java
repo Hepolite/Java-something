@@ -7,6 +7,7 @@ public class AttributeType
 	// Player attributes
 	public static final String HEALTH = "health";
 	public static final String HEALTH_MAX = "health_max";
+	public static final String HUNGER_MAX = "hunger_max";
 	public static final String SPEED_WALK = "speed_walk";
 	public static final String SPEED_FLY = "speed_fly";
 }

@@ -14,6 +14,7 @@ public final class FoodData implements IValue
 	public final Set<String> ingredients = new HashSet<>();
 	public float food = 0.0f;
 	public float ratio = 0.0f;
+	public boolean alwaysConsumable = false;
 
 	@Override
 	public void save(final IConfig config, final IProperty property)
@@ -24,6 +25,7 @@ public final class FoodData implements IValue
 		name = property.getName();
 		food = config.getFloat(property.child("food"));
 		ratio = config.getFloat(property.child("ratio"));
+		alwaysConsumable = config.getBool(property.child("alwaysConsumable"));
 
 		for (final String category : config.getString(property.child("categories")).split(" "))
 			categories.add(category);

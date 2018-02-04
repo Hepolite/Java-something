@@ -63,6 +63,7 @@ Default:
     categories: fruit
     food: 20.0
     ratio: 2.4
+    alwaysConsumable: true
     effects:
       Effect 0:
         type: regeneration
@@ -76,6 +77,7 @@ Default:
     categories: fruit
     food: 20.0
     ratio: 2.4
+    alwaysConsumable: true
     effects:
       Effect 0:
         type: regeneration
@@ -133,6 +135,7 @@ Default:
     ratio: 0.6
   potion:
     categories: potion
+    alwaysConsumable: true
   pumpkin_pie:
     ingredients: egg sugar
     categories: berry

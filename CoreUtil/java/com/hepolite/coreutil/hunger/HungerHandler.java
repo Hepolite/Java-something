@@ -22,4 +22,8 @@ public class HungerHandler extends HandlerCore
 	{
 		foodRegistry.loadFoods();
 	}
+	
+	// ...
+	
+	
 }
