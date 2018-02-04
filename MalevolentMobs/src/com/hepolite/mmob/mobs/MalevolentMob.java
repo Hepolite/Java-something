@@ -2,6 +2,7 @@ package com.hepolite.mmob.mobs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +15,9 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -25,6 +28,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.util.BlockIterator;
 
 import com.hepolite.mmob.Log;
 import com.hepolite.mmob.MMobListener;
@@ -246,7 +250,20 @@ public class MalevolentMob
 			for (Object entity : targets)
 			{
 				if (entity != this.entity && !nearbyTargets.contains((LivingEntity) entity))
+				{
+					Location loc = this.entity.getEyeLocation();
+					Location delta = ((LivingEntity)entity).getEyeLocation().subtract(loc);
+					loc.setDirection(delta.toVector());
+					
+					int i = 0;
+					BlockIterator it = new BlockIterator(loc, 0.0, Math.max(0, (int) delta.length()));
+					while (it.hasNext())
+					{
+						if (++i > 100 || it.next().getType().isSolid())
+							return;
+					}
 					nearbyTargets.add((LivingEntity) entity);
+				}
 			}
 		}
 	}
@@ -356,10 +373,12 @@ public class MalevolentMob
 		float armor = 0.0f;
 		if (Common.isAttackMelee(event))
 			armor += role.baseMeleeArmor + getLevel() * role.scaleMeleeArmor;
-		if (Common.isAttackMagic(event))
+		else if (Common.isAttackMagic(event))
 			armor += role.baseMagicArmor + getLevel() * role.scaleMagicArmor;
-		if (Common.isAttackArrow(event))
+		else if (Common.isAttackArrow(event))
 			armor += role.baseArrowArmor + getLevel() * role.scaleArrowArmor;
+		else
+			armor += role.baseMiscArmor + getLevel() * role.scaleMiscArmor;
 		if (Common.isAttackRanged(event))
 			armor += role.baseRangedArmor + getLevel() * role.scaleRangedArmor;
 		armor = armor * (1.0f - role.percentArmorPenetrated) - role.flatArmorPenetrated;
@@ -630,6 +649,10 @@ public class MalevolentMob
 			role.baseRangedArmor = armorScale * settings.getFloat("Stats.baseRangedArmor");
 		if (settings.hasProperty("Stats.scaleRangedArmor"))
 			role.scaleRangedArmor = armorScale * settings.getFloat("Stats.scaleRangedArmor");
+		if (settings.hasProperty("Stats.baseMiscArmor"))
+			role.baseMiscArmor = armorScale * settings.getFloat("Stats.baseMiscArmor");
+		if (settings.hasProperty("Stats.scaleMiscArmor"))
+			role.scaleMiscArmor = armorScale * settings.getFloat("Stats.scaleMiscArmor");
 
 		if (settings.hasProperty("Stats.baseAttackCooldown") || settings.hasProperty("Stats.scaleAttackCooldown"))
 			role.attackCooldownTime = settings.getScaledValue("General.", "AttackCooldown", getLevel(), pluginSettings.getFloat("General.Attacks.attackCooldown"));

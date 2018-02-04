@@ -12,7 +12,9 @@ public class MMobCompatibility
 {
 	private static Plugin pangaea;
 	private static Object pangaeaHungerManager;
-	private static Method pangaeaHungerManagerChangeSaturation, pangaeaHungerManagerChangeHunger;
+	private static Method pangaeaHungerManagerChangeSaturation;
+	private static Method pangaeaHungerManagerChangeHunger;
+	private static Method pangaeaHungerManagerChangeExhaustion;
 
 	/** Initializes the compatibility system */
 	@SuppressWarnings("unchecked")
@@ -34,6 +36,7 @@ public class MMobCompatibility
 				pangaeaHungerManager = hungerManager.get(MMobCompatibility.pangaea);
 				pangaeaHungerManagerChangeSaturation = pangaeaHungerManagerClass.getDeclaredMethod("changeSaturation", Player.class, float.class);
 				pangaeaHungerManagerChangeHunger = pangaeaHungerManagerClass.getDeclaredMethod("changeHunger", Player.class, float.class);
+				pangaeaHungerManagerChangeExhaustion = pangaeaHungerManagerClass.getDeclaredMethod("changeExhaustion", Player.class, float.class);
 			}
 			catch (Exception e)
 			{
@@ -64,6 +67,7 @@ public class MMobCompatibility
 		}
 		catch (Exception e)
 		{
+			Log.log("Unexpected issue with Pangaea integration [saturation]");
 		}
 	}
 
@@ -76,6 +80,20 @@ public class MMobCompatibility
 		}
 		catch (Exception e)
 		{
+			Log.log("Unexpected issue with Pangaea integration [hunger]");
+		}
+	}
+	
+	/** Changes a player's exhaustion via Pangaea */
+	public final static void pangaeaChangePlayerExhaustion(Player player, float amount)
+	{
+		try
+		{
+			pangaeaHungerManagerChangeExhaustion.invoke(pangaeaHungerManager, player, amount);
+		}
+		catch (Exception e)
+		{
+			Log.log("Unexpected issue with Pangaea integration [exhaustion]");
 		}
 	}
 }

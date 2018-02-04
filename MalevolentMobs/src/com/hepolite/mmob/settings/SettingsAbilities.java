@@ -101,10 +101,12 @@ public class SettingsAbilities
 		addWitheringBolt();
 
 		// Passives
+		addAntiFlight();
 		addDeterioratingAura();
 		addExoskeleton();
 		addExplosion();
 		addFireAura();
+		addFlight();
 		addFreezingAura();
 		addGuardianAngel();
 		addHealer();
@@ -120,7 +122,7 @@ public class SettingsAbilities
 	}
 
 	// /////////////////////////////////////////////////////////////// ACTIVE ABILITIES
-
+	
 	private static void addBlazingPillar()
 	{
 		Settings ability = new Settings("Abilities", "Active Blazing_Pillar.yml");
@@ -386,6 +388,15 @@ public class SettingsAbilities
 
 	// /////////////////////////////////////////////////////////////// PASSIVE ABILITIES
 
+	private static void addAntiFlight()
+	{
+		Settings ability = new Settings("Abilities", "Passive Anti_Flight.yml");
+		ability.addDefault("enable", true);
+		ability.addDefault("baseRange", 20.0);
+		ability.addDefault("baseExhaustion", 7.5);
+		ability.save();
+	}
+	
 	private static void addDeterioratingAura()
 	{
 		Settings ability = new Settings("Abilities", "Passive Deteriorating_Aura.yml");
@@ -421,6 +432,15 @@ public class SettingsAbilities
 		ability.addDefault("enable", true);
 		ability.addDefault("baseRange", 6.0);
 		ability.addDefault("affectPlayersOnly", true);
+		ability.save();
+	}
+	
+	private static void addFlight()
+	{
+		Settings ability = new Settings("Abilities", "Passive Flight.yml");
+		ability.addDefault("enable", true);
+		ability.addDefault("baseCooldown", 15.0);
+		ability.addDefault("baseDuration", 40.0);
 		ability.save();
 	}
 

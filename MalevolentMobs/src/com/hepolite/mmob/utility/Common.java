@@ -267,7 +267,7 @@ public class Common
 			event = new EntityDamageByEntityEvent(attacker, target, cause, damage);
 
 		postEvent(event);
-		if (!event.isCancelled())
+		if (!event.isCancelled() && event.getDamage() > 0.0)
 		{
 			target.setHealth(Math.max(0.0, target.getHealth() - event.getDamage()));
 			target.setLastDamageCause(event);

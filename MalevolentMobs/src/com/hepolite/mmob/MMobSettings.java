@@ -90,10 +90,10 @@ public class MMobSettings
 
 		// addDefault("Spawns.Creeper.roles", new String[] {});
 		addDefault("Spawns.Enderman.roles", new String[] { "Phantom", "Voidling" });
-		addDefault("Spawns.Skeleton.roles", new String[] { "Archer", "Knight", "Necromancer" });
+		addDefault("Spawns.Skeleton.roles", new String[] { "Archer", "Knight", "Necromancer", "Specter" });
 		addDefault("Spawns.Spider.roles", new String[] { "Funnel-Web", "Matriarch", "Pyre" });
 		addDefault("Spawns.Witch.roles", new String[] { "Spellweaver" });
-		addDefault("Spawns.Zombie.roles", new String[] { "Bruiser", "Mage", "Tank" });
+		addDefault("Spawns.Zombie.roles", new String[] { "Bruiser", "Mage", "Specter", "Tank" });
 		// addDefault("Spawns.Zombie Pigman.roles", new String[] {});
 	}
 

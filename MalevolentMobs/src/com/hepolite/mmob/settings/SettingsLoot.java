@@ -108,44 +108,44 @@ public class SettingsLoot
 		setting.addDefault("rarities.godlike", "&f[&bGodlike #type&f]");
 		setting.addDefault("item", new String[] { "#special.@group", "#adjective.@group #object.@group", "#object.@group of #context.@group", "The #owner.prefix #object.@group", "#object.@group of the #owner.postfix", "#owner.people #adjective.@group #object.@group" });
 
-		setting.addDefault("owner.postfix", new String[] { "Conqueror", "Dragon", "Elders", "Foe", "Forgotten", "Guard", "Mage", "Phoenix", "Princess", "Queen", "Shepherd", "Troll", "Wicked" });
-		setting.addDefault("owner.prefix", new String[] { "Angel's", "Basilisk's", "Drone's", "Goddesses'", "Gryphon's", "Fool's", "Forgotten's", "Fortune's", "Hag's", "Liar's", "Peasant's", "Phoenix'", "Seer's", "Serpent's", "Unicorn's", "Warden's", "Warrior's" });
-		setting.addDefault("owner.people", new String[] { "Alternia's", "Atalanta's", "Caramel's", "Ceymi's", "Doppel's", "Ebony's", "Flitterwing's", "Meadow Song's", "Midnight Wind's", "Nictis'", "Novel Tale's", "Pincer's", "Praegus'", "Senyx'", "Sky's", "Spark Wheel's", "Stormclaw's", "Tryp's", "Vola Nocturn's" });
-		setting.addDefault("owner.object", new String[] { "Ancient Tree's", "Desolated Realm's", "Forgotten Mine's", "Sleeping Rock's", "Twisted Mind's", "Wicked Soul's" });
+		setting.addDefault("owner.postfix", new String[] { "Conqueror", "Dragon", "Elders", "Enchanter", "Fairies", "Foe", "Forgotten", "Guard", "Mage", "Phoenix", "Princess", "Queen", "Rogue", "Shepherd", "Troll", "Undead", "Wicked" });
+		setting.addDefault("owner.prefix", new String[] { "Angel's", "Basilisk's", "Drone's", "Goddesses'", "Gryphon's", "Fool's", "Forgotten's", "Fortune's", "Hag's", "Liar's", "Peasant's", "Phoenix'", "Seer's", "Serpent's", "Unicorn's", "Warden's", "Warrior's", "Wright's", "Zombie's" });
+		setting.addDefault("owner.people", new String[] { "Alternia's", "Atalanta's", "Bellesmith's", "Caramel's", "Ceymi's", "Doppel's", "Eagle Eye's", "Ebon Mane's", "Ebony's", "Flitterwing's", "Josho's", "Meadow Song's", "Melody's", "Midnight Wind's", "Nancy Jane's", "Nictis'", "Novel Tale's", "Olivia's", "Pincer's", "Praegus'", "Props'", "Roarke's", "Senyx'", "Sky's", "Spark Wheel's", "Stormclaw's", "Thorax'", "Tryp's", "Vola Nocturn's" });
+		setting.addDefault("owner.object", new String[] { "Ancient Tree's", "Desolated Realm's", "Enchanted Woods'", "Forgotten Mine's", "Lost Legend's", "Pyre's", "Sleeping Rock's", "Twisted Mind's", "Wicked Soul's" });
 
 		setting.addDefault("object.common", new String[] { "@name" });
 		setting.addDefault("object.armor", new String[] { "#object.common", "Armor" });
-		setting.addDefault("object.helmet", new String[] { "#object.armor", "Hat", "Helm", "Headcover", "Headguard", "Cap" });
+		setting.addDefault("object.helmet", new String[] { "#object.armor", "Cap", "Hat", "Helm", "Headcover", "Headguard" });
 		setting.addDefault("object.chestplate", new String[] { "#object.armor", "Battleplate", "Breastplate", "Cuirass", "Tunic", "Vest" });
 		setting.addDefault("object.leggings", new String[] { "#object.armor", "Gaiter", "Pants", "Plateleg", "Kilt", "Legwraps", "Skirt" });
 		setting.addDefault("object.boots", new String[] { "#object.armor", "Footguards", "Footpads", "Footwear", "Sabatons", "Sandals", "Shoes", "Walkers" });
-		setting.addDefault("object.weapon", new String[] { "#object.common", "Vengeance" });
-		setting.addDefault("object.sword", new String[] { "#object.weapon", "Blade", "Dagger", "Saber", "Schimitar", "Rapier", "Cutlass" });
-		setting.addDefault("object.bow", new String[] { "#object.weapon", "Crossbow", "Flatbow", "Longbow" });
+		setting.addDefault("object.weapon", new String[] { "#object.common", "Anger", "Despair", "Vengeance", "Wrath" });
+		setting.addDefault("object.sword", new String[] { "#object.weapon", "Blade", "Broadsword", "Claymore", "Cutlass", "Dagger", "Knife", "Machete", "Rapier", "Saber", "Schimitar" });
+		setting.addDefault("object.bow", new String[] { "#object.weapon", "Composite Bow", "Crossbow", "Flatbow", "Longbow" });
 		setting.addDefault("object.misc", new String[] { "#object.common" });
-		setting.addDefault("object.tool", new String[] { "#object.misc", "Device", "Gadget", "Tool", "Utensil" });
+		setting.addDefault("object.tool", new String[] { "#object.misc", "Contraption", "Device", "Gadget", "Gizmo", "Tool", "Utensil" });
 		setting.addDefault("object.wand", new String[] { "#object.misc", "Cane", "Scepter", "Staff", "Wand" });
 
-		setting.addDefault("adjective.common", new String[] { "Acceptable", "Almost Worthless", "Arcane", "Bewitched", "Bright", "Crystalized", "Common", "Cute", "Everlasting", "Fancy", "Glacial", "Glancing", "Greater", "Goofy", "Hardened", "Infused", "Perfected", "Phantom", "Prime", "Shadow", "Shining", "Slim", "Solid", "Sparkling", "Tough", "Ugly", "Uncommon" });
+		setting.addDefault("adjective.common", new String[] { "Acceptable", "Almost Worthless", "Arcane", "Bewitched", "Bright", "Crystalized", "Common", "Cute", "Decent", "Elegant", "Enchanted", "Energetic", "Everlasting", "Fancy", "Ghastly", "Glacial", "Glancing", "Greater", "Goofy", "Hardened", "Hideous", "Infused", "Perfected", "Phantom", "Polished", "Prime", "Shadow", "Shining", "Slim", "Solid", "Sparkling", "Tough", "Ugly", "Uncommon", "Usable" });
 		setting.addDefault("adjective.armor", new String[] { "#adjective.common", "Atuned", "Battleworn", "Bruised", "Rune-Forged", "Wind-Forged" });
-		setting.addDefault("adjective.helmet", new String[] { "#adjective.armor", "Everclear" });
+		setting.addDefault("adjective.helmet", new String[] { "#adjective.armor", "Everclear", "Sensing" });
 		setting.addDefault("adjective.chestplate", new String[] { "#adjective.armor" });
 		setting.addDefault("adjective.leggings", new String[] { "#adjective.armor" });
 		setting.addDefault("adjective.boots", new String[] { "#adjective.armor" });
-		setting.addDefault("adjective.weapon", new String[] { "#adjective.common", "Elongated", "Infernal", "Malevolent", "Malicious", "Sharpened", "Tyrannical", "Wrathful" });
+		setting.addDefault("adjective.weapon", new String[] { "#adjective.common", "Angered", "Elongated", "Grim", "Infernal", "Magical", "Malevolent", "Malicious", "Tyrannical", "Unpleasant", "Wrathful" });
 		setting.addDefault("adjective.bow", new String[] { "#adjective.weapon", "Ironbark", "Metallic", "Greatwood", "Yew" });
-		setting.addDefault("adjective.sword", new String[] { "#adjective.weapon", "Sharpened", "Magical" });
+		setting.addDefault("adjective.sword", new String[] { "#adjective.weapon", "Sharpened", "Unyielding" });
 		setting.addDefault("adjective.misc", new String[] { "#adjective.common" });
 		setting.addDefault("adjective.tool", new String[] { "#adjective.misc", "Improvised", "Unbreaking" });
 		setting.addDefault("adjective.wand", new String[] { "#adjective.misc", "Corrupted", "Engraved", "Grand", "Greatwood", "Moonlit", "Primal", "Refined", "Silverwood", "Soulless" });
 
-		setting.addDefault("context.common", new String[] { "Awareness", "Bravery", "Chaos", "Cuteness", "Divinity", "Glee", "Haunting", "Honor", "Last Hope", "Lost Worlds", "Misfortune", "Nightmares", "Secrets", "Solitude", "the Ancestors", "Triviality", "Wisdom" });
+		setting.addDefault("context.common", new String[] { "Ages", "Awareness", "Awesomeness", "Bravery", "Chaos", "Cuteness", "Divinity", "Glee", "Haunting", "Honor", "Last Hope", "Lost Worlds", "Misfortune", "Nightmares", "Secrets", "Solitude", "the Ancestors", "Triviality", "Wisdom" });
 		setting.addDefault("context.armor", new String[] { "#context.common", "Glory", "Protection", "Solitude", "Stealth" });
 		setting.addDefault("context.helmet", new String[] { "#context.armor", "All-Seeing", "Intellect", "Intelligence", "Omniscience", "Revealing", "Thinking", "Unseeing" });
 		setting.addDefault("context.chestplate", new String[] { "#context.armor", "Neverfracture", "Vitality" });
-		setting.addDefault("context.leggings", new String[] { "#context.armor" });
+		setting.addDefault("context.leggings", new String[] { "#context.armor", "Mobility", "Motion", "Leaping" });
 		setting.addDefault("context.boots", new String[] { "#context.armor", "Fleeing", "Hallowed Freedom", "Jumping", "Running", "Swiftness" });
-		setting.addDefault("context.weapon", new String[] { "#context.common", "Dark Whispers", "Ending Hope", "Everlasting Blight", "Hunting", "Hope", "Justice", "Storms", "Undoing" });
+		setting.addDefault("context.weapon", new String[] { "#context.common", "Dark Whispers", "Ending Hope", "Everlasting Blight", "Harming", "Hunting", "Hope", "Justice", "Storms", "Undoing", "Unraveling", "Wounding" });
 		setting.addDefault("context.sword", new String[] { "#context.weapon", "Decapitation", "Etheral Essence" });
 		setting.addDefault("context.bow", new String[] { "#context.weapon", "Assasination", "Silencing" });
 		setting.addDefault("context.misc", new String[] { "#context.common", "Infinite Fortune", "Shame", "the Hoard" });
@@ -259,6 +259,7 @@ public class SettingsLoot
 		writeItemEffect(setting, name + i++, "Levity", "b0", "i45/60");
 		writeItemEffect(setting, name + i++, "Magic_Shield", "i18/25");
 		writeItemEffect(setting, name + i++, "Magic_Shield", "i18/25");
+		writeItemEffect(setting, name + i++, "Piercing", "i0", "i1/2");
 		writeItemEffect(setting, name + i++, "Poison", "i1", "i45/55");
 		writeItemEffect(setting, name + i++, "Powerline", "i1200/1300", "#0", "i200/225", "i18/26", "i85/100", "i11/13");
 		writeItemEffect(setting, name + i++, "Relic", "i140/200", "epic", "i60/85", "negative");
@@ -300,6 +301,7 @@ public class SettingsLoot
 		writeItemEffect(setting, name + i++, "Levity", "b0", "i60/70");
 		writeItemEffect(setting, name + i++, "Magic_Shield", "i25/30");
 		writeItemEffect(setting, name + i++, "Magic_Shield", "i25/30");
+		writeItemEffect(setting, name + i++, "Piercing", "i0", "i2/3");
 		writeItemEffect(setting, name + i++, "Poison", "i2", "i50/60");
 		writeItemEffect(setting, name + i++, "Powerline", "i1400/1600", "#0", "i225/240", "i25/30", "i105/120", "i13/16");
 		writeItemEffect(setting, name + i++, "Relic", "i160/220", "legendary", "i60/85", "negative");
@@ -342,6 +344,7 @@ public class SettingsLoot
 		writeItemEffect(setting, name + i++, "Levity", "b0", "i70/85");
 		writeItemEffect(setting, name + i++, "Magic_Mirror", "i30/35");
 		writeItemEffect(setting, name + i++, "Magic_Shield", "i30/35");
+		writeItemEffect(setting, name + i++, "Piercing", "i0", "i3");
 		writeItemEffect(setting, name + i++, "Poison", "i3", "i50/60");
 		writeItemEffect(setting, name + i++, "Powerline", "i1600/1750", "#0", "i235/250", "i30/36", "i120/140", "i16/18");
 		writeItemEffect(setting, name + i++, "Relic", "i220/280", "legendary", "i60/85", "negative");
@@ -383,6 +386,7 @@ public class SettingsLoot
 		writeItemEffect(setting, name + i++, "Levity", "b0", "i90/100");
 		writeItemEffect(setting, name + i++, "Magic_Mirror", "i45/50");
 		writeItemEffect(setting, name + i++, "Magic_Shield", "i45/50");
+		writeItemEffect(setting, name + i++, "Piercing", "i0", "i3/4");
 		writeItemEffect(setting, name + i++, "Poison", "i4", "i65/80");
 		writeItemEffect(setting, name + i++, "Powerline", "i1900/2000", "#0", "i240/250", "i30/36", "i120/140", "i22/25");
 		writeItemEffect(setting, name + i++, "Relic", "i275/350", "legendary", "i50/75", "negative");
@@ -424,6 +428,7 @@ public class SettingsLoot
 		writeItemEffect(setting, name + i++, "Levity", "b0", "i160/200");
 		writeItemEffect(setting, name + i++, "Magic_Mirror", "i70/80");
 		writeItemEffect(setting, name + i++, "Magic_Shield", "i100");
+		writeItemEffect(setting, name + i++, "Piercing", "i0", "i5");
 		writeItemEffect(setting, name + i++, "Poison", "i4", "i100/120");
 		writeItemEffect(setting, name + i++, "Powerline", "i19000/20000", "#0", "i300/350", "i50/60", "i200/250", "i35/50");
 		writeItemEffect(setting, name + i++, "Relic", "i150/250", "godlike", "i100", "negative");

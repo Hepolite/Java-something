@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.hepolite.mmob.Log;
 import com.hepolite.mmob.handlers.ItemEffectHandler;
 
 public abstract class ItemEffectCharger extends ItemEffect
@@ -23,7 +24,10 @@ public abstract class ItemEffectCharger extends ItemEffect
 	@Override
 	public void onTick(Player player, ItemStack item)
 	{
-		setChargeInItem(item, charge + rechargeAmount);
+		if (!item.hasItemMeta() || !item.getItemMeta().hasLore())
+			Log.log("WARNING: Expected a valid lore on item " + item.getType() + " for player " + player.getName());
+		else
+			setChargeInItem(item, charge + rechargeAmount);
 	}
 
 	@Override

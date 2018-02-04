@@ -27,6 +27,8 @@ public class MobRole
 	public float scaleArrowArmor = 0.0f;
 	public float baseRangedArmor = 0.0f;
 	public float scaleRangedArmor = 0.0f;
+	public float baseMiscArmor = 0.0f;
+	public float scaleMiscArmor = 0.0f;
 	public float flatArmorPenetrated = 0.0f;		// Armor penetrated for one attack
 	public float percentArmorPenetrated = 0.0f;		// Armor penetrated for one attack
 

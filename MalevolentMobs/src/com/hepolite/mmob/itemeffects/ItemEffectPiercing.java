@@ -28,7 +28,7 @@ public class ItemEffectPiercing extends ItemEffect
 	public ItemEffectPiercing()
 	{
 		super("Piercing");
-		incompatibleEffects = new String[] { getName(), "Armor_Shredder" };
+		incompatibleEffects = new String[] { getName(), "Armor_Shredder", "Lacerate", "Sharpness" };
 	}
 
 	@Override
@@ -48,12 +48,12 @@ public class ItemEffectPiercing extends ItemEffect
 
 		double armorBlocking = event.getDamage(DamageModifier.ARMOR);
 		double trueDamage = Math.max(percent * armorBlocking - flat, armorBlocking);
-		event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) - trueDamage);
-
+		event.setDamage(DamageModifier.ARMOR, armorBlocking - trueDamage);
+		
 		if (isItemBow(item))
-			damageItem(item, trueDamage * bowDurabilityCostMultiplier * durabilityCostPerDamage);
+			damageItem(item, -trueDamage * bowDurabilityCostMultiplier * durabilityCostPerDamage);
 		else
-			damageItem(item, trueDamage * durabilityCostPerDamage);
+			damageItem(item, -trueDamage * durabilityCostPerDamage);
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class ItemEffectPiercing extends ItemEffect
 		if (percent > 0.0f)
 			list.add(String.format("&fDeals &b%.0f%%&f of the damage as true damage", 100.0f * percent));
 		if (flat > 0.0f)
-			list.add(String.format("&fDeals &b%.0f&f points of the damage as true damage", flat));
+			list.add(String.format("&fDeals &b%.1f&f hearts of damage as true damage", 0.5f * flat));
 	}
 
 	@Override

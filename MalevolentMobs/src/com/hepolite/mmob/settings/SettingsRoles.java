@@ -77,6 +77,7 @@ public class SettingsRoles
 		addPyre();
 		addPyreJockey();
 		addPhantom();
+		addSpecter();
 		addVoidling();
 		addSpellweaver();
 
@@ -108,16 +109,18 @@ public class SettingsRoles
 
 		role.addDefault("enable", true);
 		role.addDefault("General.parentRole", "Common");
-		role.addDefault("General.baseHealth", 32.0);
-		role.addDefault("General.scaleHealth", 1.2);
-		role.addDefault("Stats.baseMeleeArmor", 80.0);
+		role.addDefault("General.baseHealth", 40.0);
+		role.addDefault("General.scaleHealth", 2.1);
+		role.addDefault("Stats.baseMeleeArmor", 90.0);
 		role.addDefault("Stats.scaleMeleeArmor", 13.0);
-		role.addDefault("Stats.baseMagicArmor", 60.0);
-		role.addDefault("Stats.scaleMagicArmor", 6.0);
-		role.addDefault("Stats.baseArrowArmor", 65.0);
-		role.addDefault("Stats.scaleArrowArmor", 9.5);
+		role.addDefault("Stats.baseMagicArmor", 30.0);
+		role.addDefault("Stats.scaleMagicArmor", 4.0);
+		role.addDefault("Stats.baseArrowArmor", 55.0);
+		role.addDefault("Stats.scaleArrowArmor", 9.0);
 		role.addDefault("Stats.baseRangedArmor", 60.0);
 		role.addDefault("Stats.scaleRangedArmor", 9.0);
+		role.addDefault("Stats.baseMiscArmor", 55.0);
+		role.addDefault("Stats.scaleMiscArmor", 9.0);
 		role.addDefault("Stats.baseAttackCooldown", 2.5);
 		role.addDefault("Equipment.weaponItem", "none");
 		role.addDefault("Equipment.helmetItem", "iron_helmet");
@@ -143,10 +146,9 @@ public class SettingsRoles
 		role.addDefault("Actives.Ground_Slam.scaleKnockup", 0.003);
 		role.addDefault("Actives.Lifesteal.baseStrength", 0.125);
 		role.addDefault("Actives.Lifesteal.scaleStrength", 0.0025);
-		role.addDefault("Actives.Magic_Mirror.baseChance", -18);
+		role.addDefault("Actives.Magic_Mirror.baseChance", -23);
 		role.addDefault("Actives.Magic_Mirror.scaleChance", 1);
-		role.addDefault("Actives.Magic_Mirror.baseMaxChance", 0.5);
-		role.addDefault("Actives.Magic_Mirror.scaleStrength", 0.0625);
+		role.addDefault("Actives.Magic_Mirror.scaleStrength", 0.06);
 		role.addDefault("Actives.Virulent_Grasp.scaleDuration", 0.75);
 
 		role.save();
@@ -168,6 +170,8 @@ public class SettingsRoles
 		role.addDefault("Stats.scaleArrowArmor", 9.5);
 		role.addDefault("Stats.baseRangedArmor", 50.0);
 		role.addDefault("Stats.scaleRangedArmor", 8.5);
+		role.addDefault("Stats.baseMiscArmor", 50.0);
+		role.addDefault("Stats.scaleMiscArmor", 10.0);
 		role.addDefault("Stats.baseAttackCooldown", 4.0);
 
 		role.addDefault("Passives.Exoskeleton.baseChance", -0.3);
@@ -223,18 +227,18 @@ public class SettingsRoles
 		role.addDefault("Stats.scaleArrowArmor", 7.5);
 		role.addDefault("Stats.baseRangedArmor", 40.0);
 		role.addDefault("Stats.scaleRangedArmor", 7.0);
+		role.addDefault("Stats.baseMiscArmor", 120.0);
+		role.addDefault("Stats.scaleMiscArmor", 17.0);
 		role.addDefault("Stats.baseAttackCooldown", 4.5);
 		role.addDefault("Equipment.weaponItem", "none");
 
+		role.addDefault("Passives.Anti_Flight.scaleExhaustion", 0.1);
 		role.addDefault("Passives.Regeneration.baseChance", 1.4);
 		role.addDefault("Passives.Regeneration.scaleChance", -0.025);
 		role.addDefault("Passives.Guardian_Angel.baseChance", 0.3);
 		role.addDefault("Passives.Guardian_Angel.baseChance", 0.0175);
 		role.addDefault("Passives.Potion_Effect-Fire_Resistance.effect", "fire_resistance");
 		role.addDefault("Passives.Potion_Effect-Fire_Resistance.baseDuration", 100000);
-		role.addDefault("Passives.Wither_Aura.baseChance", 0.2);
-		role.addDefault("Passives.Wither_Aura.scaleChance", 0.025);
-		role.addDefault("Passives.Wither_Aura.scaleStrength", 0.0375);
 		role.addDefault("Passives.Wither_Particles.baseChance", 0.4);
 		role.addDefault("Passives.Wither_Particles.scaleChance", 0.02);
 		role.addDefault("Passives.Wither_Particles.scaleParticleCount", 0.125);
@@ -273,10 +277,12 @@ public class SettingsRoles
 		role.addDefault("Stats.scaleMeleeArmor", 9.5);
 		role.addDefault("Stats.baseMagicArmor", 150.0);
 		role.addDefault("Stats.scaleMagicArmor", 11.5);
-		role.addDefault("Stats.baseArrowArmor", 42.0);
-		role.addDefault("Stats.scaleArrowArmor", 6.0);
+		role.addDefault("Stats.baseArrowArmor", 120.0);
+		role.addDefault("Stats.scaleArrowArmor", 9.0);
 		role.addDefault("Stats.baseRangedArmor", 40.0);
 		role.addDefault("Stats.scaleRangedArmor", 5.0);
+		role.addDefault("Stats.baseMiscArmor", 40.0);
+		role.addDefault("Stats.scaleMiscArmor", 6.0);
 		role.addDefault("Stats.baseAttackCooldown", 3.5);
 		role.addDefault("Equipment.weaponItem", "redstone_torch_on");
 
@@ -324,6 +330,8 @@ public class SettingsRoles
 		role.addDefault("Stats.scaleArrowArmor", 11.0);
 		role.addDefault("Stats.baseRangedArmor", 50.0);
 		role.addDefault("Stats.scaleRangedArmor", 8.0);
+		role.addDefault("Stats.baseMiscArmor", 90.0);
+		role.addDefault("Stats.scaleMiscArmor", 12.0);
 		role.addDefault("Stats.baseAttackCooldown", 4.0);
 		role.addDefault("Equipment.weaponItem", "bow");
 
@@ -377,9 +385,14 @@ public class SettingsRoles
 		role.addDefault("Stats.scaleArrowArmor", 9.5);
 		role.addDefault("Stats.baseRangedArmor", 50.0);
 		role.addDefault("Stats.scaleRangedArmor", 8.5);
+		role.addDefault("Stats.baseMiscArmor", 45.0);
+		role.addDefault("Stats.scaleMiscArmor", 9.5);
 		role.addDefault("Stats.baseAttackCooldown", 4.0);
 		role.addDefault("Equipment.weaponItem", "iron_sword");
 
+		role.addDefault("Passives.Anti_Flight.baseChance", -12.0);
+		role.addDefault("Passives.Anti_Flight.scaleChance", 1.0);
+		role.addDefault("Passives.Anti_Flight.scaleExhaustion", 0.1);
 		role.addDefault("Passives.Deteriorating_Aura.baseChance", -0.7);
 		role.addDefault("Passives.Deteriorating_Aura.scaleChance", 0.04);
 		role.addDefault("Passives.Explosion.baseChance", 0.4);
@@ -391,8 +404,6 @@ public class SettingsRoles
 		role.addDefault("Passives.Potion_Effect-Speed.baseDuration", 160);
 		role.addDefault("Passives.Potion_Effect-Speed.scaleDuration", 2.5);
 		role.addDefault("Passives.Potion_Effect-Speed.scaleStrength", 0.03);
-		role.addDefault("Passives.Regeneration.baseChance", 1.4);
-		role.addDefault("Passives.Regeneration.scaleChance", -0.025);
 		role.addDefault("Passives.Wither_Particles.baseChance", 0.6);
 		role.addDefault("Passives.Wither_Particles.scaleChance", 0.025);
 		role.addDefault("Passives.Wither_Particles.scaleParticleCount", 0.125);
@@ -434,6 +445,8 @@ public class SettingsRoles
 		role.addDefault("Stats.scaleArrowArmor", 8.5);
 		role.addDefault("Stats.baseRangedArmor", 40.0);
 		role.addDefault("Stats.scaleRangedArmor", 6.5);
+		role.addDefault("Stats.baseMiscArmor", 50.0);
+		role.addDefault("Stats.scaleMiscArmor", 7.0);
 		role.addDefault("Stats.baseAttackCooldown", 5.0);
 
 		role.addDefault("Passives.Deteriorating_Aura.baseChance", -0.7);
@@ -491,6 +504,8 @@ public class SettingsRoles
 		role.addDefault("Stats.scaleArrowArmor", 9.5);
 		role.addDefault("Stats.baseRangedArmor", 40.0);
 		role.addDefault("Stats.scaleRangedArmor", 7.0);
+		role.addDefault("Stats.baseMiscArmor", 50.0);
+		role.addDefault("Stats.scaleMiscArmor", 8.0);
 		role.addDefault("Stats.baseAttackCooldown", 4.0);
 
 		role.addDefault("Passives.Exoskeleton.scaleStrength", 0.5);
@@ -532,17 +547,21 @@ public class SettingsRoles
 		role.addDefault("General.parentRole", "Common");
 		role.addDefault("General.baseHealth", 20.0);
 		role.addDefault("General.scaleHealth", 1.0);
-		role.addDefault("Stats.baseMeleeArmor", 45.0);
-		role.addDefault("Stats.scaleMeleeArmor", 7.0);
-		role.addDefault("Stats.baseMagicArmor", 40.0);
-		role.addDefault("Stats.scaleMagicArmor", 6.0);
+		role.addDefault("Stats.baseMeleeArmor", 40.0);
+		role.addDefault("Stats.scaleMeleeArmor", 5.0);
+		role.addDefault("Stats.baseMagicArmor", 45.0);
+		role.addDefault("Stats.scaleMagicArmor", 7.0);
 		role.addDefault("Stats.baseArrowArmor", 75.0);
 		role.addDefault("Stats.scaleArrowArmor", 11.5);
 		role.addDefault("Stats.baseRangedArmor", 40.0);
 		role.addDefault("Stats.scaleRangedArmor", 7.0);
+		role.addDefault("Stats.baseMiscArmor", 150.0);
+		role.addDefault("Stats.scaleMiscArmor", 18.0);
 		role.addDefault("Stats.baseAttackCooldown", 4.0);
 
 		role.addDefault("Passives.Exoskeleton.scaleStrength", 0.5);
+		role.addDefault("Passives.Explosion.baseChance", 0.4);
+		role.addDefault("Passives.Explosion.scaleChance", 0.005);
 		role.addDefault("Passives.Fire_Aura.scaleRange", 0.125);
 		role.addDefault("Passives.Mount.baseChance", 0.2);
 		role.addDefault("Passives.Mount.type", "skeleton");
@@ -579,15 +598,17 @@ public class SettingsRoles
 		role.addDefault("enable", true);
 		role.addDefault("General.parentRole", "Archer");
 		role.addDefault("General.baseHealth", 20.0);
-		role.addDefault("General.scaleHealth", 0.75);
+		role.addDefault("General.scaleHealth", 0.5);
 		role.addDefault("Stats.baseMeleeArmor", 40.0);
-		role.addDefault("Stats.scaleMeleeArmor", 6.0);
+		role.addDefault("Stats.scaleMeleeArmor", 4.0);
 		role.addDefault("Stats.baseMagicArmor", 40.0);
-		role.addDefault("Stats.scaleMagicArmor", 6.0);
+		role.addDefault("Stats.scaleMagicArmor", 4.0);
 		role.addDefault("Stats.baseArrowArmor", 50.0);
-		role.addDefault("Stats.scaleArrowArmor", 8.0);
+		role.addDefault("Stats.scaleArrowArmor", 6.0);
 		role.addDefault("Stats.baseRangedArmor", 40.0);
-		role.addDefault("Stats.scaleRangedArmor", 6.0);
+		role.addDefault("Stats.scaleRangedArmor", 4.0);
+		role.addDefault("Stats.baseMiscArmor", 20.0);
+		role.addDefault("Stats.scaleMiscArmor", 2.0);
 
 		role.save();
 	}
@@ -601,13 +622,15 @@ public class SettingsRoles
 		role.addDefault("General.baseHealth", 44.0);
 		role.addDefault("General.scaleHealth", 1.0);
 		role.addDefault("Stats.baseMeleeArmor", 55.0);
-		role.addDefault("Stats.scaleMeleeArmor", 11.5);
+		role.addDefault("Stats.scaleMeleeArmor", 6.5);
 		role.addDefault("Stats.baseMagicArmor", 50.0);
-		role.addDefault("Stats.scaleMagicArmor", 11.0);
-		role.addDefault("Stats.baseArrowArmor", 30.0);
-		role.addDefault("Stats.scaleArrowArmor", 4.0);
+		role.addDefault("Stats.scaleMagicArmor", 10.0);
+		role.addDefault("Stats.baseArrowArmor", 0.0);
+		role.addDefault("Stats.scaleArrowArmor", -15.0);
 		role.addDefault("Stats.baseRangedArmor", 40.0);
 		role.addDefault("Stats.scaleRangedArmor", 7.0);
+		role.addDefault("Stats.baseMiscArmor", 150.0);
+		role.addDefault("Stats.scaleMiscArmor", 18.0);
 		role.addDefault("Stats.baseAttackCooldown", 2.0);
 
 		role.addDefault("Passives.Exoskeleton.scaleStrength", 0.5);
@@ -621,7 +644,7 @@ public class SettingsRoles
 		role.addDefault("Passives.Potion_Effect-Invisibility.baseDuration", 240);
 		role.addDefault("Passives.Potion_Effect-Invisibility.scaleDuration", 4.0);
 		role.addDefault("Passives.Potion_Effect-Speed.effect", "speed");
-		role.addDefault("Passives.Potion_Effect-Speed.baseStartupDelay", 100000);
+		role.addDefault("Passives.Potion_Effect-Speed.baseDuration", 100000);
 		role.addDefault("Passives.Wither_Aura.baseChance", 0.75);
 		role.addDefault("Passives.Wither_Aura.scaleChance", 0.025);
 		role.addDefault("Passives.Wither_Aura.scaleStrength", 0.0375);
@@ -633,6 +656,66 @@ public class SettingsRoles
 		role.addDefault("Actives.Kidnap.baseChance", -13.0);
 		role.addDefault("Actives.Kidnap.scaleChance", 1.0);
 		role.addDefault("Actives.Teleport.baseCooldown", 26.0);
+		role.addDefault("Actives.Teleport.scaleCooldown", -0.125);
+		role.addDefault("Actives.Weaken.scaleCount", 0.065);
+		role.addDefault("Actives.Withering_Bolt.baseChance", -7.0);
+		role.addDefault("Actives.Withering_Bolt.scaleChance", 1.0);
+		role.addDefault("Actives.Withering_Bolt.scaleDuration", 1.0);
+
+		role.save();
+	}
+	
+	private static void addSpecter()
+	{
+		Settings role = new Settings("Roles", "Specter.yml");
+
+		role.addDefault("enable", true);
+		role.addDefault("General.parentRole", "Common");
+		role.addDefault("General.baseHealth", 24.0);
+		role.addDefault("General.scaleHealth", 1.0);
+		role.addDefault("Stats.baseMeleeArmor", 195.0);
+		role.addDefault("Stats.scaleMeleeArmor", 12.5);
+		role.addDefault("Stats.baseMagicArmor", 20.0);
+		role.addDefault("Stats.scaleMagicArmor", 3.0);
+		role.addDefault("Stats.baseArrowArmor", 105.0);
+		role.addDefault("Stats.scaleArrowArmor", 11.0);
+		role.addDefault("Stats.baseRangedArmor", 40.0);
+		role.addDefault("Stats.scaleRangedArmor", 7.0);
+		role.addDefault("Stats.baseMiscArmor", 48.0);
+		role.addDefault("Stats.scaleMiscArmor", 7.0);
+		role.addDefault("Stats.baseAttackCooldown", 2.0);
+		role.addDefault("Equipment.weaponItem", "none");
+		role.addDefault("Equipment.helmetItem", "none");
+		role.addDefault("Equipment.chestplateItem", "elytra");
+		role.addDefault("Equipment.leggingsItem", "none");
+		role.addDefault("Equipment.bootsItem", "none");
+
+		role.addDefault("Passives.Anti_Flight.baseChance", -12.0);
+		role.addDefault("Passives.Anti_Flight.scaleChance", 1.0);
+		role.addDefault("Passives.Anti_Flight.scaleExhaustion", 0.1);
+		role.addDefault("Passives.Freezing_Aura.scaleRange", 0.1);
+		role.addDefault("Passives.Freezing_Aura.scaleStrength", 0.03);
+		role.addDefault("Passives.Potion_Effect-Invisibility.effect", "invisibility");
+		role.addDefault("Passives.Potion_Effect-Invisibility.repeats", -1);
+		role.addDefault("Passives.Potion_Effect-Invisibility.baseStartupDelay", 200);
+		role.addDefault("Passives.Potion_Effect-Invisibility.baseRepeatDelay", 100);
+		role.addDefault("Passives.Potion_Effect-Invisibility.baseRepeatDelay", 1.0);
+		role.addDefault("Passives.Potion_Effect-Invisibility.baseDuration", 60);
+		role.addDefault("Passives.Potion_Effect-Invisibility.scaleDuration", 1.0);
+		role.addDefault("Passives.Potion_Effect-Speed.effect", "speed");
+		role.addDefault("Passives.Potion_Effect-Speed.baseDuration", 100000);
+		role.addDefault("Passives.Potion_Effect-Speed.baseStrength", 1);
+		role.addDefault("Passives.Wither_Aura.baseChance", 0.75);
+		role.addDefault("Passives.Wither_Aura.scaleChance", 0.025);
+		role.addDefault("Passives.Wither_Aura.scaleStrength", 0.0375);
+
+		role.addDefault("Actives.Blindfold.scaleDuration", 1.0);
+		role.addDefault("Actives.Decoy.baseChance", -22.0);
+		role.addDefault("Actives.Decoy.scaleChance", 1.0);
+		role.addDefault("Actives.Decoy.baseMaxChance", 0.75);
+		role.addDefault("Actives.Decoy.baseCount", 2.0);
+		role.addDefault("Actives.Decoy.scaleCount", 0.02);
+		role.addDefault("Actives.Teleport.baseCooldown", 18.0);
 		role.addDefault("Actives.Teleport.scaleCooldown", -0.125);
 		role.addDefault("Actives.Weaken.scaleCount", 0.065);
 		role.addDefault("Actives.Withering_Bolt.baseChance", -7.0);
@@ -654,10 +737,12 @@ public class SettingsRoles
 		role.addDefault("Stats.scaleMeleeArmor", 22.0);
 		role.addDefault("Stats.baseMagicArmor", 30.0);
 		role.addDefault("Stats.scaleMagicArmor", 7.0);
-		role.addDefault("Stats.baseArrowArmor", 30.0);
-		role.addDefault("Stats.scaleArrowArmor", 4.0);
+		role.addDefault("Stats.baseArrowArmor", 0.0);
+		role.addDefault("Stats.scaleArrowArmor", -15.0);
 		role.addDefault("Stats.baseRangedArmor", 35.0);
 		role.addDefault("Stats.scaleRangedArmor", 6.0);
+		role.addDefault("Stats.baseMiscArmor", 70.0);
+		role.addDefault("Stats.scaleMiscArmor", 9.5);
 		role.addDefault("Stats.baseAttackCooldown", 2.0);
 
 		role.addDefault("Passives.Freezing_Aura.scaleRange", 0.1);
@@ -711,6 +796,8 @@ public class SettingsRoles
 		role.addDefault("Stats.scaleArrowArmor", 8.0);
 		role.addDefault("Stats.baseRangedArmor", 45.0);
 		role.addDefault("Stats.scaleRangedArmor", 8.0);
+		role.addDefault("Stats.baseMiscArmor", 80.0);
+		role.addDefault("Stats.scaleMiscArmor", 10.0);
 		role.addDefault("Stats.baseAttackCooldown", 2.0);
 
 		role.addDefault("Passives.Healer.scaleHealthMultiplier", 0.01);
@@ -765,6 +852,8 @@ public class SettingsRoles
 		role.addDefault("Stats.scaleArrowArmor", 9.5);
 		role.addDefault("Stats.baseRangedArmor", 35.0);
 		role.addDefault("Stats.scaleRangedArmor", 6.2);
+		role.addDefault("Stats.baseMiscArmor", 50.0);
+		role.addDefault("Stats.scaleMiscArmor", 7.5);
 
 		role.save();
 	}

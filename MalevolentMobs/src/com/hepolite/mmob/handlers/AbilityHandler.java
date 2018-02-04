@@ -24,10 +24,12 @@ import com.hepolite.mmob.abilities.actives.ActiveVolley;
 import com.hepolite.mmob.abilities.actives.ActiveWeaken;
 import com.hepolite.mmob.abilities.actives.ActiveWebbing;
 import com.hepolite.mmob.abilities.actives.ActiveWitheringBolt;
+import com.hepolite.mmob.abilities.passives.PassiveAntiFlight;
 import com.hepolite.mmob.abilities.passives.PassiveDeterioratingAura;
 import com.hepolite.mmob.abilities.passives.PassiveExoskeleton;
 import com.hepolite.mmob.abilities.passives.PassiveExplosion;
 import com.hepolite.mmob.abilities.passives.PassiveFireAura;
+import com.hepolite.mmob.abilities.passives.PassiveFlight;
 import com.hepolite.mmob.abilities.passives.PassiveFreezingAura;
 import com.hepolite.mmob.abilities.passives.PassiveGuardianAngel;
 import com.hepolite.mmob.abilities.passives.PassiveHealer;
@@ -86,6 +88,10 @@ public class AbilityHandler
 			passive = new PassiveHealer(mob, mob.getLevel());
 		else if (name.equals("Shielding"))
 			passive = new PassiveShielding(mob, mob.getLevel());
+		else if (name.equals("Anti_Flight"))
+			passive = new PassiveAntiFlight(mob, mob.getLevel());
+		else if (name.equals("Flight"))
+			passive = new PassiveFlight(mob, mob.getLevel());
 
 		return passive;
 	}

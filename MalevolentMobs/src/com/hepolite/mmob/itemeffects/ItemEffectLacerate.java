@@ -25,7 +25,7 @@ public class ItemEffectLacerate extends ItemEffect
 	public ItemEffectLacerate()
 	{
 		super("Lacerate");
-		incompatibleEffects = new String[] { getName(), "Sharpness" };
+		incompatibleEffects = new String[] { getName(), "Piercing", "Sharpness" };
 	}
 
 	@Override
