@@ -29,7 +29,7 @@ public final class ReflectedField
 		}
 		catch (IllegalArgumentException | IllegalAccessException e)
 		{
-			CoreUtilPlugin.INSTANCE.getLogger().warning("Failed to read field " + name);
+			CoreUtilPlugin.getInstance().getLogger().warning("Failed to read field " + name);
 			return null;
 		}
 	}
@@ -47,7 +47,8 @@ public final class ReflectedField
 		}
 		catch (IllegalArgumentException | IllegalAccessException e)
 		{
-			CoreUtilPlugin.INSTANCE.getLogger().warning(String.format("Failed to set field '%s' to '%s'", name, value));
+			CoreUtilPlugin.getInstance().getLogger()
+					.warning(String.format("Failed to set field '%s' to '%s'", name, value));
 		}
 	}
 

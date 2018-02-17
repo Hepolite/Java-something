@@ -39,6 +39,7 @@ import com.hepolite.mmob.abilities.passives.PassivePoisonMist;
 import com.hepolite.mmob.abilities.passives.PassivePotionEffect;
 import com.hepolite.mmob.abilities.passives.PassiveRegeneration;
 import com.hepolite.mmob.abilities.passives.PassiveShielding;
+import com.hepolite.mmob.abilities.passives.PassiveSupercharged;
 import com.hepolite.mmob.abilities.passives.PassiveVampirism;
 import com.hepolite.mmob.abilities.passives.PassiveWitherAura;
 import com.hepolite.mmob.abilities.passives.PassiveWitherParticles;
@@ -92,6 +93,8 @@ public class AbilityHandler
 			passive = new PassiveAntiFlight(mob, mob.getLevel());
 		else if (name.equals("Flight"))
 			passive = new PassiveFlight(mob, mob.getLevel());
+		else if (name.equals("Supercharged"))
+			passive = new PassiveSupercharged(mob, mob.getLevel());
 
 		return passive;
 	}

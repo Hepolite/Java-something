@@ -34,8 +34,9 @@ public final class CmdArgs
 	/** Restores the state of the arguments to the given snapshot */
 	public final void restoreSnapshot(final CmdArgsSnapshot snapshot)
 	{
-		if (snapshot == null || snapshot.index < 0 || snapshot.index >= getArgCount())
-			throw new IllegalArgumentException("Invalid or illegal snapshot");
+		if (snapshot == null || snapshot.index < 0 || snapshot.index > getArgCount())
+			throw new IllegalArgumentException(String.format("Invalid or illegal snapshot (received %d, range 0-%d)",
+					snapshot.index, getArgCount()));
 		index = snapshot.index;
 	}
 

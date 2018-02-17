@@ -19,8 +19,8 @@ public class ItemEffectBulwark extends ItemEffectShield
 	public void addDescription(List<String> list)
 	{
 		if (strength > 0.0f)
-			list.add(String.format("&fReduces physical damage by &b%.0f%%&f", 100.0f * strength));
+			list.add(String.format("&fReduces received physical damage by &b%.0f%%&f", 100.0f * strength));
 		else if (strength < 0.0f)
-			list.add(String.format("&fIncreases physical damage by &c%.0f%%&f", -100.0f * strength));
+			list.add(String.format("&fIncreases received physical damage by &c%.0f%%&f", -100.0f * strength));
 	}
 }

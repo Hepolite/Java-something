@@ -78,6 +78,7 @@ public class SettingsRoles
 		addPyreJockey();
 		addPhantom();
 		addSpecter();
+		addSupercharged();
 		addVoidling();
 		addSpellweaver();
 
@@ -449,6 +450,7 @@ public class SettingsRoles
 		role.addDefault("Stats.scaleMiscArmor", 7.0);
 		role.addDefault("Stats.baseAttackCooldown", 5.0);
 
+		role.addDefault("Passives.Anti_Flight.scaleExhaustion", 0.1);
 		role.addDefault("Passives.Deteriorating_Aura.baseChance", -0.7);
 		role.addDefault("Passives.Deteriorating_Aura.scaleChance", 0.03);
 		role.addDefault("Passives.Exoskeleton.scaleStrength", 0.333);
@@ -725,6 +727,63 @@ public class SettingsRoles
 		role.save();
 	}
 
+	private static void addSupercharged()
+	{
+		Settings role = new Settings("Roles", "Supercharged.yml");
+
+		role.addDefault("enable", true);
+		role.addDefault("General.parentRole", "Common");
+		role.addDefault("General.baseHealth", 24.0);
+		role.addDefault("General.scaleHealth", 1.1);
+		role.addDefault("Stats.baseMeleeArmor", 35.0);
+		role.addDefault("Stats.scaleMeleeArmor", 6.0);
+		role.addDefault("Stats.baseMagicArmor", 175.0);
+		role.addDefault("Stats.scaleMagicArmor", 12.5);
+		role.addDefault("Stats.baseArrowArmor", 65.0);
+		role.addDefault("Stats.scaleArrowArmor", 10.0);
+		role.addDefault("Stats.baseRangedArmor", 50.0);
+		role.addDefault("Stats.scaleRangedArmor", 8.5);
+		role.addDefault("Stats.baseMiscArmor", 125.0);
+		role.addDefault("Stats.scaleMiscArmor", 13.5);
+		role.addDefault("Stats.baseAttackCooldown", 4.0);
+
+		role.addDefault("Passives.Anti_Flight.baseChance", -16.0);
+		role.addDefault("Passives.Anti_Flight.scaleChance", 1.0);
+		role.addDefault("Passives.Anti_Flight.scaleExhaustion", 0.1);
+		role.addDefault("Passives.Explosion.baseStrength", 12.0);
+		role.addDefault("Passives.Explosion.scaleStrength", 0.1);
+		role.addDefault("Passives.Freezing_Aura.baseChance", -0.3);
+		role.addDefault("Passives.Freezing_Aura.scaleChance", 0.05);
+		role.addDefault("Passives.Freezing_Aura.scaleRange", 0.1);
+		role.addDefault("Passives.Freezing_Aura.scaleStrength", 0.03);
+		role.addDefault("Passives.Potion_Effect-Speed.effect", "speed");
+		role.addDefault("Passives.Potion_Effect-Speed.baseStartupDelay", 20);
+		role.addDefault("Passives.Potion_Effect-Speed.baseDuration", 100000);
+		role.addDefault("Passives.Potion_Effect-Speed.baseStrength", 2.0);
+		role.addDefault("Passives.Supercharged.scaleRadius", 0.075);
+
+		role.addDefault("Actives.Ground_Slam.scaleStrength", 0.05);
+		role.addDefault("Actives.Ground_Slam.scaleKnockup", 0.003);
+		role.addDefault("Actives.Grenade.scaleStrength", 0.05);
+		role.addDefault("Actives.Grenade.scaleRange", 0.1);
+		role.addDefault("Actives.Grenade.scaleDuration", -0.25);
+		role.addDefault("Actives.Lightning_Strike.baseChance", -20.0);
+		role.addDefault("Actives.Lightning_Strike.scaleChance", 1);
+		role.addDefault("Actives.Lightning_Strike.scaleDelay", -0.25);
+		role.addDefault("Actives.Lightning_Strike.scaleStrikeCount", 0.0625);
+		role.addDefault("Actives.Magic_Blast.baseChance", -9.0);
+		role.addDefault("Actives.Magic_Blast.scaleChance", 1);
+		role.addDefault("Actives.Magic_Blast.baseMaxChance", 0.75);
+		role.addDefault("Actives.Magic_Blast.baseStrength", 4.5);
+		role.addDefault("Actives.Magic_Blast.scaleStrength", 0.0875);
+		role.addDefault("Actives.Teleport.baseChance", -14.0);
+		role.addDefault("Actives.Teleport.scaleChance", 1);
+		role.addDefault("Actives.Teleport.baseCooldown", 18.0);
+		role.addDefault("Actives.Teleport.scaleCooldown", -0.125);
+
+		role.save();
+	}
+	
 	private static void addVoidling()
 	{
 		Settings role = new Settings("Roles", "Voidling.yml");

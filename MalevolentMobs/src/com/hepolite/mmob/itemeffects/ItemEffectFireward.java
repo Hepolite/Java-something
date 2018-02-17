@@ -19,8 +19,8 @@ public class ItemEffectFireward extends ItemEffectShield
 	public void addDescription(List<String> list)
 	{
 		if (strength > 0.0f)
-			list.add(String.format("&fReduces fire-based damage by &b%.0f%%&f", 100.0f * strength));
+			list.add(String.format("&fReduces received fire-based damage by &b%.0f%%&f", 100.0f * strength));
 		else if (strength < 0.0f)
-			list.add(String.format("&fIncreases fire-based damage by &c%.0f%%&f", -100.0f * strength));
+			list.add(String.format("&fIncreases received fire-based damage by &c%.0f%%&f", -100.0f * strength));
 	}
 }

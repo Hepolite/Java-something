@@ -40,7 +40,7 @@ public final class ConsoleUser implements IUser
 	@Override
 	public void sendMessage(final Message message)
 	{
-		Bukkit.getLogger().info(message.toCleaned());
+		Bukkit.getLogger().info(message.toPlain());
 	}
 
 	@Override

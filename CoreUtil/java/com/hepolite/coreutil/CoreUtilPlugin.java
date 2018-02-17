@@ -20,20 +20,36 @@ import com.hepolite.coreutil.util.reflection.ReflectionHandler;
 
 public final class CoreUtilPlugin extends PluginCore implements IPlugin
 {
-	public static CoreUtilPlugin INSTANCE;
-
 	private final Collection<IPlugin> plugins = new ArrayList<>();
 	private final CmdCoreUtil cmd = new CmdCoreUtil();
 
-	public HungerHandler hungerHandler;
-	public MovementHandler movementHandler;
+	private static CoreUtilPlugin instance;
+	private HungerHandler hungerHandler;
+	private MovementHandler movementHandler;
 
 	private int currentTick = 0;
+
+	// ...
+
+	public static final CoreUtilPlugin getInstance()
+	{
+		return instance;
+	}
+	public static final HungerHandler getHungerHandler()
+	{
+		return instance.hungerHandler;
+	}
+	public static final MovementHandler getMovementHandler()
+	{
+		return instance.movementHandler;
+	}
+
+	// ...
 
 	@Override
 	public void onEnable()
 	{
-		INSTANCE = this;
+		instance = this;
 
 		// Ensure that all plugins are found and updated every tick
 		getLogger().info("Setting up tasks...");

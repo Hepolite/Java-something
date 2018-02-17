@@ -86,10 +86,9 @@ public final class FoodMap extends HashMap<String, FoodData>
 	 */
 	private void resolveContents(final FoodData data, final String group)
 	{
-		if (data.ingredients.isEmpty())
-			return;
+		data.ingredients.remove("");
 		for (final String ingredient : data.ingredients)
 			get(ingredient, group).ifPresent((other) -> data.categories.addAll(other.categories));
-		data.ingredients.clear();
+		data.categories.remove("");
 	}
 }

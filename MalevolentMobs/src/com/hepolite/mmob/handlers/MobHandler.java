@@ -119,6 +119,7 @@ public class MobHandler
 			BossBar bar = getBossbarForPlayer(player);
 			bar.setTitle(title);
 			bar.setProgress(nearestEntity.getHealth() / nearestEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+			bar.setVisible(true);
 		}
 		else
 			removeBossbarForPlayer(player);
@@ -228,12 +229,16 @@ public class MobHandler
 			bar = Bukkit.createBossBar("Malevolent Mob", BarColor.BLUE, BarStyle.SEGMENTED_10);
 			bossbars.put(uuid, bar);
 			bar.addPlayer(player);
+			bar.setVisible(false);
 		}
-		bar.setVisible(true);
+		if (!bar.getPlayers().contains(player))
+			bar.addPlayer(player);
 		return bar;
 	}
 	private static void removeBossbarForPlayer(Player player)
 	{
-		getBossbarForPlayer(player).setVisible(false);;
+		UUID uuid = player.getUniqueId();
+		if (bossbars.containsKey(uuid))
+			bossbars.get(uuid).setVisible(false);
 	}
 }

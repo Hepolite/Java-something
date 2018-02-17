@@ -24,7 +24,7 @@ public class CmdReload extends Cmd
 	public boolean execute(final IUser user, final ICmdContext context) throws CommandException
 	{
 		user.sendMessage(BEFORE_RELOAD);
-		CoreUtilPlugin.INSTANCE.onReload();
+		CoreUtilPlugin.getInstance().onReload();
 		user.sendMessage(AFTER_RELOAD);
 		return true;
 	}

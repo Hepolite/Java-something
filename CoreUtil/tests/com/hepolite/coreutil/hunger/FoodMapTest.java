@@ -50,7 +50,8 @@ class FoodMapTest
 
 		final Optional<FoodData> data = map.get("dataB", "Default");
 		assertTrue(data.isPresent());
-		assertEquals(0, data.get().ingredients.size());
+		assertEquals(1, data.get().ingredients.size());
+		assertTrue(data.get().ingredients.contains("dataA"));
 		assertEquals(2, data.get().categories.size());
 		assertTrue(data.get().categories.contains("meat"));
 		assertTrue(data.get().categories.contains("vegetable"));

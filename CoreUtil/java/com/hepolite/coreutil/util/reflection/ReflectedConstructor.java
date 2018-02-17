@@ -33,7 +33,7 @@ public class ReflectedConstructor
 		}
 		catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
 		{
-			CoreUtilPlugin.INSTANCE.getLogger()
+			CoreUtilPlugin.getInstance().getLogger()
 					.info(String.format("Failed to instantiate from class '%s', using signature '%s'",
 							reflectedClass.name, signature(args)));
 			return null;

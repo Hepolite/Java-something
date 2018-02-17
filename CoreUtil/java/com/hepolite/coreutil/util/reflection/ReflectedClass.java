@@ -26,7 +26,7 @@ public final class ReflectedClass
 		}
 		catch (InstantiationException | IllegalAccessException e)
 		{
-			CoreUtilPlugin.INSTANCE.getLogger().info("Failed to instantiate class " + name);
+			CoreUtilPlugin.getInstance().getLogger().info("Failed to instantiate class " + name);
 			return null;
 		}
 	}

@@ -76,7 +76,6 @@ v1_12_R1:
   NBTTagIntArray:
     class: NBTTagIntArray
     method:
-      asInt: asIntArray
       asIntArray: d
   NBTTagList:
     class: NBTTagList
@@ -186,7 +185,6 @@ v1_11_R1:
   NBTTagIntArray:
     class: NBTTagIntArray
     method:
-      asInt: asIntArray
       asIntArray: d
   NBTTagList:
     class: NBTTagList

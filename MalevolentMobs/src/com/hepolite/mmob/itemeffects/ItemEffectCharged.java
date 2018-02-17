@@ -89,16 +89,17 @@ public class ItemEffectCharged extends ItemEffect
 		if (damagePercentBoost > 0)
 		{
 			list.add(String.format("&fDoes &b%.0f%%&f more damage and splits", 100.0f * damagePercentBoost));
-			list.add(String.format("&fdamage between &b%d&f targets", targets));
+			list.add(String.format("&fthe damage into &b%d&f charges", targets));
 		}
 		else if (damagePercentBoost < 0)
 		{
 			list.add(String.format("&fDoes &c%.0f%%&f less damage and splits", -100.0f * damagePercentBoost));
-			list.add(String.format("&fdamage between &b%d&f targets", targets));
+			list.add(String.format("&fthe damage into &b%d&f charges", targets));
 		}
 		else
 			list.add(String.format("&fSplits damage between &c%d&f targets", targets));
 		list.add(String.format("&fCan spread to targets up to &b%.1f&f meters away", range));
+		list.add(String.format("&f(Only one charge may hit a target at a time)"));
 	}
 
 	@Override

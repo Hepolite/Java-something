@@ -196,7 +196,7 @@ public class SettingsLoot
 		writeItemEffect(setting, name + i++, "Levity", "b0", "i25/32");
 		writeItemEffect(setting, name + i++, "Magic_Shield", "i8/12");
 		writeItemEffect(setting, name + i++, "Fireward", "i8/12");
-		writeItemEffect(setting, name + i++, "Relic", "i100/140", "high", "i60/85", "negative");
+		writeItemEffect(setting, name + i++, "Relic", "i100/140", "high", "i60/85", "negative_weak");
 		writeItemEffect(setting, name + i++, "Repair", "i40/60");
 		writeItemEffect(setting, name + i++, "Runic_Shield", "i25/35", "#0", "i12/18");
 		writeItemEffect(setting, name + i++, "Runic_Shield", "i100/130", "#0", "i3/5");
@@ -221,7 +221,7 @@ public class SettingsLoot
 		writeItemEffect(setting, name + i++, "Levity", "b0", "i33/45");
 		writeItemEffect(setting, name + i++, "Magic_Shield", "i12/18");
 		writeItemEffect(setting, name + i++, "Poison", "i1", "i35/45");
-		writeItemEffect(setting, name + i++, "Relic", "i100/140", "epic", "i60/85", "negative");
+		writeItemEffect(setting, name + i++, "Relic", "i100/140", "epic", "i60/85", "negative_low");
 		writeItemEffect(setting, name + i++, "Repair", "i60/70");
 		writeItemEffect(setting, name + i++, "Runic_Shield", "i35/50", "#0", "i17/27");
 		writeItemEffect(setting, name + i++, "Runic_Shield", "i130/150", "#0", "i4/6");
@@ -262,7 +262,7 @@ public class SettingsLoot
 		writeItemEffect(setting, name + i++, "Piercing", "i0", "i1/2");
 		writeItemEffect(setting, name + i++, "Poison", "i1", "i45/55");
 		writeItemEffect(setting, name + i++, "Powerline", "i1200/1300", "#0", "i200/225", "i18/26", "i85/100", "i11/13");
-		writeItemEffect(setting, name + i++, "Relic", "i140/200", "epic", "i60/85", "negative");
+		writeItemEffect(setting, name + i++, "Relic", "i140/200", "epic", "i60/85", "negative_medium");
 		writeItemEffect(setting, name + i++, "Repair", "i70/80");
 		writeItemEffect(setting, name + i++, "Runic_Shield", "i50/65", "#0", "i23/33");
 		writeItemEffect(setting, name + i++, "Runic_Shield", "i150/180", "#0", "i4/6");
@@ -304,7 +304,7 @@ public class SettingsLoot
 		writeItemEffect(setting, name + i++, "Piercing", "i0", "i2/3");
 		writeItemEffect(setting, name + i++, "Poison", "i2", "i50/60");
 		writeItemEffect(setting, name + i++, "Powerline", "i1400/1600", "#0", "i225/240", "i25/30", "i105/120", "i13/16");
-		writeItemEffect(setting, name + i++, "Relic", "i160/220", "legendary", "i60/85", "negative");
+		writeItemEffect(setting, name + i++, "Relic", "i160/220", "legendary", "i60/85", "negative_high");
 		writeItemEffect(setting, name + i++, "Repair", "i80/95");
 		writeItemEffect(setting, name + i++, "Runic_Shield", "i65/75", "#0", "i30/36");
 		writeItemEffect(setting, name + i++, "Runic_Shield", "i180/200", "#0", "i4/6");
@@ -347,7 +347,7 @@ public class SettingsLoot
 		writeItemEffect(setting, name + i++, "Piercing", "i0", "i3");
 		writeItemEffect(setting, name + i++, "Poison", "i3", "i50/60");
 		writeItemEffect(setting, name + i++, "Powerline", "i1600/1750", "#0", "i235/250", "i30/36", "i120/140", "i16/18");
-		writeItemEffect(setting, name + i++, "Relic", "i220/280", "legendary", "i60/85", "negative");
+		writeItemEffect(setting, name + i++, "Relic", "i220/280", "epic", "i60/85", "negative_epic");
 		writeItemEffect(setting, name + i++, "Repair", "i95/115");
 		writeItemEffect(setting, name + i++, "Runic_Shield", "i75/90", "#0", "i38/48");
 		writeItemEffect(setting, name + i++, "Runic_Shield", "i200/220", "#0", "i4/6");
@@ -389,7 +389,7 @@ public class SettingsLoot
 		writeItemEffect(setting, name + i++, "Piercing", "i0", "i3/4");
 		writeItemEffect(setting, name + i++, "Poison", "i4", "i65/80");
 		writeItemEffect(setting, name + i++, "Powerline", "i1900/2000", "#0", "i240/250", "i30/36", "i120/140", "i22/25");
-		writeItemEffect(setting, name + i++, "Relic", "i275/350", "legendary", "i50/75", "negative");
+		writeItemEffect(setting, name + i++, "Relic", "i275/350", "legendary", "i50/75", "negative_legendary");
 		writeItemEffect(setting, name + i++, "Repair", "i140/160");
 		writeItemEffect(setting, name + i++, "Runic_Shield", "i110/120", "#0", "i50/65");
 		writeItemEffect(setting, name + i++, "Runic_Shield", "i250/300", "#0", "i5/7");
@@ -431,7 +431,7 @@ public class SettingsLoot
 		writeItemEffect(setting, name + i++, "Piercing", "i0", "i5");
 		writeItemEffect(setting, name + i++, "Poison", "i4", "i100/120");
 		writeItemEffect(setting, name + i++, "Powerline", "i19000/20000", "#0", "i300/350", "i50/60", "i200/250", "i35/50");
-		writeItemEffect(setting, name + i++, "Relic", "i150/250", "godlike", "i100", "negative");
+		writeItemEffect(setting, name + i++, "Relic", "i150/250", "godlike", "i100", "negative_godlike");
 		writeItemEffect(setting, name + i++, "Repair", "i250/350");
 		writeItemEffect(setting, name + i++, "Runic_Shield", "i250/300", "#0", "i75/100");
 		writeItemEffect(setting, name + i++, "Runic_Shield", "i750/900", "#0", "i10/15");
@@ -446,9 +446,9 @@ public class SettingsLoot
 		writeItemEffect(setting, name + i++, "Tunneler");
 		writeItemEffect(setting, name + i++, "Wither", "i4", "i90/120");
 		
-		// Negative item effects
+		// Weak/low negative item effects
 		i = 0;
-		name = "negative.effect";
+		name = "negative_weak.effect";
 		writeItemEffect(setting, name + i++, "Armor_Shredder", "i-15/-5", "i0");
 		writeItemEffect(setting, name + i++, "Armor_Shredder", "i0", "i-60/-20");
 		writeItemEffect(setting, name + i++, "Bulwark", "i-15/-4");
@@ -460,10 +460,128 @@ public class SettingsLoot
 		writeItemEffect(setting, name + i++, "Magic_Shield", "i-20/-8");
 		writeItemEffect(setting, name + i++, "Repair", "i-12/-4");
 		writeItemEffect(setting, name + i++, "Saturation", "i0", "i-12/-7");
-		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i0", "i-10/-5", "i-3/-2");
-		writeItemEffect(setting, name + i++, "Sharpness", "i-20/-8", "i-5/-2", "i0", "i0");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i0", "i0", "i-3/-2");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i0", "i-10/-5", "i0");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i-5/-2", "i0", "i0");
+		writeItemEffect(setting, name + i++, "Sharpness", "i-20/-8", "i0", "i0", "i0");
+		writeItemEffect(setting, name + i++, "Shock_Absorber", "i-20/-8");
+		
+		i = 0;
+		name = "negative_low.effect";
+		writeItemEffect(setting, name + i++, "Armor_Shredder", "i-15/-5", "i0");
+		writeItemEffect(setting, name + i++, "Armor_Shredder", "i0", "i-60/-20");
+		writeItemEffect(setting, name + i++, "Bulwark", "i-15/-4");
+		writeItemEffect(setting, name + i++, "Entropy_Limit", "i-20/-8");
+		writeItemEffect(setting, name + i++, "Fireward", "i-20/-8");
+		writeItemEffect(setting, name + i++, "Fragile", "i10/40");
+		writeItemEffect(setting, name + i++, "Hungry", "i5/15");
+		writeItemEffect(setting, name + i++, "Levity", "b0", "i-15/-5");
+		writeItemEffect(setting, name + i++, "Magic_Shield", "i-20/-8");
+		writeItemEffect(setting, name + i++, "Repair", "i-12/-4");
+		writeItemEffect(setting, name + i++, "Saturation", "i0", "i-12/-7");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i0", "i0", "i-3/-2");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i0", "i-10/-5", "i0");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i-5/-2", "i0", "i0");
+		writeItemEffect(setting, name + i++, "Sharpness", "i-20/-8", "i0", "i0", "i0");
 		writeItemEffect(setting, name + i++, "Shock_Absorber", "i-20/-8");
 
+		// Medium/high negative item effects
+		i = 0;
+		name = "negative_medium.effect";
+		writeItemEffect(setting, name + i++, "Armor_Shredder", "i-25/-15", "i0");
+		writeItemEffect(setting, name + i++, "Armor_Shredder", "i0", "i-100/-60");
+		writeItemEffect(setting, name + i++, "Bulwark", "i-25/-15");
+		writeItemEffect(setting, name + i++, "Entropy_Limit", "i-40/-25");
+		writeItemEffect(setting, name + i++, "Fireward", "i-40/-25");
+		writeItemEffect(setting, name + i++, "Fragile", "i40/70");
+		writeItemEffect(setting, name + i++, "Hungry", "i15/25");
+		writeItemEffect(setting, name + i++, "Levity", "b0", "i-30/-15");
+		writeItemEffect(setting, name + i++, "Magic_Shield", "i-40/-20");
+		writeItemEffect(setting, name + i++, "Repair", "i-20/-12");
+		writeItemEffect(setting, name + i++, "Saturation", "i0", "i-20/-12");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i0", "i0", "i-5/-3");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i0", "i-20/-10", "i0");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i-8/-5", "i0", "i0");
+		writeItemEffect(setting, name + i++, "Sharpness", "i-30/-20", "i0", "i0", "i0");
+		writeItemEffect(setting, name + i++, "Shock_Absorber", "i-40/-20");
+		
+		i = 0;
+		name = "negative_high.effect";
+		writeItemEffect(setting, name + i++, "Armor_Shredder", "i-25/-15", "i0");
+		writeItemEffect(setting, name + i++, "Armor_Shredder", "i0", "i-100/-60");
+		writeItemEffect(setting, name + i++, "Bulwark", "i-25/-15");
+		writeItemEffect(setting, name + i++, "Entropy_Limit", "i-40/-25");
+		writeItemEffect(setting, name + i++, "Fireward", "i-40/-25");
+		writeItemEffect(setting, name + i++, "Fragile", "i40/70");
+		writeItemEffect(setting, name + i++, "Hungry", "i15/25");
+		writeItemEffect(setting, name + i++, "Levity", "b0", "i-30/-15");
+		writeItemEffect(setting, name + i++, "Magic_Shield", "i-40/-20");
+		writeItemEffect(setting, name + i++, "Repair", "i-20/-12");
+		writeItemEffect(setting, name + i++, "Saturation", "i0", "i-20/-12");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i0", "i0", "i-5/-3");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i0", "i-20/-10", "i0");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i-8/-5", "i0", "i0");
+		writeItemEffect(setting, name + i++, "Sharpness", "i-30/-20", "i0", "i0", "i0");
+		writeItemEffect(setting, name + i++, "Shock_Absorber", "i-40/-20");
+		
+		// Epic/legendary/godlike negative item effects
+		i = 0;
+		name = "negative_epic.effect";
+		writeItemEffect(setting, name + i++, "Armor_Shredder", "i-40/-25", "i0");
+		writeItemEffect(setting, name + i++, "Armor_Shredder", "i0", "i-200/-100");
+		writeItemEffect(setting, name + i++, "Bulwark", "i-40/-25");
+		writeItemEffect(setting, name + i++, "Entropy_Limit", "i-60/-40");
+		writeItemEffect(setting, name + i++, "Fireward", "i-60/-40");
+		writeItemEffect(setting, name + i++, "Fragile", "i70/100");
+		writeItemEffect(setting, name + i++, "Hungry", "i25/40");
+		writeItemEffect(setting, name + i++, "Levity", "b0", "i-40/-30");
+		writeItemEffect(setting, name + i++, "Magic_Shield", "i-60/-40");
+		writeItemEffect(setting, name + i++, "Repair", "i-30/-20");
+		writeItemEffect(setting, name + i++, "Saturation", "i0", "i-30/-20");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i0", "i0", "i-8/-5");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i0", "i-30/-20", "i0");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i-10/-8", "i0", "i0");
+		writeItemEffect(setting, name + i++, "Sharpness", "i-50/-30", "i0", "i0", "i0");
+		writeItemEffect(setting, name + i++, "Shock_Absorber", "i-60/-40");
+		
+		i = 0;
+		name = "negative_legendary.effect";
+		writeItemEffect(setting, name + i++, "Armor_Shredder", "i-40/-25", "i0");
+		writeItemEffect(setting, name + i++, "Armor_Shredder", "i0", "i-200/-100");
+		writeItemEffect(setting, name + i++, "Bulwark", "i-40/-25");
+		writeItemEffect(setting, name + i++, "Entropy_Limit", "i-60/-40");
+		writeItemEffect(setting, name + i++, "Fireward", "i-60/-40");
+		writeItemEffect(setting, name + i++, "Fragile", "i70/100");
+		writeItemEffect(setting, name + i++, "Hungry", "i25/40");
+		writeItemEffect(setting, name + i++, "Levity", "b0", "i-40/-30");
+		writeItemEffect(setting, name + i++, "Magic_Shield", "i-60/-40");
+		writeItemEffect(setting, name + i++, "Repair", "i-30/-20");
+		writeItemEffect(setting, name + i++, "Saturation", "i0", "i-30/-20");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i0", "i0", "i-8/-5");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i0", "i-30/-20", "i0");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i-10/-8", "i0", "i0");
+		writeItemEffect(setting, name + i++, "Sharpness", "i-50/-30", "i0", "i0", "i0");
+		writeItemEffect(setting, name + i++, "Shock_Absorber", "i-60/-40");
+		
+		i = 0;
+		name = "negative_godlike.effect";
+		writeItemEffect(setting, name + i++, "Armor_Shredder", "i-40/-25", "i0");
+		writeItemEffect(setting, name + i++, "Armor_Shredder", "i0", "i-200/-100");
+		writeItemEffect(setting, name + i++, "Bulwark", "i-40/-25");
+		writeItemEffect(setting, name + i++, "Entropy_Limit", "i-60/-40");
+		writeItemEffect(setting, name + i++, "Fireward", "i-60/-40");
+		writeItemEffect(setting, name + i++, "Fragile", "i70/100");
+		writeItemEffect(setting, name + i++, "Hungry", "i25/40");
+		writeItemEffect(setting, name + i++, "Levity", "b0", "i-40/-30");
+		writeItemEffect(setting, name + i++, "Magic_Shield", "i-60/-40");
+		writeItemEffect(setting, name + i++, "Repair", "i-30/-20");
+		writeItemEffect(setting, name + i++, "Saturation", "i0", "i-30/-20");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i0", "i0", "i-8/-5");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i0", "i-30/-20", "i0");
+		writeItemEffect(setting, name + i++, "Sharpness", "i0", "i-10/-8", "i0", "i0");
+		writeItemEffect(setting, name + i++, "Sharpness", "i-50/-30", "i0", "i0", "i0");
+		writeItemEffect(setting, name + i++, "Shock_Absorber", "i-60/-40");
+		
 		setting.save();
 	}
 
@@ -601,7 +719,7 @@ public class SettingsLoot
 		for (int i = 0; i < randomItemEffects; i++)
 			setting.addDefault(property + ".itemeffects." + effectIndex++, "#random");
 		for (int i = 0; i < randomNegativeItemEffects; i++)
-			setting.addDefault(property + ".itemeffects." + effectIndex++, "#random.negative");
+			setting.addDefault(property + ".itemeffects." + effectIndex++, "#random.negative_" + property.substring(0, property.indexOf('.')));
 
 		// Write enchantments
 		if (enchantmentData != null)

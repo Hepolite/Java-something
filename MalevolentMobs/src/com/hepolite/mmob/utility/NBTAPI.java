@@ -36,11 +36,15 @@ public class NBTAPI
 	@SuppressWarnings("rawtypes")
 	private static Class classNBTTagInt;
 	@SuppressWarnings("rawtypes")
+	private static Class classNBTTagIntArray;
+	@SuppressWarnings("rawtypes")
 	private static Class classNBTTagLong;
 	@SuppressWarnings("rawtypes")
 	private static Class classNBTTagShort;
 	@SuppressWarnings("rawtypes")
 	private static Class classNBTTagByte;
+	@SuppressWarnings("rawtypes")
+	private static Class classNBTTagByteArray;
 	@SuppressWarnings("rawtypes")
 	private static Class classNBTTagFloat;
 	@SuppressWarnings("rawtypes")
@@ -54,9 +58,11 @@ public class NBTAPI
 	private static Method ItemStack_hasTag;
 	private static Method NBTTagCompound_setString, NBTTagCompound_getString;
 	private static Method NBTTagCompound_setInt, NBTTagCompound_getInt;
+	private static Method NBTTagCompound_setIntArray, NBTTagCompound_getIntArray;
 	private static Method NBTTagCompound_setLong, NBTTagCompound_getLong;
 	private static Method NBTTagCompound_setShort, NBTTagCompound_getShort;
 	private static Method NBTTagCompound_setByte, NBTTagCompound_getByte;
+	private static Method NBTTagCompound_setByteArray, NBTTagCompound_getByteArray;
 	private static Method NBTTagCompound_setFloat, NBTTagCompound_getFloat;
 	private static Method NBTTagCompound_setDouble, NBTTagCompound_getDouble;
 	private static Method NBTTagCompound_setTag, NBTTagCompound_getCompound, NBTTagCompound_getTag;
@@ -64,7 +70,7 @@ public class NBTAPI
 	private static Method NBTTagCompound_hasKey, NBTTagCompound_getKeys;
 	private static Method NBTTagList_add, NBTTagList_remove, NBTTagList_get, NBTTagList_size;
 	private static Method NBTTagString_get;
-	private static Method NBTTagInt_get, NBTTagLong_get, NBTTagShort_get, NBTTagByte_get;
+	private static Method NBTTagInt_get, NBTTagIntArray_get, NBTTagLong_get, NBTTagShort_get, NBTTagByte_get, NBTTagByteArray_get;
 	private static Method NBTTagFloat_get, NBTTagDouble_get;
 
 	/** Initialize the API */
@@ -87,9 +93,11 @@ public class NBTAPI
 			classNBTTagList = Class.forName("net.minecraft.server." + version + "." + mappings.getString("class.NBTTagList"));
 			classNBTTagString = Class.forName("net.minecraft.server." + version + "." + mappings.getString("class.NBTTagString"));
 			classNBTTagInt = Class.forName("net.minecraft.server." + version + "." + mappings.getString("class.NBTTagInt"));
+			classNBTTagIntArray = Class.forName("net.minecraft.server." + version + "." + mappings.getString("class.NBTTagIntArray"));
 			classNBTTagLong = Class.forName("net.minecraft.server." + version + "." + mappings.getString("class.NBTTagLong"));
 			classNBTTagShort = Class.forName("net.minecraft.server." + version + "." + mappings.getString("class.NBTTagShort"));
 			classNBTTagByte = Class.forName("net.minecraft.server." + version + "." + mappings.getString("class.NBTTagByte"));
+			classNBTTagByteArray = Class.forName("net.minecraft.server." + version + "." + mappings.getString("class.NBTTagByteArray"));
 			classNBTTagFloat = Class.forName("net.minecraft.server." + version + "." + mappings.getString("class.NBTTagFloat"));
 			classNBTTagDouble = Class.forName("net.minecraft.server." + version + "." + mappings.getString("class.NBTTagDouble"));
 
@@ -108,10 +116,14 @@ public class NBTAPI
 			NBTTagCompound_getString = classNBTTagCompound.getMethod(mappings.getString("method.NBTTagCompound.getString"), String.class);
 			NBTTagCompound_setInt = classNBTTagCompound.getMethod(mappings.getString("method.NBTTagCompound.setInt"), String.class, int.class);
 			NBTTagCompound_getInt = classNBTTagCompound.getMethod(mappings.getString("method.NBTTagCompound.getInt"), String.class);
+			NBTTagCompound_setIntArray = classNBTTagCompound.getMethod(mappings.getString("method.NBTTagCompound.setIntArray"), String.class, int[].class);
+			NBTTagCompound_getIntArray = classNBTTagCompound.getMethod(mappings.getString("method.NBTTagCompound.getIntArray"), String.class);
 			NBTTagCompound_setLong = classNBTTagCompound.getMethod(mappings.getString("method.NBTTagCompound.setLong"), String.class, long.class);
 			NBTTagCompound_getLong = classNBTTagCompound.getMethod(mappings.getString("method.NBTTagCompound.getLong"), String.class);
 			NBTTagCompound_setByte = classNBTTagCompound.getMethod(mappings.getString("method.NBTTagCompound.setByte"), String.class, byte.class);
 			NBTTagCompound_getByte = classNBTTagCompound.getMethod(mappings.getString("method.NBTTagCompound.getByte"), String.class);
+			NBTTagCompound_setByteArray = classNBTTagCompound.getMethod(mappings.getString("method.NBTTagCompound.setByteArray"), String.class, byte[].class);
+			NBTTagCompound_getByteArray = classNBTTagCompound.getMethod(mappings.getString("method.NBTTagCompound.getByteArray"), String.class);
 			NBTTagCompound_setShort = classNBTTagCompound.getMethod(mappings.getString("method.NBTTagCompound.setShort"), String.class, short.class);
 			NBTTagCompound_getShort = classNBTTagCompound.getMethod(mappings.getString("method.NBTTagCompound.getShort"), String.class);
 			NBTTagCompound_setFloat = classNBTTagCompound.getMethod(mappings.getString("method.NBTTagCompound.setFloat"), String.class, float.class);
@@ -130,9 +142,11 @@ public class NBTAPI
 			NBTTagList_size = classNBTTagList.getMethod(mappings.getString("method.NBTTagList.size"));
 			NBTTagString_get = classNBTTagString.getMethod(mappings.getString("method.NBTTagString.get"));
 			NBTTagInt_get = classNBTTagInt.getMethod(mappings.getString("method.NBTTagInt.get"));
+			NBTTagIntArray_get = classNBTTagInt.getMethod(mappings.getString("method.NBTTagIntArray.get"));
 			NBTTagLong_get = classNBTTagLong.getMethod(mappings.getString("method.NBTTagLong.get"));
 			NBTTagShort_get = classNBTTagShort.getMethod(mappings.getString("method.NBTTagShort.get"));
 			NBTTagByte_get = classNBTTagByte.getMethod(mappings.getString("method.NBTTagByte.get"));
+			NBTTagByteArray_get = classNBTTagByte.getMethod(mappings.getString("method.NBTTagByteArray.get"));
 			NBTTagFloat_get = classNBTTagFloat.getMethod(mappings.getString("method.NBTTagFloat.get"));
 			NBTTagDouble_get = classNBTTagDouble.getMethod(mappings.getString("method.NBTTagDouble.get"));
 
@@ -388,12 +402,16 @@ public class NBTAPI
 				return NBTTagString_get.invoke(nbtTag);
 			else if (nbtClass.isAssignableFrom(classNBTTagInt))
 				return NBTTagInt_get.invoke(nbtTag);
+			else if (nbtClass.isAssignableFrom(classNBTTagIntArray))
+				return NBTTagIntArray_get.invoke(nbtTag);
 			else if (nbtClass.isAssignableFrom(classNBTTagLong))
 				return NBTTagLong_get.invoke(nbtTag);
 			else if (nbtClass.isAssignableFrom(classNBTTagShort))
 				return NBTTagShort_get.invoke(nbtTag);
 			else if (nbtClass.isAssignableFrom(classNBTTagByte))
 				return NBTTagByte_get.invoke(nbtTag);
+			else if (nbtClass.isAssignableFrom(classNBTTagByteArray))
+				return NBTTagByteArray_get.invoke(nbtTag);
 			else if (nbtClass.isAssignableFrom(classNBTTagFloat))
 				return NBTTagFloat_get.invoke(nbtTag);
 			else if (nbtClass.isAssignableFrom(classNBTTagDouble))
@@ -475,12 +493,16 @@ public class NBTAPI
 					types.put(key, "string");
 				else if (value instanceof Integer)
 					types.put(key, "int");
+				else if (value instanceof int[])
+					types.put(key, "intarray");
 				else if (value instanceof Long)
 					types.put(key, "long");
 				else if (value instanceof Short)
 					types.put(key, "short");
 				else if (value instanceof Byte)
 					types.put(key, "byte");
+				else if (value instanceof byte[])
+					types.put(key, "bytearray");
 				else if (value instanceof Float)
 					types.put(key, "float");
 				else if (value instanceof Double)
@@ -558,6 +580,21 @@ public class NBTAPI
 				return 0;
 			return (int) getNBTTagCompoundValue(nmsTag, NBTTagCompound_getInt, key);
 		}
+		
+		/** Stores an integer array within the NBT tag */
+		public void setIntArray(String key, int[] value)
+		{
+			types.put(key, "intarray");
+			setNBTTagCompoundValue(nmsTag, NBTTagCompound_setIntArray, key, value);
+		}
+
+		/** Retrieves an integer from the NBT tag */
+		public int[] getIntArray(String key)
+		{
+			if (!types.get(key).equals("intarray"))
+				return new int[] {};
+			return (int[]) getNBTTagCompoundValue(nmsTag, NBTTagCompound_getIntArray, key);
+		}
 
 		/** Stores a long within the NBT tag */
 		public void setLong(String key, long value)
@@ -604,6 +641,21 @@ public class NBTAPI
 			return (byte) getNBTTagCompoundValue(nmsTag, NBTTagCompound_getByte, key);
 		}
 
+		/** Stores a byte within the NBT tag */
+		public void setByteArray(String key, byte[] value)
+		{
+			types.put(key, "bytearray");
+			setNBTTagCompoundValue(nmsTag, NBTTagCompound_setByteArray, key, value);
+		}
+
+		/** Retrieves a byte from the NBT tag */
+		public byte[] getByteArray(String key)
+		{
+			if (!types.get(key).equals("bytearray"))
+				return new byte[] {};
+			return (byte[]) getNBTTagCompoundValue(nmsTag, NBTTagCompound_getByteArray, key);
+		}
+		
 		/** Stores a boolean within the NBT tag */
 		public void setBoolean(String key, boolean value)
 		{
@@ -712,12 +764,16 @@ public class NBTAPI
 					format.add("string");
 				else if (object instanceof Integer)
 					format.add("int");
+				else if (object instanceof int[])
+					format.add("intarray");
 				else if (object instanceof Long)
 					format.add("long");
 				else if (object instanceof Short)
 					format.add("short");
 				else if (object instanceof Byte)
 					format.add("byte");
+				else if (object instanceof byte[])
+					format.add("bytearray");
 				else if (object instanceof Float)
 					format.add("float");
 				else if (object instanceof Double)
@@ -819,6 +875,21 @@ public class NBTAPI
 			return (int) convert(getNBTTagListEntry(nmsTag, index));
 		}
 
+		/** Adds an integer to the list */
+		public void addIntArray(int value)
+		{
+			format.add("intarray");
+			addNBTTagListEntry(nmsTag, classNBTTagIntArray, value);
+		}
+
+		/** Retrieves an integer from the list */
+		public int[] getIntArray(int index)
+		{
+			if (!format.get(index).equals("intarray"))
+				return new int[] {};
+			return (int[]) convert(getNBTTagListEntry(nmsTag, index));
+		}
+
 		/** Adds a long to the list */
 		public void addLong(long value)
 		{
@@ -862,6 +933,21 @@ public class NBTAPI
 			if (!format.get(index).equals("byte"))
 				return 0;
 			return (byte) convert(getNBTTagListEntry(nmsTag, index));
+		}
+
+		/** Adds a byte to the list */
+		public void addByteArray(byte value)
+		{
+			format.add("bytearray");
+			addNBTTagListEntry(nmsTag, classNBTTagByteArray, value);
+		}
+
+		/** Retrieves a byte from the list */
+		public byte[] getByteArray(int index)
+		{
+			if (!format.get(index).equals("bytearray"))
+				return new byte[] {};
+			return (byte[]) convert(getNBTTagListEntry(nmsTag, index));
 		}
 
 		/** Adds a boolean to the list */

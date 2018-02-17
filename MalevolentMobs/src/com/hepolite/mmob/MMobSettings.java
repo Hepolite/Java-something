@@ -73,8 +73,8 @@ public class MMobSettings
 		addDefault("Spawns.allow", true);
 		addDefault("Spawns.spawnChance", 0.005);
 		addDefault("Spawns.blockedWorlds", new String[] { "ExampleWorldName", "AnotherExampleWorldName" });
-		// addDefault("Spawns.Creeper.allow", true);
-		// addDefault("Spawns.Creeper.chanceMultiplier", 1.0);
+		addDefault("Spawns.Creeper.allow", true);
+		addDefault("Spawns.Creeper.chanceMultiplier", 1.0);
 		addDefault("Spawns.Enderman.allow", true);
 		addDefault("Spawns.Enderman.chanceMultiplier", 2.0);
 		addDefault("Spawns.Skeleton.allow", true);
@@ -88,7 +88,7 @@ public class MMobSettings
 		// addDefault("Spawns.Zombie Pigman.allow", true);
 		// addDefault("Spawns.Zombie Pigman.chanceMultiplier", 1.0);
 
-		// addDefault("Spawns.Creeper.roles", new String[] {});
+		addDefault("Spawns.Creeper.roles", new String[] { "Supercharged" });
 		addDefault("Spawns.Enderman.roles", new String[] { "Phantom", "Voidling" });
 		addDefault("Spawns.Skeleton.roles", new String[] { "Archer", "Knight", "Necromancer", "Specter" });
 		addDefault("Spawns.Spider.roles", new String[] { "Funnel-Web", "Matriarch", "Pyre" });

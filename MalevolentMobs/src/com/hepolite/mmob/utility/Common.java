@@ -269,7 +269,7 @@ public class Common
 		postEvent(event);
 		if (!event.isCancelled() && event.getDamage() > 0.0)
 		{
-			target.setHealth(Math.max(0.0, target.getHealth() - event.getDamage()));
+			target.setHealth(Math.max(0.0, Math.min(target.getMaxHealth(), target.getHealth() - event.getDamage())));
 			target.setLastDamageCause(event);
 			if (target.getHealth() == 0.0 && !(target instanceof Player))
 				postEvent(new EntityDeathEvent(target, null));

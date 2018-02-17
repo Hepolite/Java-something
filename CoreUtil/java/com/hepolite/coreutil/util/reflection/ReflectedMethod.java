@@ -31,7 +31,7 @@ public final class ReflectedMethod
 		}
 		catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
 		{
-			CoreUtilPlugin.INSTANCE.getLogger()
+			CoreUtilPlugin.getInstance().getLogger()
 					.info(String.format("Failed to invoke '%s' using signature '%s'", name, signature(args)));
 			return null;
 		}

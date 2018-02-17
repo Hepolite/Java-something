@@ -2,11 +2,12 @@ package com.hepolite.coreutil.cmd;
 
 import java.util.Optional;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandException;
 import org.bukkit.entity.Player;
 
 import com.hepolite.api.chat.Builder;
-import com.hepolite.api.chat.Message;
+import com.hepolite.api.chat.Color;
 import com.hepolite.api.cmd.Cmd;
 import com.hepolite.api.cmd.GenericArgs;
 import com.hepolite.api.cmd.ICmdContext;
@@ -22,7 +23,10 @@ public class CmdDebugFood extends Cmd
 		/// @formatter:off
 		super("food",
 				GenericArgs.optional(GenericArgs.playerOrUser("player")),
-				GenericArgs.optional(GenericArgs.string("item"))
+				GenericArgs.optional(
+					GenericArgs.string("group"),
+					GenericArgs.string("item")
+				)
 		);
 		/// @formatter:on
 	}
@@ -30,32 +34,38 @@ public class CmdDebugFood extends Cmd
 	@Override
 	public boolean execute(final IUser user, final ICmdContext context) throws CommandException
 	{
-		final FoodRegistry foodRegistry = CoreUtilPlugin.INSTANCE.hungerHandler.foodRegistry;
-		final Optional<String> item = context.get("item");
+		final FoodRegistry foodRegistry = CoreUtilPlugin.getHungerHandler().foodRegistry;
 		final Optional<Player> player = context.get("player");
+		final Optional<String> item = context.get("item");
+		final Optional<String> group = context.get("group");
 
-		final String group = null;
-
-		Optional<FoodData> opData = Optional.empty();
+		Optional<FoodData> data = Optional.empty();
 		if (item.isPresent())
-			opData = foodRegistry.getFoodData(item.get(), group);
+			data = foodRegistry.getFoodData(item.get(), group.orElse("Default"));
 		else if (player.isPresent())
-			opData = foodRegistry.getFoodData(player.get().getInventory().getItemInMainHand(), group);
+			data = foodRegistry.getFoodData(player.get().getInventory().getItemInMainHand(), group.orElse("Default"));
 
-		if (!opData.isPresent())
-			throw new CommandException("Could not detect food to debug");
-		final FoodData data = opData.get();
-
-		final StringBuilder categories = new StringBuilder();
-		for (final String category : data.categories)
-		{
-			if (categories.length() != 0)
-				categories.append(", ");
-			categories.append(category);
-		}
-		final Message message = new Builder(String.format("Food '%s' contains '%.1f/%.1f' points and categories '%s'",
-				data.name, data.food, data.food * data.ratio, categories.toString())).build();
-		user.sendMessage(message);
+		if (!data.isPresent())
+			throw new CommandException("Could not deduce a food item from the provided parameters");
+		displayGenericFoodInfo(user, data.get());
 		return true;
+	}
+
+	/**
+	 * Displays generic information about the food to the specified user
+	 * 
+	 * @param user The user that should see the information
+	 * @param data The food to provide information about
+	 */
+	private void displayGenericFoodInfo(final IUser user, final FoodData data)
+	{
+		final String categories = data.categories.isEmpty() ? "none" : StringUtils.join(data.categories, ", ");
+		final String ingredients = data.ingredients.isEmpty() ? "none" : StringUtils.join(data.ingredients, ", ");
+
+		final Builder builder = new Builder("");
+		builder.addText(String.format("Food '%s' contains '%.1f/%.1f' hunger/saturation",
+				data.name, data.food, data.ratio * data.food), Color.RED);
+		builder.addHover("Categories: " + categories + "\nIngredients: " + ingredients);
+		user.sendMessage(builder.build());
 	}
 }

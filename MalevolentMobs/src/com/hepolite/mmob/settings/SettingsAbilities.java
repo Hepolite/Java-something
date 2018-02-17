@@ -116,6 +116,7 @@ public class SettingsAbilities
 		addPotionEffect();
 		addRegeneration();
 		addShielding();
+		addSupercharged();
 		addVampirism();
 		addWitherAura();
 		addWitherParticles();
@@ -534,6 +535,15 @@ public class SettingsAbilities
 		Settings ability = new Settings("Abilities", "Passive Shielding.yml");
 		ability.addDefault("enable", true);
 		ability.addDefault("baseStrength", 15.0);
+		ability.save();
+	}
+	
+	private static void addSupercharged()
+	{
+		Settings ability = new Settings("Abilities", "Passive Supercharged.yml");
+		ability.addDefault("enable", true);
+		ability.addDefault("baseRadius", 6.0);
+		ability.addDefault("baseFuse", 30.0);
 		ability.save();
 	}
 	

@@ -19,7 +19,9 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Creature;
+import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -359,7 +361,12 @@ public class MalevolentMob
 	/** Called when a creeper blows up, or a wither skull and ghast fireball hits anything */
 	public void onExplode(ExplosionPrimeEvent event)
 	{
-
+		if (entity instanceof Creeper)
+		{
+			Creeper creeper = (Creeper) entity;
+			float radius = creeper.getExplosionRadius();
+			Common.createExplosionWithEffect(creeper.getEyeLocation(), 5.0f * radius, radius, true, entity);
+		}
 	}
 
 	// /////////////////////////////////////////////////////////////////////////////
