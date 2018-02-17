@@ -67,11 +67,11 @@ Default:
     effects:
       Effect 0:
         type: regeneration
-        duration: 100
+        duration: 5s
         amplifier: 2
       Effect 1:
         type: absorption
-        duration: 2400
+        duration: 2m
         amplifier: 4
   golden_apple-1:
     categories: fruit
@@ -81,19 +81,19 @@ Default:
     effects:
       Effect 0:
         type: regeneration
-        duration: 400
+        duration: 20s
         amplifier: 2
       Effect 1:
         type: absorption
-        duration: 2400
+        duration: 2m
         amplifier: 4
       Effect 2:
         type: damage_resistance
-        duration: 6000
+        duration: 5m
         amplifier: 1
       Effect 3:
         type: fire_resistance
-        duration: 6000
+        duration: 5m
         amplifier: 1
   golden_carrot:
     categories: vegetable
@@ -119,12 +119,12 @@ Default:
     ingredients: potato_item
     food: 10.0
     ratio: 0.6
-    chance: 0.6
     effects:
       Effect 0:
         type: poison
-        duration: 80
+        duration: 4s
         amplifier: 1
+        chance: 0.6
   pork:
     categories: meat
     food: 15.0
@@ -157,12 +157,12 @@ Default:
     categories: meat
     food: 10.0
     ratio: 0.6
-    chance: 0.3
     effects:
       Effect 0:
         type: hunger
-        duration: 600
+        duration: 30s
         amplifier: 1
+        chance: 0.3
   raw_fish:
     categories: meat
     food: 10.0
@@ -182,26 +182,26 @@ Default:
     effects:
       Effect 0:
         type: hunger
-        duration: 300
+        duration: 15s
         amplifier: 3
       Effect 1:
         type: confusion
-        duration: 300
+        duration: 15s
         amplifier: 2
       Effect 2:
         type: poison
-        duration: 1200
+        duration: 1m
         amplifier: 4
   rotten_flesh:
     categories: meat
     food: 20.0
     ratio: 0.2
-    chance: 0.8
     effects:
       Effect 0:
         type: hunger
-        duration: 600
+        duration: 30s
         amplifier: 1
+        chance: 0.8
   spider_eye:
     categories: meat
     food: 10.0
@@ -209,5 +209,5 @@ Default:
     effects:
       Effect 0:
         type: poison
-        duration: 80
+        duration: 4s
         amplifier: 1

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.TranslatableComponent;
@@ -69,7 +70,7 @@ public final class Message
 	 */
 	public String toPlain()
 	{
-		return base.toPlainText();
+		return ChatColor.stripColor(base.toPlainText());
 	}
 	/**
 	 * Converts the message to a plaintext version. It may contain formatting.

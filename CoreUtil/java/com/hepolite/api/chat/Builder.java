@@ -3,6 +3,7 @@ package com.hepolite.api.chat;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -27,7 +28,7 @@ public class Builder
 	 */
 	public Builder(final String text, final Object... format)
 	{
-		base = new TextComponent(text);
+		base = new TextComponent(ChatColor.translateAlternateColorCodes('&', text));
 		current = base;
 		applyFormat(base, format);
 	}
@@ -41,7 +42,7 @@ public class Builder
 	 */
 	public Builder addText(final String text, final Object... format)
 	{
-		current = new TextComponent(text);
+		current = new TextComponent(ChatColor.translateAlternateColorCodes('&', text));
 		base.addExtra(current);
 		applyFormat(current, format);
 		return this;
@@ -61,7 +62,7 @@ public class Builder
 	 */
 	public Builder addTranslatedText(final String key, final String text, final Object... format)
 	{
-		current = new TranslatableComponent(text);
+		current = new TranslatableComponent(ChatColor.translateAlternateColorCodes('&', text));
 		base.addExtra(current);
 		keys.put(key, (TranslatableComponent) current);
 		applyFormat(current, format);
@@ -76,7 +77,7 @@ public class Builder
 	 */
 	public Builder addHover(final String text, final Object... format)
 	{
-		final BaseComponent component = new TextComponent(text);
+		final BaseComponent component = new TextComponent(ChatColor.translateAlternateColorCodes('&', text));
 		applyFormat(component, format);
 		current.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {
 			component
