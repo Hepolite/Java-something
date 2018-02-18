@@ -1,9 +1,15 @@
 package com.hepolite.coreutil.hunger;
 
+import java.util.Optional;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,6 +31,9 @@ public class HungerHandler extends HandlerCore
 	private final HungerRegistry hungerRegistry;
 	private final GroupRegistry groupRegistry;
 
+	private boolean ignoreDamageEvent = false;
+	private boolean ignoreHealingEvent = false;
+
 	public HungerHandler(final JavaPlugin plugin)
 	{
 		super(plugin);
@@ -36,10 +45,18 @@ public class HungerHandler extends HandlerCore
 	@Override
 	public void onTick(final int tick)
 	{
-		if (tick % Time.TICKS_PER_SECOND == 0)
+		for (final Player player : Bukkit.getOnlinePlayers())
 		{
-			for (final Player player : Bukkit.getOnlinePlayers())
-				consumeHunger(UserFactory.fromPlayer(player));
+			final IUser user = UserFactory.fromPlayer(player);
+			final HungerData data = getHungerData(user);
+			final GroupData group = groupRegistry.getGroupData(data.group);
+
+			if (tick % Time.TICKS_PER_SECOND == 0)
+				consumeHunger(user, data, group);
+			if (group.healingEnable && tick % group.healingFrequency.asTicks() == 0)
+				handleHealing(user, data, group);
+			if (group.starvationEnable && tick % group.starvationFrequency.asTicks() == 0)
+				handleStarvation(user, data, group);
 		}
 
 		if (tick % Time.TICKS_PER_HOUR == 0)
@@ -72,12 +89,43 @@ public class HungerHandler extends HandlerCore
 	{
 		resetHunger(UserFactory.fromPlayer(event.getPlayer()));
 	}
-
-	private void consumeHunger(final IUser user)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void onPlayerTakeDamage(final EntityDamageEvent event)
 	{
-		final HungerData data = getHungerData(user);
+		if (ignoreDamageEvent || event.getCause() != DamageCause.STARVATION)
+			return;
+		event.setCancelled(true);
+	}
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void onPlayerHealDamage(final EntityRegainHealthEvent event)
+	{
+		if (ignoreHealingEvent || event.getRegainReason() != RegainReason.SATIATED)
+			return;
+		event.setCancelled(true);
+	}
+
+	private void resetHunger(final IUser user)
+	{
+		final HungerData data = hungerRegistry.getHungerData(user);
 		final GroupData group = groupRegistry.getGroupData(data.group);
 
+		data.hunger = data.saturation = group.hungerMax;
+		data.consumption = 0.0f;
+	}
+	private void updateHunger(final IUser user)
+	{
+		final Optional<Player> player = user.getPlayer();
+		if (!player.isPresent())
+			return;
+		final Attribute maxHunger = AttributeDatabase.get(user, AttributeType.HUNGER_MAX);
+		final HungerData data = hungerRegistry.getHungerData(user);
+
+		player.get().setFoodLevel(Math.round(20.0f * data.hunger / maxHunger.getValue()));
+		player.get().setSaturation(20.0f * data.saturation / maxHunger.getValue());
+	}
+
+	private void consumeHunger(final IUser user, final HungerData data, final GroupData group)
+	{
 		float targetConsumption = 0.0f;
 		switch (CoreUtilPlugin.getMovementHandler().getMovementType(user.getPlayer().get()))
 		{
@@ -115,13 +163,31 @@ public class HungerHandler extends HandlerCore
 		data.consumption += group.consumptionChange * (targetConsumption - data.consumption);
 		changeSaturation(user, -data.consumption);
 	}
-	private void resetHunger(final IUser user)
+	private void handleStarvation(final IUser user, final HungerData data, final GroupData group)
 	{
-		final HungerData data = hungerRegistry.getHungerData(user);
-		final GroupData group = groupRegistry.getGroupData(data.group);
-
-		data.hunger = data.saturation = group.hungerMax;
-		data.consumption = 0.0f;
+		if (data.hunger > 0.0f)
+			return;
+		final Player player = user.getPlayer().get();
+		ignoreDamageEvent = true;
+		// DamageAPI.damage(player);
+		player.damage(group.starvationDamage);
+		ignoreDamageEvent = false;
+	}
+	private void handleHealing(final IUser user, final HungerData data, final GroupData group)
+	{
+		if (data.hunger <= group.healingStart)
+			return;
+		final Player player = user.getPlayer().get();
+		ignoreHealingEvent = true;
+		// if (DamageAPI.heal(player))
+		// changeSaturation(user, -group.healingCost);
+		final double maxHealth = player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH).getValue();
+		if (player.getHealth() < maxHealth)
+		{
+			player.setHealth(Math.max(0, Math.min(maxHealth, player.getHealth() + group.healingAmount)));
+			changeSaturation(user, -group.healingCost);
+		}
+		ignoreHealingEvent = false;
 	}
 
 	// ...
@@ -170,6 +236,7 @@ public class HungerHandler extends HandlerCore
 
 		data.hunger = Math.max(0.0f, Math.min(maxHunger.getValue(), event.getNewHunger()));
 		data.saturation = Math.min(data.hunger, data.saturation);
+		updateHunger(user);
 	}
 	/**
 	 * Changes the given user's saturation level by the given amount. If the saturation change leads
@@ -191,12 +258,13 @@ public class HungerHandler extends HandlerCore
 		// If the user has enough saturation to sustain a saturation loss, simply update. Otherwise,
 		// drain hunger
 		if (event.getNewSaturation() >= 0.0f)
-			data.saturation = Math.max(0.0f, Math.min(data.saturation, event.getNewSaturation()));
+			data.saturation = Math.max(0.0f, Math.min(data.hunger, event.getNewSaturation()));
 		else
 		{
 			data.saturation = 0.0f;
 			changeHunger(user, event.getNewSaturation());
 		}
+		updateHunger(user);
 	}
 
 	// ...

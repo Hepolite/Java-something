@@ -21,6 +21,16 @@ public class GroupData implements IValue
 	public float consumptionSwimming = 0.0f;
 	public float consumptionWalking = 0.0f;
 
+	public boolean healingEnable = true;
+	public Time healingFrequency = Time.fromSeconds(1);
+	public double healingAmount = 0.0;
+	public float healingStart = 0.0f;
+	public float healingCost = 0.0f;
+
+	public boolean starvationEnable = true;
+	public Time starvationFrequency = Time.fromSeconds(1);
+	public double starvationDamage = 0.0;
+
 	@Override
 	public void save(final IConfig config, final IProperty property)
 	{}
@@ -29,6 +39,8 @@ public class GroupData implements IValue
 	{
 		loadHunger(config, property.child("Hunger"));
 		loadConsumption(config, property.child("Consumption"));
+		loadHealing(config, property.child("Healing"));
+		loadStarvation(config, property.child("Starvation"));
 	}
 	private void loadHunger(final IConfig config, final IProperty property)
 	{
@@ -47,6 +59,20 @@ public class GroupData implements IValue
 		consumptionStanding = convert(config.getValue(state.child("standing"), new TimeValue()).time);
 		consumptionSwimming = convert(config.getValue(state.child("swimming"), new TimeValue()).time);
 		consumptionWalking = convert(config.getValue(state.child("walking"), new TimeValue()).time);
+	}
+	private void loadHealing(final IConfig config, final IProperty property)
+	{
+		healingEnable = config.getBool(property.child("enable"));
+		healingFrequency = config.getValue(property.child("frequency"), new TimeValue()).time;
+		healingAmount = config.getDouble(property.child("heal"));
+		healingStart = config.getFloat(property.child("start"));
+		healingCost = config.getFloat(property.child("cost"));
+	}
+	private void loadStarvation(final IConfig config, final IProperty property)
+	{
+		starvationEnable = config.getBool(property.child("enable"));
+		starvationFrequency = config.getValue(property.child("frequency"), new TimeValue()).time;
+		starvationDamage = config.getDouble(property.child("damage"));
 	}
 
 	private float convert(final Time time)
