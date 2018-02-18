@@ -1,38 +1,51 @@
+
+# The various messages that are displayed for various events
 Message:
-  cannotConsume: '&bYou are unable to consume that'
-  inedibles: '&cFood contains inedibles:&f'
   starved:
   - '&f<player>&f starved to death'
   - '&f<player>&f was unable to find food in time'
   - '&f<player>&f went too long without food'
+  - '&f<player>&f went on a hunger strike'
+
+# Sounds that are played for various events
 Sound:
-  eat:
+  eat:               # The sound that plays whenever the player eats something
     enable: true
-    sound: entity_generic_eat
+    sound:  entity_generic_eat
     volume: 1.0
-    pitch: 1.0
-Exhaustion:
-  rateOfChange: 0.95
-  rateOfHunger: 0.25
-  restpoint:
-    floating: 30.0
-    flying: 250.0
-    gliding: 185.0
-    hovering: 210.0
-    running: 180.0
-    sneaking: 30.0
-    standing: 15.0
-    swimming: 150.0
-    walking: 50.0
+    pitch:  1.0
+
+# Base amount of food consumed by a player every second
+Consumption:
+  change: 0.015      # Rate of change for rate of consuption (def: 0.015)
+  state:
+    floating: 35m    # Bobbing up and down in water, not moving much (def: N/A)
+    flying:   3m     # Constantly flapping the wings to move around (def: N/A)
+    gliding:  6m 30s # Using the wings to not fall to the ground, but not flying either (def: N/A)
+    hovering: 4m 30s # Flying, stationary in one spot (def: N/A)
+    running:  25m    # Fast running around (def: N/A)
+    sneaking: 2h 30m # Sneaking around, moving slowly (def: N/A)
+    standing: 6h 30m # Standig still, doing nothing (def: N/A)
+    swimming: 25m    # Moving around while in water (either underwater or on the surface) (def: N/A)
+    walking:  1h 45m # Simply walking around on land (def: N/A)
+
+# Allows fine-tuning the foods the player is able to eat, and how much the player can eat
+Hunger:
+  max: 100.0         # The usual maximum hunger the player can have (def: 100.0)
+  forbidden:
+    categories:  ''  # Categories of food the player cannot eat (def: '')
+    ingredients: ''  # Foods the player cannot eat (def: '')
+
+# Allows fine-tuning the player healing mechanism due to being well-fed
 Healing:
-  enable: true
-  frequency: 10
-  start: 0.3
-  heal: 0.75
-  cost: 2.5
+  enable:    true    # Whether to enable healing from food or not (def: true)
+  frequency: 10s     # The frequency of healing, time between each heal (def: 10s)
+  start:     30.0    # The required number of hunger points needed to heal (def: 30.0)
+  heal:      0.75    # The amount the player is healed at a time (def: 0.75)
+  cost:      2.5     # The hunger cost required to heal (def: 2.5)
+
+# Allows fine-tuning the player starvation mechanism
 Starvation:
-  enable: true
-  frequency: 3
-  damage: 1.0
-Food:
-  forbidden: ''
+  enable:    true    # Whether to enable player starvation or not
+  frequency: 3s      # The frequency of damage, time between each damage (def: 3s)
+  damage:    1.0     # How much damage the player takes for each starvation (def: 1.0)

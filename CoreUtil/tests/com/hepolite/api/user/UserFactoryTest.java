@@ -21,6 +21,7 @@ class UserFactoryTest
 
 		assertTrue(consoleUser instanceof ConsoleUser);
 		assertTrue(entityUser instanceof EntityUser);
-		assertThrows(IllegalArgumentException.class, () -> UserFactory.fromUUID(null));
+		assertThrows(IllegalArgumentException.class, () -> UserFactory.fromUUID((UUID) null));
+		assertThrows(IllegalArgumentException.class, () -> UserFactory.fromUUID((String) null));
 	}
 }

@@ -11,9 +11,12 @@ import com.hepolite.api.cmd.Cmd;
 import com.hepolite.api.cmd.GenericArgs;
 import com.hepolite.api.cmd.ICmdContext;
 import com.hepolite.api.user.IUser;
+import com.hepolite.api.user.UserFactory;
 import com.hepolite.coreutil.CoreUtilPlugin;
 import com.hepolite.coreutil.hunger.FoodData;
 import com.hepolite.coreutil.hunger.FoodRegistry;
+import com.hepolite.coreutil.hunger.GroupRegistry;
+import com.hepolite.coreutil.hunger.HungerHandler;
 
 public class CmdDebugFood extends Cmd
 {
@@ -23,8 +26,8 @@ public class CmdDebugFood extends Cmd
 		super("food",
 				GenericArgs.optional(GenericArgs.playerOrUser("player")),
 				GenericArgs.optional(
-					GenericArgs.string("group"),
-					GenericArgs.string("item")
+					GenericArgs.string("item"),
+					GenericArgs.optional(GenericArgs.string("group"))
 				)
 		);
 		/// @formatter:on
@@ -33,20 +36,25 @@ public class CmdDebugFood extends Cmd
 	@Override
 	public boolean execute(final IUser user, final ICmdContext context) throws CommandException
 	{
-		final FoodRegistry foodRegistry = CoreUtilPlugin.getHungerHandler().foodRegistry;
+		final HungerHandler hungerHandler = CoreUtilPlugin.getHungerHandler();
+		final FoodRegistry foodRegistry = hungerHandler.foodRegistry;
+
 		final Optional<Player> player = context.get("player");
 		final Optional<String> item = context.get("item");
-		final Optional<String> group = context.get("group");
+		String group = context.<String> get("group").orElse(GroupRegistry.DEFAULT_GROUP);
 
 		Optional<FoodData> data = Optional.empty();
 		if (item.isPresent())
-			data = foodRegistry.getFoodData(item.get(), group.orElse("Default"));
+			data = foodRegistry.getFoodData(item.get(), group);
 		else if (player.isPresent())
-			data = foodRegistry.getFoodData(player.get().getInventory().getItemInMainHand(), group.orElse("Default"));
+		{
+			group = hungerHandler.getUserGroup(UserFactory.fromPlayer(player.get()));
+			data = foodRegistry.getFoodData(player.get().getInventory().getItemInMainHand(), group);
+		}
 
 		if (!data.isPresent())
 			throw new CommandException("Could not deduce a food item from the provided parameters");
-		displayGenericFoodInfo(user, data.get());
+		displayGenericFoodInfo(user, data.get(), group);
 		return true;
 	}
 
@@ -56,7 +64,7 @@ public class CmdDebugFood extends Cmd
 	 * @param user The user that should see the information
 	 * @param data The food to provide information about
 	 */
-	private void displayGenericFoodInfo(final IUser user, final FoodData data)
+	private void displayGenericFoodInfo(final IUser user, final FoodData data, final String group)
 	{
 		final String categories = data.categories.isEmpty() ? "none" : StringUtils.join(data.categories, ", ");
 		final String ingredients = data.ingredients.isEmpty() ? "none" : StringUtils.join(data.ingredients, ", ");
@@ -65,8 +73,8 @@ public class CmdDebugFood extends Cmd
 		final Builder builder = new Builder("");
 		builder.addText(String.format("&bFood &9'%s'&b contains &9'%.1f/%.1f (%.1f)'&b hunger/saturation (ratio)",
 				data.name, data.food, data.ratio * data.food, data.ratio));
-		builder.addHover(String.format("&bCategories: &f%s\n&bIngredients: &f%s\n&bEffects:\n&f%s",
-				categories, ingredients, effects));
+		builder.addHover(String.format("&bGroup: &9%s\n&bCategories: &f%s\n&bIngredients: &f%s\n&bEffects:\n&f%s",
+				group, categories, ingredients, effects));
 		user.sendMessage(builder.build());
 	}
 }

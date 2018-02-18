@@ -33,6 +33,12 @@ public class HandlerCore implements IHandler
 		for (final IHandler handler : handlers)
 			handler.onReload();
 	}
+	@Override
+	public void onDisable()
+	{
+		for (final IHandler handler : handlers)
+			handler.onDisable();
+	}
 
 	@Override
 	public <T extends IHandler> T register(final T handler)

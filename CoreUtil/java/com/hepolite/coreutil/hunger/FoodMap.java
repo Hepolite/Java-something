@@ -10,8 +10,6 @@ public final class FoodMap extends HashMap<String, FoodData>
 {
 	private static final long serialVersionUID = -1765236330244617598L;
 
-	public static final String DEFAULT_GROUP = "Default";
-
 	/**
 	 * Adds the provided food to the collection
 	 * 
@@ -56,7 +54,7 @@ public final class FoodMap extends HashMap<String, FoodData>
 	{
 		FoodData data = get(group + ":" + food);
 		if (data == null)
-			data = get(DEFAULT_GROUP + ":" + food);
+			data = get(GroupRegistry.DEFAULT_GROUP + ":" + food);
 		if (data == null)
 			return Optional.empty();
 		resolveContents(data, group);

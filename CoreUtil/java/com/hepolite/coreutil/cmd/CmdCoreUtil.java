@@ -15,7 +15,8 @@ public class CmdCoreUtil extends Cmd
 		super("coreutil",
 			GenericArgs.children(
 				new CmdDebug(),
-				new CmdReload()
+				new CmdReload(),
+				new CmdSet()
 		));
 		/// @formatter:on
 	}

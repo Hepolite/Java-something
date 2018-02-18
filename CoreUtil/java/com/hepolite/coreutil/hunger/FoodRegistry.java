@@ -19,11 +19,10 @@ public final class FoodRegistry
 	public FoodRegistry(final JavaPlugin plugin)
 	{
 		this.plugin = plugin;
-		this.folder = new File(plugin.getDataFolder(), "Hunger");
+		this.folder = new File(plugin.getDataFolder(), "Hunger/Consumables");
 
 		ConfigFactory.create(plugin, "Hunger/Consumables/Vanilla");
 		ConfigFactory.create(plugin, "Hunger/Consumables/VanillaExtended");
-		ConfigFactory.create(plugin, "Hunger/Groups/Default");
 		loadFoods();
 	}
 

@@ -7,6 +7,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.hepolite.api.units.Time;
+import com.hepolite.coreutil.CoreUtilPlugin;
 
 public final class CommonValues
 {
@@ -47,12 +48,14 @@ public final class CommonValues
 		@Override
 		public void save(final IConfig config, final IProperty property)
 		{
-			config.set(property, type.toString().toLowerCase());
+			config.set(property, type.getName());
 		}
 		@Override
 		public void load(final IConfig config, final IProperty property)
 		{
 			type = PotionEffectType.getByName(config.getString(property).toUpperCase());
+			if (type == null)
+				CoreUtilPlugin.WARN("Failed loading PotionEffectType: " + property.getPath());
 		}
 
 		@Override
@@ -66,9 +69,9 @@ public final class CommonValues
 	{
 		private static final Random random = new Random();
 
-		public PotionEffectType type = PotionEffectType.ABSORPTION;
-		public int amplifier = 1;
-		public Time duration = Time.fromInstant();
+		public PotionEffectType type;
+		public int amplifier;
+		public Time duration;
 		public boolean ambient = false;
 		public boolean particles = true;
 		public float chance = 1.0f;
@@ -111,7 +114,8 @@ public final class CommonValues
 		@Override
 		public String toString()
 		{
-			return String.format("Type: %s, amplifier: %d, duration: %s", type.getName(), amplifier, duration.toString());
+			return String.format("Type: %s, amplifier: %d, duration: %s", type.getName(), amplifier,
+					duration.toString());
 		}
 	}
 }

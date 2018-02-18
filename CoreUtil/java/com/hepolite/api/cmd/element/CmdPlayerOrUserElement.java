@@ -22,7 +22,7 @@ public class CmdPlayerOrUserElement extends CmdPlayerElement
 		final CmdArgsSnapshot snapshot = args.getSnapshot();
 		try
 		{
-			super.parseValue(user, args);
+			return super.parseValue(user, args);
 		}
 		catch (final ArgumentParseException e)
 		{

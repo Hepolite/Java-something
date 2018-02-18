@@ -15,6 +15,10 @@ public interface IHandler extends Listener
 	 * Invoked when the plugin is being reloaded
 	 */
 	public void onReload();
+	/**
+	 * Invoked when the plugin is being shut down
+	 */
+	public void onDisable();
 
 	/**
 	 * Adds the given child handler to this handler

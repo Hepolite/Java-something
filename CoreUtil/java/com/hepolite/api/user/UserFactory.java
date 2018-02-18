@@ -23,6 +23,18 @@ public final class UserFactory
 			return new EntityUser(uuid);
 	}
 	/**
+	 * Constructs a new user instance from the given uuid in string form
+	 * 
+	 * @param uuid The uuid of the user
+	 * @return The new user instance
+	 */
+	public static IUser fromUUID(final String uuid)
+	{
+		if (uuid == null || uuid.isEmpty())
+			throw new IllegalArgumentException("String cannot be null or empty");
+		return fromUUID(UUID.fromString(uuid));
+	}
+	/**
 	 * Constructs a new user instance from the given player
 	 * 
 	 * @param player The player of the users

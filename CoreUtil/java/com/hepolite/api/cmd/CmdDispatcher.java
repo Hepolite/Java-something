@@ -23,7 +23,7 @@ public class CmdDispatcher
 	 * @param args Raw arguments
 	 * @return True if the command was successfully executed
 	 */
-	public static boolean dispatch(final CommandSender sender, final Cmd command, final String[] args)
+	public static boolean dispatch(final CommandSender sender, final ICmd command, final String[] args)
 	{
 		final IUser user;
 		if (sender instanceof ConsoleCommandSender)
