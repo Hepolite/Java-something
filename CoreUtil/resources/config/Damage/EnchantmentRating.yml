@@ -1,0 +1,38 @@
+
+# In vanilla, the protection enchantment blocks everything, but screw that
+# By default, this config will not follow vanilla conventions, and instead
+# require the user to select the other enchantments if they want protection
+# against other elements. Protection will only protect against physical attacks.
+protection_environmental:
+  strength: 1.0    # The EPF factor per level
+  blocks:          # All damage causes the enchantment protects against
+  - contact
+  - entity_attack
+  - entity_sweep_attack
+  - falling_block
+
+protection_fire:
+  strength: 2.0
+  blocks:
+  - dragon_breath
+  - fire
+  - fire_tick
+  - hot_floor
+  - lava
+
+protection_explosions:
+  strength: 2.0
+  blocks:
+  - block_explosion
+  - entity_explosion
+
+protection_projectile:
+  strength: 2.0
+  blocks:
+  - projectile
+
+protection_fall:
+  strength: 3.0
+  blocks:
+  - fall
+  - fly_into_wall

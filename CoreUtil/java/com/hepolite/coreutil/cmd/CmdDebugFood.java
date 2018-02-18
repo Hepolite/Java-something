@@ -14,21 +14,20 @@ import com.hepolite.api.user.IUser;
 import com.hepolite.api.user.UserFactory;
 import com.hepolite.coreutil.CoreUtilPlugin;
 import com.hepolite.coreutil.hunger.FoodData;
-import com.hepolite.coreutil.hunger.FoodRegistry;
 import com.hepolite.coreutil.hunger.GroupRegistry;
 import com.hepolite.coreutil.hunger.HungerHandler;
 
 public class CmdDebugFood extends Cmd
 {
-	protected CmdDebugFood()
+	public CmdDebugFood()
 	{
 		/// @formatter:off
 		super("food",
-				GenericArgs.optional(GenericArgs.playerOrUser("player")),
-				GenericArgs.optional(
-					GenericArgs.string("item"),
-					GenericArgs.optional(GenericArgs.string("group"))
-				)
+			GenericArgs.optional(GenericArgs.playerOrUser("player")),
+			GenericArgs.optional(
+				GenericArgs.string("item"),
+				GenericArgs.optional(GenericArgs.string("group"))
+			)
 		);
 		/// @formatter:on
 	}
@@ -37,7 +36,6 @@ public class CmdDebugFood extends Cmd
 	public boolean execute(final IUser user, final ICmdContext context) throws CommandException
 	{
 		final HungerHandler hungerHandler = CoreUtilPlugin.getHungerHandler();
-		final FoodRegistry foodRegistry = hungerHandler.foodRegistry;
 
 		final Optional<Player> player = context.get("player");
 		final Optional<String> item = context.get("item");
@@ -45,11 +43,11 @@ public class CmdDebugFood extends Cmd
 
 		Optional<FoodData> data = Optional.empty();
 		if (item.isPresent())
-			data = foodRegistry.getFoodData(item.get(), group);
+			data = hungerHandler.getFoodData(item.get(), group);
 		else if (player.isPresent())
 		{
 			group = hungerHandler.getUserGroup(UserFactory.fromPlayer(player.get()));
-			data = foodRegistry.getFoodData(player.get().getInventory().getItemInMainHand(), group);
+			data = hungerHandler.getFoodData(player.get().getInventory().getItemInMainHand(), group);
 		}
 
 		if (!data.isPresent())

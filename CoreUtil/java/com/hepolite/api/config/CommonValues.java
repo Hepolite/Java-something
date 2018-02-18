@@ -1,8 +1,11 @@
 package com.hepolite.api.config;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -116,6 +119,36 @@ public final class CommonValues
 		{
 			return String.format("Type: %s, amplifier: %d, duration: %s", type.getName(), amplifier,
 					duration.toString());
+		}
+	}
+
+	public static final class DamageCauseSetValue implements IValue
+	{
+		public Set<DamageCause> types = new HashSet<>();
+
+		@Override
+		public void save(final IConfig config, final IProperty property)
+		{
+			final Set<String> strings = new HashSet<>();
+			for (final DamageCause cause : types)
+				strings.add(cause.toString().toLowerCase());
+			config.set(property, strings);
+		}
+		@Override
+		public void load(final IConfig config, final IProperty property)
+		{
+			types.clear();
+			for (final String cause : config.getStrings(property))
+			{
+				try
+				{
+					types.add(DamageCause.valueOf(cause.toUpperCase()));
+				}
+				catch (final Exception e)
+				{
+					CoreUtilPlugin.WARN("Failed loading DamageCause: " + cause + " under " + property.getPath());
+				}
+			}
 		}
 	}
 }

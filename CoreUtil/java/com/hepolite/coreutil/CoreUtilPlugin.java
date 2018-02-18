@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+import com.hepolite.api.damage.DamageAPI;
 import com.hepolite.api.plugin.IPlugin;
 import com.hepolite.api.plugin.PluginCore;
 import com.hepolite.api.task.SynchronizedTask;
@@ -71,6 +72,7 @@ public final class CoreUtilPlugin extends PluginCore implements IPlugin
 
 		// Set up utilities
 		handler.register(new ReflectionHandler(this));
+		handler.register(new DamageAPI(this));
 
 		// Ensure that all sub-systems are ready to roll
 		hungerHandler = handler.register(new HungerHandler(this));

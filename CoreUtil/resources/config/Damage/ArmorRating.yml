@@ -1,0 +1,90 @@
+
+# Leather is weak against physical attacks, but strong against magical attacks
+leather_boots:
+  physical: 1.0
+  magical: 2.0
+  toughness: 0.0
+leather_leggings:
+  physical: 2.0
+  magical: 5.0
+  toughness: 0.0
+leather_chestplate:
+  physical: 3.0
+  magical: 6.0
+  toughness: 0.0
+leather_helmet:
+  physical: 1.0
+  magical: 3.0
+  toughness: 0.0
+
+# Gold armor is weak against physical attacks, but excellent against magical attacks
+golden_boots:
+  physical: 1.0
+  magical: 3.0
+  toughness: 0.0
+golden_leggings:
+  physical: 3.0
+  magical: 7.0
+  toughness: 0.0
+golden_chestplate:
+  physical: 5.0
+  magical: 10.0
+  toughness: 0.0
+golden_helmet:
+  physical: 2.0
+  magical: 5.0
+  toughness: 0.0
+
+# Chain armor is mediocre against both physical and magical attacks
+chain_boots:
+  physical: 1.0
+  magical: 1.0
+  toughness: 0.0
+chain_leggings:
+  physical: 4.0
+  magical: 3.0
+  toughness: 0.0
+chain_chestplate:
+  physical: 5.0
+  magical: 4.0
+  toughness: 0.0
+chain_helmet:
+  physical: 2.0
+  magical: 1.0
+  toughness: 0.0
+
+# Iron is good against   physical attacks but weak against   magical attacks
+iron_boots:
+  physical: 2.0
+  magical: 0.0
+  toughness: 0.0
+iron_leggings:
+  physical: 5.0
+  magical: 1.0
+  toughness: 0.0
+iron_chestplate:
+  physical: 6.0
+  magical: 2.0
+  toughness: 0.0
+iron_helmet:
+  physical: 2.0
+  magical: 0.5
+  toughness: 0.0
+
+# Diamond armor is excellent against physical attacks, but weak against magical attacks
+diamond_boots:
+  physical: 3.0
+  magical: 1.0
+  toughness: 2.0
+diamond_leggings:
+  physical: 6.0
+  magical: 2.0
+  toughness: 2.0
+diamond_chestplate:
+  physical: 8.0
+  magical: 3.0
+  toughness: 2.0
+diamond_helmet:
+  physical: 3.0
+  magical: 1.0
+  toughness: 2.0

@@ -3,6 +3,7 @@ package com.hepolite.coreutil.hunger;
 import java.util.Optional;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -12,6 +13,7 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.hepolite.api.attribute.Attribute;
@@ -25,9 +27,9 @@ import com.hepolite.api.user.IUser;
 import com.hepolite.api.user.UserFactory;
 import com.hepolite.coreutil.CoreUtilPlugin;
 
-public class HungerHandler extends HandlerCore
+public final class HungerHandler extends HandlerCore
 {
-	public final FoodRegistry foodRegistry;
+	private final FoodRegistry foodRegistry;
 	private final HungerRegistry hungerRegistry;
 	private final GroupRegistry groupRegistry;
 
@@ -47,6 +49,9 @@ public class HungerHandler extends HandlerCore
 	{
 		for (final Player player : Bukkit.getOnlinePlayers())
 		{
+			if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR)
+				continue;
+
 			final IUser user = UserFactory.fromPlayer(player);
 			final HungerData data = getHungerData(user);
 			final GroupData group = groupRegistry.getGroupData(data.group);
@@ -103,6 +108,8 @@ public class HungerHandler extends HandlerCore
 			return;
 		event.setCancelled(true);
 	}
+
+	// ...
 
 	private void resetHunger(final IUser user)
 	{
@@ -279,5 +286,35 @@ public class HungerHandler extends HandlerCore
 	public HungerData getHungerData(final IUser user)
 	{
 		return hungerRegistry.getHungerData(user);
+	}
+
+	// ...
+
+	/**
+	 * Attempts to retrieve the food data associated with the given item, under the given group. The
+	 * the food is not a valid food under the give group, the food will be checked against the
+	 * default group. If the food has a custom name, the custom name will be prioritized, then the
+	 * same search will be performed on the item type.
+	 * 
+	 * @param item The item to look up
+	 * @param group The group to search under
+	 * @return The food data associated with the item if any
+	 */
+	public Optional<FoodData> getFoodData(final ItemStack item, final String group)
+	{
+		return foodRegistry.getFoodData(item, group);
+	}
+	/**
+	 * Attempts to retrieve the food data associated with the given item, under the given group. The
+	 * the food is not a valid food under the give group, the food will be checked against the
+	 * default group.
+	 * 
+	 * @param item The item to look up
+	 * @param group The group to search under
+	 * @return The food data associated with the item if any
+	 */
+	public Optional<FoodData> getFoodData(final String item, final String group)
+	{
+		return foodRegistry.getFoodData(item, group);
 	}
 }
