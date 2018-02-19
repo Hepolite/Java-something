@@ -14,8 +14,10 @@ public class CmdDebug extends Cmd
 		/// @formatter:off
 		super("debug",
 			GenericArgs.children(
+				new CmdDebugAttribute(),
 				new CmdDebugDamage(),
 				new CmdDebugFood(),
+				new CmdDebugHeal(),
 				new CmdDebugHunger()
 		));
 		/// @formatter:on

@@ -1,14 +1,17 @@
 package com.hepolite.api.damage;
 
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.hepolite.api.event.HandlerCore;
 import com.hepolite.api.event.events.DamageEvent;
-import com.hepolite.coreutil.CoreUtilPlugin;
+import com.hepolite.api.event.events.HealEvent;
 
 public final class DamageAPI extends HandlerCore
 {
@@ -57,41 +60,86 @@ public final class DamageAPI extends HandlerCore
 	{
 		if (!target.isValid() || damage.getAmount() <= 0.0)
 			return false;
-		instance.adapter.inject(damage);
+		instance.adapter.injectDamage(damage);
 		if (attacker == null)
 			target.damage(damage.getAmount());
 		else
 			target.damage(damage.getAmount(), attacker);
-		instance.adapter.inject(null);
+		instance.adapter.injectDamage(null);
 		return !cancelledDamage;
+	}
+
+	/**
+	 * Performs a heal on the target
+	 * 
+	 * @param target The entity to heal
+	 * @param healing The healing to perform
+	 * @return True if the entity was healed
+	 */
+	public static boolean heal(final LivingEntity target, final Heal healing)
+	{
+		return heal(target, null, healing);
+	}
+	/**
+	 * Performs a heal on the target
+	 * 
+	 * @param target The entity to heal
+	 * @param healer The entity performing the healing
+	 * @param healing The healing to perform
+	 * @return True if the entity was healed
+	 */
+	public static boolean heal(final LivingEntity target, final LivingEntity healer, final Heal healing)
+	{
+		if (!target.isValid() || healing.getAmount() <= 0.0)
+			return false;
+
+		// It's utterly ridiculous that Spigot does not provide some heal method on living
+		// entities... Seriously, it would have been super-easy to add some LivingEntity.heal
+		// method!
+		instance.adapter.injectHeal(healing);
+		final EntityRegainHealthEvent event = instance
+				.post(new EntityRegainHealthEvent(target, healing.getAmount(), RegainReason.CUSTOM));
+		instance.adapter.injectHeal(null);
+
+		// Make sure the entity is not dead at this point, otherwise it ends up in limbo!
+		if (event.isCancelled() || event.getAmount() < 0.0 || !target.isValid() || target.isDead())
+			return false;
+		final double maxHealth = target.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+		if (target.getHealth() >= maxHealth)
+			return false;
+		target.setHealth(Math.min(target.getHealth() + event.getAmount(), maxHealth));
+		return true;
 	}
 
 	// ...
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-	public void onEntityTakeDamage(final EntityDamageEvent event)
+	public void onEntityReceiveDamage(final EntityDamageEvent event)
 	{
 		final DamageEvent damageEvent = adapter.adapt(event);
 		if (damageEvent == null)
 			return;
 		calculator.calculateReduction(damageEvent.getTarget(), damageEvent);
 
-		CoreUtilPlugin.INFO("");
-		CoreUtilPlugin.INFO("Damage: " + damageEvent.getBaseDamage() + " - " + damageEvent.getVariant() + "/"
-				+ damageEvent.getType());
-		CoreUtilPlugin.INFO("Armor: " + damageEvent.getDamage(com.hepolite.api.damage.DamageModifier.ARMOR));
-		CoreUtilPlugin.INFO("Magic: " + damageEvent.getDamage(com.hepolite.api.damage.DamageModifier.MAGIC));
-		CoreUtilPlugin.INFO("Resistance: " + damageEvent.getDamage(com.hepolite.api.damage.DamageModifier.POTION));
-		CoreUtilPlugin.INFO("Blocking: " + damageEvent.getDamage(com.hepolite.api.damage.DamageModifier.BLOCKING));
-		CoreUtilPlugin.INFO("");
-
 		post(damageEvent);
 		event.setDamage(damageEvent.getFinalDamage());
 		event.setCancelled(damageEvent.isCancelled());
 	}
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
-	public void monitorEntityTakeDamage(final EntityDamageEvent event)
+	public void monitorEntityReceiveDamage(final EntityDamageEvent event)
 	{
 		cancelledDamage = event.isCancelled();
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+	public void onEntityReceiveHeal(final EntityRegainHealthEvent event)
+	{
+		final HealEvent healEvent = adapter.adapt(event);
+		if (healEvent == null)
+			return;
+
+		post(healEvent);
+		event.setAmount(healEvent.getHealing());
+		event.setCancelled(healEvent.isCancelled());
 	}
 }

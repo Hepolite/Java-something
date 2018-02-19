@@ -1,5 +1,9 @@
 package com.hepolite.api.attribute;
 
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Set;
+
 public final class Attribute
 {
 	private final ModifierMap modifiers = new ModifierMap();
@@ -100,6 +104,24 @@ public final class Attribute
 		final float value = modifier.multiplier * (baseValue * (1 + modifier.scale) + modifier.constant);
 		return Math.max(minValue, Math.min(maxValue, value));
 	}
+	/**
+	 * Calculates the grand total modifier for this attribute
+	 * 
+	 * @return The modifier which represents the cumulative effect of all modifiers in the attribute
+	 */
+	public Modifier getModifier()
+	{
+		return modifiers.calculateTotal();
+	}
+	/**
+	 * Retrieves a set containing the keys for all modifiers in the attribute
+	 * 
+	 * @return The set of keys
+	 */
+	public Set<String> getKeys()
+	{
+		return Collections.unmodifiableSet(modifiers.keySet());
+	}
 
 	// ...
 
@@ -122,6 +144,15 @@ public final class Attribute
 	public void put(final String key, final Modifier modifier)
 	{
 		modifiers.put(key, modifier);
+	}
+	/**
+	 * Returns the modifiers under the given key if it exists
+	 * 
+	 * @param key The key of the modifier
+	 */
+	public Optional<Modifier> get(final String key)
+	{
+		return Optional.ofNullable(modifiers.get(key));
 	}
 	/**
 	 * Removes the modifier under the given key, if it exists

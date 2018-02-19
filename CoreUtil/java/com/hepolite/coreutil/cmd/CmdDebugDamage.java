@@ -23,7 +23,7 @@ public class CmdDebugDamage extends Cmd
 			GenericArgs.optional(GenericArgs.player("attacker")),
 			GenericArgs.string("variant"),
 			GenericArgs.string("type"),
-			GenericArgs.doubleNum("amount")
+			GenericArgs.optional(GenericArgs.doubleNum("amount"))
 		);
 		/// @formatter:on
 	}
@@ -35,7 +35,7 @@ public class CmdDebugDamage extends Cmd
 		final Player attacker = context.<Player> get("attacker").orElse(null);
 		final String variant = context.<String> get("variant").orElse("invalid");
 		final String type = context.<String> get("type").orElse("invalid");
-		final double amount = context.<Double> get("amount").orElse(0.0);
+		final double amount = context.<Double> get("amount").orElse(1.0);
 
 		try
 		{

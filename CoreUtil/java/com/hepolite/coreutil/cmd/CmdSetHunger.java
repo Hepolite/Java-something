@@ -36,7 +36,7 @@ public class CmdSetHunger extends Cmd
 		data.hunger = hunger;
 		data.saturation = saturation;
 
-		user.sendMessage(new Builder(String.format("&bChanged &9%s&b's hunger and saturation to &9%.1f/%.1f",
+		user.sendMessage(new Builder(String.format("&bChanged &9%s's&b hunger and saturation to &9%.1f/%.1f",
 				player.getName(), data.hunger, data.saturation)).build());
 		return true;
 	}

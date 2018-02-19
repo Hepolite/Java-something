@@ -68,6 +68,7 @@ public class DamageEvent extends Event implements Cancellable
 	{
 		return damage.getType();
 	}
+
 	/**
 	 * @return The amount of base damage associated with this damage instance
 	 */
@@ -75,6 +76,16 @@ public class DamageEvent extends Event implements Cancellable
 	{
 		return damage.getAmount();
 	}
+	/**
+	 * Sets the base damage done by this damage event
+	 * 
+	 * @param damage The damage to deal
+	 */
+	public final void setBaseDamage(final double amount)
+	{
+		damage.setAmount(amount);
+	}
+
 	/**
 	 * @return The final amount of damage associated with this damage instance
 	 */

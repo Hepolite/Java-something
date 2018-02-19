@@ -5,10 +5,10 @@ import java.util.Random;
 import java.util.Set;
 
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import com.hepolite.api.damage.DamageType;
 import com.hepolite.api.units.Time;
 import com.hepolite.coreutil.CoreUtilPlugin;
 
@@ -122,15 +122,15 @@ public final class CommonValues
 		}
 	}
 
-	public static final class DamageCauseSetValue implements IValue
+	public static final class DamageCauseTypeValue implements IValue
 	{
-		public Set<DamageCause> types = new HashSet<>();
+		public Set<DamageType> types = new HashSet<>();
 
 		@Override
 		public void save(final IConfig config, final IProperty property)
 		{
 			final Set<String> strings = new HashSet<>();
-			for (final DamageCause cause : types)
+			for (final DamageType cause : types)
 				strings.add(cause.toString().toLowerCase());
 			config.set(property, strings);
 		}
@@ -142,11 +142,11 @@ public final class CommonValues
 			{
 				try
 				{
-					types.add(DamageCause.valueOf(cause.toUpperCase()));
+					types.add(DamageType.valueOf(cause.toUpperCase()));
 				}
 				catch (final Exception e)
 				{
-					CoreUtilPlugin.WARN("Failed loading DamageCause: " + cause + " under " + property.getPath());
+					CoreUtilPlugin.WARN("Failed loading DamageType: " + cause + " under " + property.getPath());
 				}
 			}
 		}

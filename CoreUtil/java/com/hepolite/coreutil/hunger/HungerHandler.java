@@ -19,6 +19,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.hepolite.api.attribute.Attribute;
 import com.hepolite.api.attribute.AttributeDatabase;
 import com.hepolite.api.attribute.AttributeType;
+import com.hepolite.api.damage.Damage;
+import com.hepolite.api.damage.DamageAPI;
+import com.hepolite.api.damage.DamageType;
+import com.hepolite.api.damage.Heal;
+import com.hepolite.api.damage.HealType;
 import com.hepolite.api.event.HandlerCore;
 import com.hepolite.api.event.events.PlayerHungerChange;
 import com.hepolite.api.event.events.PlayerSaturationChange;
@@ -176,8 +181,7 @@ public final class HungerHandler extends HandlerCore
 			return;
 		final Player player = user.getPlayer().get();
 		ignoreDamageEvent = true;
-		// DamageAPI.damage(player);
-		player.damage(group.starvationDamage);
+		DamageAPI.damage(player, new Damage(DamageType.HUNGER, group.starvationDamage));
 		ignoreDamageEvent = false;
 	}
 	private void handleHealing(final IUser user, final HungerData data, final GroupData group)
@@ -186,14 +190,8 @@ public final class HungerHandler extends HandlerCore
 			return;
 		final Player player = user.getPlayer().get();
 		ignoreHealingEvent = true;
-		// if (DamageAPI.heal(player))
-		// changeSaturation(user, -group.healingCost);
-		final double maxHealth = player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH).getValue();
-		if (player.getHealth() < maxHealth)
-		{
-			player.setHealth(Math.max(0, Math.min(maxHealth, player.getHealth() + group.healingAmount)));
+		if (DamageAPI.heal(player, player, new Heal(HealType.SATIATED_REGEN, group.healingAmount)))
 			changeSaturation(user, -group.healingCost);
-		}
 		ignoreHealingEvent = false;
 	}
 

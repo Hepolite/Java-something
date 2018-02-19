@@ -2,6 +2,7 @@ package com.hepolite.api.user;
 
 import java.util.UUID;
 
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 public final class UserFactory
@@ -43,5 +44,15 @@ public final class UserFactory
 	public static IUser fromPlayer(final Player player)
 	{
 		return fromUUID(player.getUniqueId());
+	}
+	/**
+	 * Constructs a new user instance from the given entity
+	 * 
+	 * @param player The player of the users
+	 * @return The new user instance
+	 */
+	public static IUser fromEntity(final LivingEntity entity)
+	{
+		return fromUUID(entity.getUniqueId());
 	}
 }

@@ -8,6 +8,9 @@ public enum DamageModifier
 {
 	/** Represents damage blocked by basic armor */
 	ARMOR,
+	
+	/** Represents damage blocked by attributes */
+	ATTRIBUTE,
 
 	/** Represents damage blocked by blocking with a shield */
 	BLOCKING,
