@@ -32,6 +32,7 @@ import com.hepolite.api.event.events.PlayerSaturationChange;
 import com.hepolite.api.units.Time;
 import com.hepolite.api.user.IUser;
 import com.hepolite.api.user.UserFactory;
+import com.hepolite.api.util.StringConverter;
 import com.hepolite.coreutil.CoreUtilPlugin;
 
 public final class HungerHandler extends HandlerCore
@@ -117,7 +118,10 @@ public final class HungerHandler extends HandlerCore
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
 	public void onPlayerInteract(final PlayerInteractEvent event)
 	{
+		final Player player = event.getPlayer();
+		final ItemStack item = player.getInventory().getItemInMainHand();
 
+		player.sendMessage("Item " + StringConverter.fromItem(item) + ": " + canPlayerEat(player, item));
 	}
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onPlayerConsumeItem(final PlayerItemConsumeEvent event)
@@ -204,9 +208,41 @@ public final class HungerHandler extends HandlerCore
 
 	// ...
 
-	//public boolean canEat(final Player player, )
+	/**
+	 * Returns true iff the player is allowed to eat the given item
+	 * 
+	 * @param player The player that want to eat the item
+	 * @param item The item the player wants to eat
+	 * @return True iff the player is allowed to devour that item
+	 */
+	public boolean canPlayerEat(final Player player, final ItemStack item)
+	{
+		final String group = getPlayerGroup(player);
+		final Optional<FoodData> opFood = foodRegistry.getFoodData(item, group);
+		if (!opFood.isPresent())
+			return false;
 
-	// ...
+		final Attribute maxHunger = AttributeDatabase.get(UserFactory.fromPlayer(player), AttributeType.HUNGER_MAX);
+		final HungerData hunger = hungerRegistry.getHungerData(player);
+		final FoodData food = opFood.get();
+		final GroupData data = groupRegistry.getGroupData(group);
+
+		// If the food contains no nourishment or the player is full, eating cannot commence
+		if (!food.alwaysConsumable)
+		{
+			if (food.food == 0.0f || hunger.hunger >= maxHunger.getValue())
+				return false;
+		}
+
+		// Ensure the player cannot eat forbidden fruit
+		for (final String category : food.categories)
+			if (data.forbiddenCategories.contains(category))
+				return false;
+		for (final String category : food.ingredients)
+			if (data.forbiddenIngredients.contains(category))
+				return false;
+		return !data.forbiddenCategories.contains(food.name);
+	}
 
 	/**
 	 * Retrieves the hunger group the given player is associated with

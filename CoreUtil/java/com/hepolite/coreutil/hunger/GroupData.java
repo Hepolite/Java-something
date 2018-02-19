@@ -1,5 +1,8 @@
 package com.hepolite.coreutil.hunger;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.hepolite.api.config.CommonValues.TimeValue;
 import com.hepolite.api.config.IConfig;
 import com.hepolite.api.config.IProperty;
@@ -9,6 +12,8 @@ import com.hepolite.api.units.Time;
 public class GroupData implements IValue
 {
 	public float hungerMax = 0.0f;
+	public Set<String> forbiddenCategories = new HashSet<>();
+	public Set<String> forbiddenIngredients = new HashSet<>();
 
 	public float consumptionChange = 0.0f;
 	public float consumptionFloating = 0.0f;
@@ -45,6 +50,12 @@ public class GroupData implements IValue
 	private void loadHunger(final IConfig config, final IProperty property)
 	{
 		hungerMax = config.getFloat(property.child("max"));
+
+		final IProperty forbidden = property.child("forbidden");
+		for (final String category : config.getString(forbidden.child("categories")).split(" "))
+			forbiddenCategories.add(category);
+		for (final String ingredient : config.getString(forbidden.child("ingredients")).split(" "))
+			forbiddenIngredients.add(ingredient);
 	}
 	private void loadConsumption(final IConfig config, final IProperty property)
 	{

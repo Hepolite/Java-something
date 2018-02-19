@@ -1,7 +1,9 @@
 package com.hepolite.coreutil.hunger;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -84,9 +86,20 @@ public final class FoodMap extends HashMap<String, FoodData>
 	 */
 	private void resolveContents(final FoodData data, final String group)
 	{
-		data.ingredients.remove("");
+		if (data.resolved)
+			return;
+		data.resolved = true;
+
+		final Set<String> ingredients = new HashSet<>();
 		for (final String ingredient : data.ingredients)
-			get(ingredient, group).ifPresent((other) -> data.categories.addAll(other.categories));
+		{
+			get(ingredient, group).ifPresent((other) -> {
+				data.categories.addAll(other.categories);
+				ingredients.addAll(other.ingredients);
+			});
+		}
+		data.ingredients.addAll(ingredients);
+		data.ingredients.remove("");
 		data.categories.remove("");
 	}
 }

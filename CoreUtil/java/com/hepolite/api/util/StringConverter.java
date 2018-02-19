@@ -2,6 +2,11 @@ package com.hepolite.api.util;
 
 import java.util.function.Function;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
 public final class StringConverter
 {
 	/**
@@ -177,5 +182,67 @@ public final class StringConverter
 	public static short toShort(final String string, final short def)
 	{
 		return convert(string, def, Short::parseShort);
+	}
+
+	// ...
+
+	/**
+	 * Attempts to convert the string to a simple item; Default value: air
+	 * 
+	 * @param string The string to convert
+	 * @return The converted value or the default value
+	 */
+	public static ItemStack toItem(final String string)
+	{
+		Material material = Material.AIR;
+		short meta = 0;
+		int amount = 1;
+		String name = "";
+
+		try
+		{
+			String parts[] = string.split("=");
+			if (parts.length == 2)
+				amount = Integer.parseInt(parts[2]);
+
+			parts = parts[0].split(";");
+			if (parts.length == 2)
+				name = parts[1];
+
+			parts = parts[0].split("-");
+			if (parts.length == 2)
+				meta = Short.parseShort(parts[1]);
+
+			material = Material.valueOf(parts[0]);
+		}
+		catch (final Exception e)
+		{}
+		final ItemStack item = new ItemStack(material, amount, meta);
+		if (!name.isEmpty())
+			item.getItemMeta().setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+		return item;
+	}
+	/**
+	 * Attempts to convert the item to a simple string on the format type-meta;name=amount. If meta
+	 * is 0, it is omitted, if name is not specified, it too is omitted, if the amount is 1 it is
+	 * also omitted.
+	 * 
+	 * @param item The item to convert
+	 * @return The resulting string
+	 */
+	public static String fromItem(final ItemStack item)
+	{
+		final StringBuilder builder = new StringBuilder(item.getType().toString());
+		if (item.getDurability() != 0)
+			builder.append("-").append(item.getDurability());
+		if (item.getAmount() != 1)
+			builder.append("=").append(item.getAmount());
+		if (item.hasItemMeta())
+		{
+			final ItemMeta meta = item.getItemMeta();
+			if (meta.hasDisplayName())
+				builder.append(";").append(meta.getDisplayName().replaceAll(String.valueOf(ChatColor.COLOR_CHAR), "&"));
+		}
+		return builder.toString();
 	}
 }
