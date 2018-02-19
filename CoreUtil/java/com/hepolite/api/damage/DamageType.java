@@ -25,27 +25,26 @@ public enum DamageType
 	// ...
 
 	/** Damage dealt by magical attacks */
-	MAGIC(DamageVariant.MAGICAL, DamageCause.MAGIC, 0.0, 0.0, 0.0, 0.5),
+	MAGIC(DamageVariant.MAGICAL, DamageCause.MAGIC, 1.0, 1.0, 0.0, 0.5),
 	/** Damage dealt by potion-based attacks */
 	POTION(DamageVariant.PERSONAL, DamageCause.MAGIC, 0.0, 0.0, 0.0, 0.5),
-
 
 	// ...
 
 	/** Damage dealt by being on fire */
 	BURNING(DamageVariant.PERSONAL, DamageCause.FIRE, 0.0, 0.0, 1.0, 1.0),
 	/** Damage dealt to those who got hit by a fire effect */
-	FIRE(DamageVariant.ELEMENTAL, DamageCause.FIRE, 0.0, 0.0, 1.0, 1.0),
+	FIRE(DamageVariant.ELEMENTAL, DamageCause.FIRE, 1.0, 0.0, 1.0, 1.0),
 	/** Damage dealt to those who got too close to lava */
-	LAVA(DamageVariant.ELEMENTAL, DamageCause.LAVA, 0.0, 0.0, 1.0, 0.0),
+	LAVA(DamageVariant.ELEMENTAL, DamageCause.LAVA, 1.0, 0.0, 1.0, 0.0),
 
 	/** Damage dealt by electrical attacks */
-	ELECTRICITY(DamageVariant.ELEMENTAL, DamageCause.LIGHTNING, 0.0, 0.0, 0.0, 0.0),
+	ELECTRICITY(DamageVariant.ELEMENTAL, DamageCause.LIGHTNING, 1.0, 0.0, 0.0, 0.0),
 
 	/** Damage dealt to those who got hit by a cold effect */
-	FROST(DamageVariant.ELEMENTAL, DamageCause.CUSTOM, 0.0, 0.0, 1.0, 1.0),
+	FROST(DamageVariant.ELEMENTAL, DamageCause.CUSTOM, 1.0, 0.0, 1.0, 1.0),
 	/** Damage by water-based attacks */
-	WATER(DamageVariant.ELEMENTAL, DamageCause.DROWNING, 0.0, 0.0, 0.0, 1.0),
+	WATER(DamageVariant.ELEMENTAL, DamageCause.DROWNING, 1.0, 1.0, 0.0, 1.0),
 
 	// ...
 

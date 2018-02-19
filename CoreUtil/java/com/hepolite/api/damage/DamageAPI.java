@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.hepolite.api.event.HandlerCore;
 import com.hepolite.api.event.events.DamageEvent;
+import com.hepolite.coreutil.CoreUtilPlugin;
 
 public final class DamageAPI extends HandlerCore
 {
@@ -30,6 +31,8 @@ public final class DamageAPI extends HandlerCore
 	{
 		calculator.reloadConfigs();
 	}
+
+	// ...
 
 	/**
 	 * Performs an attack on the target
@@ -73,18 +76,14 @@ public final class DamageAPI extends HandlerCore
 			return;
 		calculator.calculateReduction(damageEvent.getTarget(), damageEvent);
 
-		// CoreUtilPlugin.INFO("");
-		// CoreUtilPlugin.INFO("Damage: " + damageEvent.getBaseDamage() + " - " +
-		// damageEvent.getVariant() + "/" + damageEvent.getType());
-		// CoreUtilPlugin.INFO("Armor: " +
-		// damageEvent.getDamage(com.hepolite.api.damage.DamageModifier.ARMOR));
-		// CoreUtilPlugin.INFO("Magic: " +
-		// damageEvent.getDamage(com.hepolite.api.damage.DamageModifier.MAGIC));
-		// CoreUtilPlugin.INFO("Resistance: " +
-		// damageEvent.getDamage(com.hepolite.api.damage.DamageModifier.POTION));
-		// CoreUtilPlugin.INFO("Blocking: " +
-		// damageEvent.getDamage(com.hepolite.api.damage.DamageModifier.BLOCKING));
-		// CoreUtilPlugin.INFO("");
+		CoreUtilPlugin.INFO("");
+		CoreUtilPlugin.INFO("Damage: " + damageEvent.getBaseDamage() + " - " + damageEvent.getVariant() + "/"
+				+ damageEvent.getType());
+		CoreUtilPlugin.INFO("Armor: " + damageEvent.getDamage(com.hepolite.api.damage.DamageModifier.ARMOR));
+		CoreUtilPlugin.INFO("Magic: " + damageEvent.getDamage(com.hepolite.api.damage.DamageModifier.MAGIC));
+		CoreUtilPlugin.INFO("Resistance: " + damageEvent.getDamage(com.hepolite.api.damage.DamageModifier.POTION));
+		CoreUtilPlugin.INFO("Blocking: " + damageEvent.getDamage(com.hepolite.api.damage.DamageModifier.BLOCKING));
+		CoreUtilPlugin.INFO("");
 
 		post(damageEvent);
 		event.setDamage(damageEvent.getFinalDamage());

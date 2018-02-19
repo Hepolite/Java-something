@@ -18,19 +18,19 @@ leather_helmet:
   toughness: 0.0
 
 # Gold armor is weak against physical attacks, but excellent against magical attacks
-golden_boots:
+gold_boots:
   physical: 1.0
   magical: 3.0
   toughness: 0.0
-golden_leggings:
+gold_leggings:
   physical: 3.0
   magical: 7.0
   toughness: 0.0
-golden_chestplate:
+gold_chestplate:
   physical: 5.0
   magical: 10.0
   toughness: 0.0
-golden_helmet:
+gold_helmet:
   physical: 2.0
   magical: 5.0
   toughness: 0.0
