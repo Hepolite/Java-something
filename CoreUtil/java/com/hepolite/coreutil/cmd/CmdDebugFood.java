@@ -11,7 +11,6 @@ import com.hepolite.api.cmd.Cmd;
 import com.hepolite.api.cmd.GenericArgs;
 import com.hepolite.api.cmd.ICmdContext;
 import com.hepolite.api.user.IUser;
-import com.hepolite.api.user.UserFactory;
 import com.hepolite.coreutil.CoreUtilPlugin;
 import com.hepolite.coreutil.hunger.FoodData;
 import com.hepolite.coreutil.hunger.GroupRegistry;
@@ -46,7 +45,7 @@ public class CmdDebugFood extends Cmd
 			data = hungerHandler.getFoodData(item.get(), group);
 		else if (player.isPresent())
 		{
-			group = hungerHandler.getUserGroup(UserFactory.fromPlayer(player.get()));
+			group = hungerHandler.getPlayerGroup(player.get());
 			data = hungerHandler.getFoodData(player.get().getInventory().getItemInMainHand(), group);
 		}
 

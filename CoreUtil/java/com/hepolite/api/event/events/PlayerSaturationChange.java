@@ -1,49 +1,49 @@
 package com.hepolite.api.event.events;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import com.hepolite.api.user.IUser;
 
 public class PlayerSaturationChange extends Event implements Cancellable
 {
-	private final IUser user;
+	private final Player player;
 	private final float oldSaturation;
 	private float newSaturation;
 
 	private boolean isCancelled = false;
 
-	public PlayerSaturationChange(final IUser user, final float oldSaturation, final float newSaturation)
+	public PlayerSaturationChange(final Player player, final float oldSaturation, final float newSaturation)
 	{
-		this.user = user;
+		this.player = player;
 		this.oldSaturation = oldSaturation;
 		this.newSaturation = newSaturation;
 	}
 
 	/**
-	 * @return Retrieves the user who had the saturation value changed
+	 * @return Retrieves the player who had the saturation value changed
 	 */
-	public final IUser getUser()
+	public final Player getPlayer()
 	{
-		return user;
+		return player;
 	}
 	/**
-	 * @return Retrieves the old saturation value for the user
+	 * @return Retrieves the old saturation value for the player
 	 */
 	public final float getOldSaturation()
 	{
 		return oldSaturation;
 	}
 	/**
-	 * @return Retrieves the new saturation value for the user
+	 * @return Retrieves the new saturation value for the player
 	 */
 	public final float getNewSaturation()
 	{
 		return newSaturation;
 	}
 	/**
-	 * @return Retrieves the change in saturation for the user
+	 * @return Retrieves the change in saturation for the player
 	 */
 	public final float getDeltaSaturation()
 	{
@@ -51,18 +51,18 @@ public class PlayerSaturationChange extends Event implements Cancellable
 	}
 
 	/**
-	 * Assigns the new saturation for the user
+	 * Assigns the new saturation for the player
 	 * 
-	 * @param newSaturation The new saturation value for the user
+	 * @param newSaturation The new saturation value for the player
 	 */
 	public void setNewSaturation(final float newSaturation)
 	{
 		this.newSaturation = newSaturation;
 	}
 	/**
-	 * Assigns the new delta saturation for the user
+	 * Assigns the new delta saturation for the player
 	 * 
-	 * @param newSaturation The new saturation value for the user
+	 * @param newSaturation The new saturation value for the player
 	 */
 	public void setDeltaSaturation(final float deltaSaturation)
 	{

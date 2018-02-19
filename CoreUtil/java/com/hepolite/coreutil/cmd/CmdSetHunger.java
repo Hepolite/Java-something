@@ -8,7 +8,6 @@ import com.hepolite.api.cmd.Cmd;
 import com.hepolite.api.cmd.GenericArgs;
 import com.hepolite.api.cmd.ICmdContext;
 import com.hepolite.api.user.IUser;
-import com.hepolite.api.user.UserFactory;
 import com.hepolite.coreutil.CoreUtilPlugin;
 import com.hepolite.coreutil.hunger.HungerData;
 
@@ -32,7 +31,7 @@ public class CmdSetHunger extends Cmd
 		final float hunger = context.<Float> get("hunger").get();
 		final float saturation = context.<Float> get("saturation").get();
 
-		final HungerData data = CoreUtilPlugin.getHungerHandler().getHungerData(UserFactory.fromPlayer(player));
+		final HungerData data = CoreUtilPlugin.getHungerHandler().getHungerData(player);
 		data.hunger = hunger;
 		data.saturation = saturation;
 

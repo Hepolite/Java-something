@@ -8,7 +8,6 @@ import com.hepolite.api.cmd.Cmd;
 import com.hepolite.api.cmd.GenericArgs;
 import com.hepolite.api.cmd.ICmdContext;
 import com.hepolite.api.user.IUser;
-import com.hepolite.api.user.UserFactory;
 import com.hepolite.coreutil.CoreUtilPlugin;
 import com.hepolite.coreutil.hunger.HungerData;
 import com.hepolite.coreutil.hunger.HungerHandler;
@@ -26,7 +25,7 @@ public class CmdDebugHunger extends Cmd
 		final HungerHandler hungerHandler = CoreUtilPlugin.getHungerHandler();
 
 		final Player player = context.<Player> get("player").get();
-		final HungerData data = hungerHandler.getHungerData(UserFactory.fromPlayer(player));
+		final HungerData data = hungerHandler.getHungerData(player);
 		displayGenericHungerInfo(user, player, data);
 		return true;
 	}

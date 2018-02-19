@@ -1,11 +1,13 @@
 package com.hepolite.coreutil.hunger;
 
+import java.util.UUID;
+
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.hepolite.api.config.Config;
 import com.hepolite.api.config.IConfig;
 import com.hepolite.api.config.Property;
-import com.hepolite.api.user.IUser;
 
 public final class HungerRegistry
 {
@@ -30,19 +32,20 @@ public final class HungerRegistry
 	// ...
 
 	/**
-	 * Returns whether the given user has a hunger data node or not
+	 * Returns whether the given player has a hunger data node or not
 	 */
-	public boolean hasHungerData(final IUser user)
+	public boolean hasHungerData(final Player player)
 	{
-		return users.containsKey(user);
+		return users.containsKey(player.getUniqueId());
 	}
 	/**
-	 * Returns the data that is associated with the given user, creating it if it does not exist
+	 * Returns the data that is associated with the given player, creating it if it does not exist
 	 */
-	public HungerData getHungerData(final IUser user)
+	public HungerData getHungerData(final Player player)
 	{
-		if (!users.containsKey(user))
-			users.put(user, new HungerData());
-		return users.get(user);
+		final UUID uuid = player.getUniqueId();
+		if (!users.containsKey(uuid))
+			users.put(uuid, new HungerData());
+		return users.get(uuid);
 	}
 }

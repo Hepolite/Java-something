@@ -59,16 +59,15 @@ public final class HungerHandler extends HandlerCore
 			if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR)
 				continue;
 
-			final IUser user = UserFactory.fromPlayer(player);
-			final HungerData data = getHungerData(user);
+			final HungerData data = getHungerData(player);
 			final GroupData group = groupRegistry.getGroupData(data.group);
 
 			if (tick % Time.TICKS_PER_SECOND == 0)
-				consumeHunger(user, data, group);
+				consumeHunger(player, data, group);
 			if (group.healingEnable && tick % group.healingFrequency.asTicks() == 0)
-				handleHealing(user, data, group);
+				handleHealing(player, data, group);
 			if (group.starvationEnable && tick % group.starvationFrequency.asTicks() == 0)
-				handleStarvation(user, data, group);
+				handleStarvation(player, data, group);
 		}
 
 		if (tick % Time.TICKS_PER_HOUR == 0)
@@ -91,15 +90,15 @@ public final class HungerHandler extends HandlerCore
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
-		final IUser user = UserFactory.fromPlayer(event.getPlayer());
-		if (!hungerRegistry.hasHungerData(user))
-			resetHunger(user);
-		setUserGroup(user, hungerRegistry.getHungerData(user).group);
+		final Player player = event.getPlayer();
+		if (!hungerRegistry.hasHungerData(player))
+			resetHunger(player);
+		setPlayerGroup(player, hungerRegistry.getHungerData(player).group);
 	}
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
 	public void onPlayerRespawn(final PlayerRespawnEvent event)
 	{
-		resetHunger(UserFactory.fromPlayer(event.getPlayer()));
+		resetHunger(event.getPlayer());
 	}
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onPlayerTakeDamage(final EntityDamageEvent event)
@@ -128,30 +127,28 @@ public final class HungerHandler extends HandlerCore
 
 	// ...
 
-	private void resetHunger(final IUser user)
+	private void resetHunger(final Player player)
 	{
-		final HungerData data = hungerRegistry.getHungerData(user);
+		final HungerData data = hungerRegistry.getHungerData(player);
 		final GroupData group = groupRegistry.getGroupData(data.group);
 
 		data.hunger = data.saturation = group.hungerMax;
 		data.consumption = 0.0f;
 	}
-	private void updateHunger(final IUser user)
+	private void updateHunger(final Player player)
 	{
-		final Optional<Player> player = user.getPlayer();
-		if (!player.isPresent())
-			return;
+		final IUser user = UserFactory.fromPlayer(player);
 		final Attribute maxHunger = AttributeDatabase.get(user, AttributeType.HUNGER_MAX);
-		final HungerData data = hungerRegistry.getHungerData(user);
+		final HungerData data = hungerRegistry.getHungerData(player);
 
-		player.get().setFoodLevel(Math.round(20.0f * data.hunger / maxHunger.getValue()));
-		player.get().setSaturation(20.0f * data.saturation / maxHunger.getValue());
+		player.setFoodLevel(Math.round(20.0f * data.hunger / maxHunger.getValue()));
+		player.setSaturation(20.0f * data.saturation / maxHunger.getValue());
 	}
 
-	private void consumeHunger(final IUser user, final HungerData data, final GroupData group)
+	private void consumeHunger(final Player player, final HungerData data, final GroupData group)
 	{
 		float targetConsumption = 0.0f;
-		switch (CoreUtilPlugin.getMovementHandler().getMovementType(user.getPlayer().get()))
+		switch (CoreUtilPlugin.getMovementHandler().getMovementType(player))
 		{
 		case FLOATING:
 			targetConsumption = group.consumptionFloating;
@@ -185,117 +182,123 @@ public final class HungerHandler extends HandlerCore
 		}
 
 		data.consumption += group.consumptionChange * (targetConsumption - data.consumption);
-		changeSaturation(user, -data.consumption);
+		changeSaturation(player, -data.consumption);
 	}
-	private void handleStarvation(final IUser user, final HungerData data, final GroupData group)
+	private void handleStarvation(final Player player, final HungerData data, final GroupData group)
 	{
 		if (data.hunger > 0.0f)
 			return;
-		final Player player = user.getPlayer().get();
 		ignoreDamageEvent = true;
 		DamageAPI.damage(player, new Damage(DamageType.HUNGER, group.starvationDamage));
 		ignoreDamageEvent = false;
 	}
-	private void handleHealing(final IUser user, final HungerData data, final GroupData group)
+	private void handleHealing(final Player player, final HungerData data, final GroupData group)
 	{
 		if (data.hunger <= group.healingStart)
 			return;
-		final Player player = user.getPlayer().get();
 		ignoreHealingEvent = true;
 		if (DamageAPI.heal(player, player, new Heal(HealType.SATIATED_REGEN, group.healingAmount)))
-			changeSaturation(user, -group.healingCost);
+			changeSaturation(player, -group.healingCost);
 		ignoreHealingEvent = false;
 	}
 
 	// ...
 
+	//public boolean canEat(final Player player, )
+
+	// ...
+
 	/**
-	 * Retrieves the hunger group the given user is associated with
+	 * Retrieves the hunger group the given player is associated with
 	 * 
-	 * @param user The user to look up
-	 * @return The hunger group ID the user is associated with
+	 * @param player The player to look up
+	 * @return The hunger group ID the player is associated with
 	 */
-	public String getUserGroup(final IUser user)
+	public String getPlayerGroup(final Player player)
 	{
-		return hungerRegistry.getHungerData(user).group;
+		return hungerRegistry.getHungerData(player).group;
 	}
 	/**
-	 * Assigns the hunger group the given user is associated with
+	 * Assigns the hunger group the given player is associated with
 	 * 
-	 * @param user The user to look up
-	 * @param group The group the user should be associated with
+	 * @param player The player to look up
+	 * @param group The group the player should be associated with
 	 */
-	public void setUserGroup(final IUser user, final String group)
+	public void setPlayerGroup(final Player player, final String group)
 	{
+		final IUser user = UserFactory.fromPlayer(player);
 		final GroupData groupData = groupRegistry.getGroupData(group);
 		final Attribute maxHunger = AttributeDatabase.get(user, AttributeType.HUNGER_MAX);
 
-		hungerRegistry.getHungerData(user).group = group;
+		hungerRegistry.getHungerData(player).group = group;
 		maxHunger.setBaseValue(groupData.hungerMax).setMinValue(0.0f);
 	}
 
 	/**
-	 * Changes the given user's hunger level by the given amount. This will not consume saturation
+	 * Changes the given player's hunger level by the given amount. This will not consume saturation
 	 * first; if the final hunger value is less than the current saturation value, some saturation
 	 * points will be lost.
 	 * 
-	 * @param user The user to change the hunger for
-	 * @param amount The amount of hunger points to add to the user's account
+	 * @param player The player to change the hunger for
+	 * @param amount The amount of hunger points to add to the player's account
 	 */
-	public void changeHunger(final IUser user, final float amount)
+	public void changeHunger(final Player player, final float amount)
 	{
+		final IUser user = UserFactory.fromPlayer(player);
 		final Attribute maxHunger = AttributeDatabase.get(user, AttributeType.HUNGER_MAX);
-		final HungerData data = hungerRegistry.getHungerData(user);
+		final HungerData data = hungerRegistry.getHungerData(player);
 
-		final PlayerHungerChange event = post(new PlayerHungerChange(user, data.hunger, data.hunger + amount));
+		final PlayerHungerChange event = post(new PlayerHungerChange(player, data.hunger, data.hunger + amount));
 		if (event.isCancelled())
 			return;
 
 		data.hunger = Math.max(0.0f, Math.min(maxHunger.getValue(), event.getNewHunger()));
 		data.saturation = Math.min(data.hunger, data.saturation);
-		updateHunger(user);
+		updateHunger(player);
 	}
 	/**
-	 * Changes the given user's saturation level by the given amount. If the saturation change leads
-	 * to a saturation value greater than the hunger value, the excess saturation points are lost.
-	 * If the saturation is about to become negative, the hunger value will be drained instead.
+	 * Changes the given player's saturation level by the given amount. If the saturation change
+	 * leads to a saturation value greater than the hunger value, the excess saturation points are
+	 * lost. If the saturation is about to become negative, the hunger value will be drained
+	 * instead.
 	 * 
-	 * @param user The user to change the saturation for
-	 * @param amount The amount of saturation points to add to the user's account
+	 * @param player The player to change the saturation for
+	 * @param amount The amount of saturation points to add to the player's account
 	 */
-	public void changeSaturation(final IUser user, final float amount)
+	public void changeSaturation(final Player player, final float amount)
 	{
-		final HungerData data = hungerRegistry.getHungerData(user);
+		final HungerData data = hungerRegistry.getHungerData(player);
 
 		final PlayerSaturationChange event = post(
-				new PlayerSaturationChange(user, data.saturation, data.saturation + amount));
+				new PlayerSaturationChange(player, data.saturation, data.saturation + amount));
 		if (event.isCancelled())
 			return;
 
-		// If the user has enough saturation to sustain a saturation loss, simply update. Otherwise,
+		// If the player has enough saturation to sustain a saturation loss, simply update.
+		// Otherwise,
 		// drain hunger
 		if (event.getNewSaturation() >= 0.0f)
 			data.saturation = Math.max(0.0f, Math.min(data.hunger, event.getNewSaturation()));
 		else
 		{
 			data.saturation = 0.0f;
-			changeHunger(user, event.getNewSaturation());
+			changeHunger(player, event.getNewSaturation());
 		}
-		updateHunger(user);
+		updateHunger(player);
 	}
 
 	// ...
 
 	/**
-	 * Retrieves the raw hunger data for the given user. Consider the returned object as immutable;
-	 * use {@link HungerHandler} itself to modify any of the fields in the hunger data.
+	 * Retrieves the raw hunger data for the given player. Consider the returned object as
+	 * immutable; use {@link HungerHandler} itself to modify any of the fields in the hunger data.
 	 * 
-	 * @param user The user to look up
-	 * @return The hunger data associated with the given user
+	 * @param player The player to look up
+	 * @return The hunger data associated with the given player
 	 */
-	public HungerData getHungerData(final IUser user)
+	public HungerData getHungerData(final Player player)
 	{
-		return hungerRegistry.getHungerData(user);
+		return hungerRegistry.getHungerData(player);
 	}
 
 	// ...
