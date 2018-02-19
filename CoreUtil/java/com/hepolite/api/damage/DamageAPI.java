@@ -1,13 +1,20 @@
 package com.hepolite.api.damage;
 
+import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import com.hepolite.api.event.HandlerCore;
 import com.hepolite.api.event.events.DamageEvent;
@@ -42,7 +49,7 @@ public final class DamageAPI extends HandlerCore
 	 * 
 	 * @param target The target that will receive the damage
 	 * @param damage The damage to be dealt to the target
-	 * @return True iff the damage was not cancelled
+	 * @return True iff the damage was dealt to the target
 	 */
 	public static boolean damage(final LivingEntity target, final Damage damage)
 	{
@@ -54,7 +61,7 @@ public final class DamageAPI extends HandlerCore
 	 * @param target The target that will receive the damage
 	 * @param attacker The attack which deals the damage, may be null
 	 * @param damage The damage to be dealt to the target
-	 * @return True iff the damage was not cancelled
+	 * @return True iff the damage was dealt to the target
 	 */
 	public static boolean damage(final LivingEntity target, final LivingEntity attacker, final Damage damage)
 	{
@@ -67,6 +74,42 @@ public final class DamageAPI extends HandlerCore
 			target.damage(damage.getAmount(), attacker);
 		instance.adapter.injectDamage(null);
 		return !cancelledDamage;
+	}
+	/**
+	 * Performs an attack on the target, using the provided item as a weapon
+	 * 
+	 * @param target The target that will receive the damage
+	 * @param item The item that will deal the damage
+	 * @return True iff the damage was dealt to the target
+	 */
+	public static boolean damage(final LivingEntity target, final ItemStack item)
+	{
+		return damage(target, null, item);
+	}
+	/**
+	 * Performs an attack on the target, using the provided item as a weapon
+	 * 
+	 * @param target The target that will receive the damage
+	 * @param attacker The attack which deals the damage, may be null
+	 * @param item The item that will deal the damage
+	 * @return True iff the damage was dealt to the target
+	 */
+	public static boolean damage(final LivingEntity target, final LivingEntity attacker, final ItemStack item)
+	{
+		// Calculate damage done by the item
+		double damage = 0.0;
+		damage += DamageAPI.getDamageFromItem(item);
+		damage += DamageAPI.getDamageAgainstEntity(target.getType(), item);
+		if (attacker != null)
+			damage += DamageAPI.getDamageFromEntity(attacker);
+
+		// Apply item effects if the attack was valid
+		final int fireAspect = item.getEnchantmentLevel(Enchantment.FIRE_ASPECT);
+
+		final boolean didDamage = damage(target, attacker, new Damage(DamageType.NORMAL, damage));
+		if (didDamage && fireAspect != 0)
+			target.setFireTicks(Math.max(80 * fireAspect, target.getFireTicks()));
+		return didDamage;
 	}
 
 	/**
@@ -111,6 +154,26 @@ public final class DamageAPI extends HandlerCore
 		return true;
 	}
 
+	/**
+	 * Applies a force on the target, knocking them away from the origin location
+	 * 
+	 * @param target The target to knock to the side
+	 * @param origin The source location of the force
+	 * @param strength The strength of the force, measured in m/s
+	 * @param lift Additional lift parameter, measured in m/s
+	 */
+	public static void knockback(final LivingEntity target, final Location origin, final double strength,
+			final double lift)
+	{
+		final Vector delta = target.getLocation().subtract(origin).toVector();
+		delta.setY(0.0);
+		if (delta.lengthSquared() > 0.001)
+			delta.normalize();
+		delta.multiply(0.05 * strength);
+		delta.setY(delta.getY() + 0.05 * lift);
+		target.setVelocity(target.getVelocity().add(delta));
+	}
+
 	// ...
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
@@ -141,5 +204,92 @@ public final class DamageAPI extends HandlerCore
 		post(healEvent);
 		event.setAmount(healEvent.getHealing());
 		event.setCancelled(healEvent.isCancelled());
+	}
+
+	// ...
+
+	/**
+	 * Returns the amount of damage the given item can inflict upon use
+	 * 
+	 * @param item The item to check
+	 * @return The damage the item can do
+	 */
+	private static double getDamageFromItem(final ItemStack item)
+	{
+		switch (item.getType())
+		{
+		case WOOD_PICKAXE:
+		case GOLD_PICKAXE:
+			return 2.0;
+		case WOOD_SPADE:
+		case GOLD_SPADE:
+			return 2.5;
+		case STONE_PICKAXE:
+			return 3.0;
+		case STONE_SPADE:
+			return 3.5;
+		case WOOD_SWORD:
+		case GOLD_SWORD:
+		case IRON_PICKAXE:
+			return 4.0;
+		case IRON_SPADE:
+			return 4.5;
+		case STONE_SWORD:
+		case DIAMOND_PICKAXE:
+			return 5.9;
+		case DIAMOND_SPADE:
+			return 5.5;
+		case IRON_SWORD:
+			return 6.0;
+		case WOOD_AXE:
+		case GOLD_AXE:
+		case DIAMOND_SWORD:
+			return 7.0;
+		case STONE_AXE:
+		case IRON_AXE:
+		case DIAMOND_AXE:
+			return 9.0;
+		default:
+			return 1.0;
+		}
+	}
+	/**
+	 * Returns the bonus damage the item will deal against the given mob type; this will only
+	 * consider the enchantments on the item
+	 * 
+	 * @param type The entity type to fight against
+	 * @param item The item that is used
+	 * @return The additional damage done by the item
+	 */
+	private static double getDamageAgainstEntity(final EntityType type, final ItemStack item)
+	{
+		final int sharpness = item.getEnchantmentLevel(Enchantment.DAMAGE_ALL);
+		final int bane = item.getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS);
+		final int smite = item.getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD);
+
+		double damage = 0.5 * sharpness;
+		if (type == EntityType.SKELETON || type == EntityType.ZOMBIE || type == EntityType.WITHER
+				|| type == EntityType.WITHER_SKELETON || type == EntityType.PIG_ZOMBIE
+				|| type == EntityType.SKELETON_HORSE || type == EntityType.ZOMBIE_HORSE || type == EntityType.STRAY
+				|| type == EntityType.ZOMBIE_VILLAGER || type == EntityType.HUSK)
+			damage += 2.5 * smite;
+		if (type == EntityType.SPIDER || type == EntityType.CAVE_SPIDER || type == EntityType.SILVERFISH
+				|| type == EntityType.ENDERMITE)
+			damage += 2.5 * bane;
+		return damage;
+	}
+	/**
+	 * Returns the bonus damage the given entity can deal out when attacking; this will only
+	 * consider potion effects
+	 * 
+	 * @param entity The entity to look at
+	 * @return The additional damage done by the entity
+	 */
+	private static double getDamageFromEntity(final LivingEntity entity)
+	{
+		final PotionEffect effect = entity.getPotionEffect(PotionEffectType.INCREASE_DAMAGE);
+		if (effect == null)
+			return 0.0;
+		return 3.0 * (effect.getAmplifier() + 1);
 	}
 }
