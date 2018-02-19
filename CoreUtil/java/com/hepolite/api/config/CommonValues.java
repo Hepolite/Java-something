@@ -84,12 +84,12 @@ public final class CommonValues
 		 * 
 		 * @param entity The entity to apply the effect to
 		 */
-		void apply(final LivingEntity entity)
+		public void apply(final LivingEntity entity)
 		{
 			if (random.nextFloat() < chance)
 			{
-				entity.addPotionEffect(new PotionEffect(type, amplifier > 0 ? amplifier - 1 : amplifier,
-						(int) duration.asTicks(), ambient, particles));
+				entity.addPotionEffect(new PotionEffect(type, (int) duration.asTicks(),
+						amplifier > 0 ? amplifier - 1 : amplifier, ambient, particles), true);
 			}
 		}
 
@@ -117,12 +117,12 @@ public final class CommonValues
 		@Override
 		public String toString()
 		{
-			return String.format("Type: %s, amplifier: %d, duration: %s", type.getName(), amplifier,
-					duration.toString());
+			return String.format("Type: %s, amplifier: %d, duration: %s, chance: %.0f%%", type.getName(), amplifier,
+					duration.toString(), 100.0f * chance);
 		}
 	}
 
-	public static final class DamageCauseTypeValue implements IValue
+	public static final class DamageTypeSetValue implements IValue
 	{
 		public Set<DamageType> types = new HashSet<>();
 

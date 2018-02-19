@@ -21,6 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.hepolite.api.attribute.Attribute;
 import com.hepolite.api.attribute.AttributeDatabase;
 import com.hepolite.api.attribute.AttributeType;
+import com.hepolite.api.config.CommonValues.PotionEffectValue;
 import com.hepolite.api.damage.Damage;
 import com.hepolite.api.damage.DamageAPI;
 import com.hepolite.api.damage.DamageType;
@@ -32,7 +33,6 @@ import com.hepolite.api.event.events.PlayerSaturationChange;
 import com.hepolite.api.units.Time;
 import com.hepolite.api.user.IUser;
 import com.hepolite.api.user.UserFactory;
-import com.hepolite.api.util.StringConverter;
 import com.hepolite.coreutil.CoreUtilPlugin;
 
 public final class HungerHandler extends HandlerCore
@@ -121,7 +121,8 @@ public final class HungerHandler extends HandlerCore
 		final Player player = event.getPlayer();
 		final ItemStack item = player.getInventory().getItemInMainHand();
 
-		player.sendMessage("Item " + StringConverter.fromItem(item) + ": " + canPlayerEat(player, item));
+		if (canPlayerEat(player, item))
+			consumeItem(player, item);
 	}
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onPlayerConsumeItem(final PlayerItemConsumeEvent event)
@@ -242,6 +243,32 @@ public final class HungerHandler extends HandlerCore
 			if (data.forbiddenIngredients.contains(category))
 				return false;
 		return !data.forbiddenCategories.contains(food.name);
+	}
+	/**
+	 * Forces the player to consume the specified item
+	 * 
+	 * @param player The player that is to eat the item
+	 * @param item The item to be eaten
+	 */
+	public void consumeItem(final Player player, final ItemStack item)
+	{
+		final String group = getPlayerGroup(player);
+		final Optional<FoodData> opFood = foodRegistry.getFoodData(item, group);
+		if (!opFood.isPresent())
+			return;
+		final FoodData food = opFood.get();
+
+		for (final PotionEffectValue effect : food.effects)
+			effect.apply(player);
+
+		// When food takes hunger points, take saturation first
+		if (food.food > 0.0f)
+		{
+			changeHunger(player, food.food);
+			changeSaturation(player, food.food * food.ratio);
+		}
+		else
+			changeSaturation(player, food.food * (1.0f + food.ratio));
 	}
 
 	/**

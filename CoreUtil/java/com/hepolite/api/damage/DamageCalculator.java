@@ -19,7 +19,7 @@ import org.bukkit.util.Vector;
 import com.hepolite.api.attribute.Attribute;
 import com.hepolite.api.attribute.AttributeDatabase;
 import com.hepolite.api.attribute.AttributeType;
-import com.hepolite.api.config.CommonValues.DamageCauseTypeValue;
+import com.hepolite.api.config.CommonValues.DamageTypeSetValue;
 import com.hepolite.api.config.ConfigFactory;
 import com.hepolite.api.config.IConfig;
 import com.hepolite.api.config.IProperty;
@@ -63,7 +63,7 @@ public final class DamageCalculator
 		for (final IProperty property : configEPF.getProperties())
 		{
 			enchantmentCauses.put(property.getName().toLowerCase(),
-					configEPF.getValue(property.child("blocks"), new DamageCauseTypeValue()).types);
+					configEPF.getValue(property.child("blocks"), new DamageTypeSetValue()).types);
 			enchantmentStrengths.put(property.getName(), configEPF.getDouble(property.child("strength")));
 		}
 

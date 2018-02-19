@@ -15,7 +15,8 @@ Sound:
     volume: 1.0
     pitch:  1.0
 
-# Base amount of food consumed by a player every second
+# Base amount of food consumed by players; the player will have consumed a full
+# hunger bar when the specified amount of time has elapsed while in that state
 Consumption:
   change: 0.015      # Rate of change for rate of consuption (def: 0.015)
   state:

@@ -69,10 +69,12 @@ Default:
         type: regeneration
         duration: 5s
         amplifier: 2
+        chance: 1.0
       Effect 1:
         type: absorption
         duration: 2m
         amplifier: 4
+        chance: 1.0
   golden_apple-1:
     categories: fruit
     food: 20.0
@@ -83,18 +85,22 @@ Default:
         type: regeneration
         duration: 20s
         amplifier: 2
+        chance: 1.0
       Effect 1:
         type: absorption
         duration: 2m
         amplifier: 4
+        chance: 1.0
       Effect 2:
         type: damage_resistance
         duration: 5m
         amplifier: 1
+        chance: 1.0
       Effect 3:
         type: fire_resistance
         duration: 5m
         amplifier: 1
+        chance: 1.0
   golden_carrot:
     categories: vegetable
     food: 20.0
@@ -107,6 +113,9 @@ Default:
     categories: berry
     food: 10.0
     ratio: 0.6
+  milk_bucket:
+    categories: dairy
+    alwaysConsumable: true
   mushroom_soup:
     ingredients: brown_mushroom
     food: 30.0
@@ -137,8 +146,7 @@ Default:
     categories: potion
     alwaysConsumable: true
   pumpkin_pie:
-    ingredients: egg sugar
-    categories: berry
+    ingredients: egg pumpkin sugar
     food: 40.0
     ratio: 0.6
   rabbit:
@@ -184,14 +192,17 @@ Default:
         type: hunger
         duration: 15s
         amplifier: 3
+        chance: 1.0
       Effect 1:
         type: confusion
         duration: 15s
         amplifier: 2
+        chance: 1.0
       Effect 2:
         type: poison
         duration: 1m
         amplifier: 4
+        chance: 1.0
   rotten_flesh:
     categories: meat
     food: 20.0
@@ -211,3 +222,4 @@ Default:
         type: poison
         duration: 4s
         amplifier: 1
+        chance: 1.0
