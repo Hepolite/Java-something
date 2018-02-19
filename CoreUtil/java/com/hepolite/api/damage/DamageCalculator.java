@@ -27,7 +27,6 @@ import com.hepolite.api.config.Property;
 import com.hepolite.api.event.events.DamageEvent;
 import com.hepolite.api.user.IUser;
 import com.hepolite.api.user.UserFactory;
-import com.hepolite.coreutil.CoreUtilPlugin;
 
 /**
  * Don't use this class yet. It is still in development and will not be needed before
@@ -103,14 +102,15 @@ public final class DamageCalculator
 		/// @formatter:on
 
 		// TODO: Figure out how to make this a debugging option
-		CoreUtilPlugin.INFO("");
-		CoreUtilPlugin.INFO("Damage: " + event.getBaseDamage() + " - " + event.getVariant() + "/" + event.getType());
-		CoreUtilPlugin.INFO("Armor: " + event.getDamage(DamageModifier.ARMOR));
-		CoreUtilPlugin.INFO("Attribute: " + event.getDamage(DamageModifier.ATTRIBUTE));
-		CoreUtilPlugin.INFO("Magic: " + event.getDamage(DamageModifier.MAGIC));
-		CoreUtilPlugin.INFO("Resistance: " + event.getDamage(DamageModifier.POTION));
-		CoreUtilPlugin.INFO("Blocking: " + event.getDamage(DamageModifier.BLOCKING));
-		CoreUtilPlugin.INFO("");
+		// CoreUtilPlugin.INFO("");
+		// CoreUtilPlugin.INFO("Damage: " + event.getBaseDamage() + " - " + event.getVariant() + "/"
+		// + event.getType());
+		// CoreUtilPlugin.INFO("Armor: " + event.getDamage(DamageModifier.ARMOR));
+		// CoreUtilPlugin.INFO("Attribute: " + event.getDamage(DamageModifier.ATTRIBUTE));
+		// CoreUtilPlugin.INFO("Magic: " + event.getDamage(DamageModifier.MAGIC));
+		// CoreUtilPlugin.INFO("Resistance: " + event.getDamage(DamageModifier.POTION));
+		// CoreUtilPlugin.INFO("Blocking: " + event.getDamage(DamageModifier.BLOCKING));
+		// CoreUtilPlugin.INFO("");
 	}
 
 	// ...

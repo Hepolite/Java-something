@@ -14,10 +14,10 @@ class AttributeDatabaseTest
 	{
 		final IUser userA = new EntityUser();
 		final IUser userB = new EntityUser();
-		final Attribute attributeA = AttributeDatabase.get(userA, AttributeType.HEALTH);
-		final Attribute attributeB = AttributeDatabase.get(userA, AttributeType.HEALTH);
-		final Attribute attributeC = AttributeDatabase.get(userA, AttributeType.HEALTH_MAX);
-		final Attribute attributeD = AttributeDatabase.get(userB, AttributeType.HEALTH_MAX);
+		final Attribute attributeA = AttributeDatabase.get(userA, AttributeType.HUNGER_MAX);
+		final Attribute attributeB = AttributeDatabase.get(userA, AttributeType.HUNGER_MAX);
+		final Attribute attributeC = AttributeDatabase.get(userA, AttributeType.SPEED_WALK);
+		final Attribute attributeD = AttributeDatabase.get(userB, AttributeType.SPEED_WALK);
 
 		assertNotNull(attributeA);
 		assertNotNull(attributeC);

@@ -11,6 +11,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
@@ -112,6 +114,16 @@ public final class HungerHandler extends HandlerCore
 		if (ignoreHealingEvent || event.getRegainReason() != RegainReason.SATIATED)
 			return;
 		event.setCancelled(true);
+	}
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
+	public void onPlayerInteract(final PlayerInteractEvent event)
+	{
+
+	}
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void onPlayerConsumeItem(final PlayerItemConsumeEvent event)
+	{
+
 	}
 
 	// ...
