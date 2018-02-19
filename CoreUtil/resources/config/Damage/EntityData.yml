@@ -1,0 +1,30 @@
+
+zombie:
+  physical: 2.0
+  magical: 0.0
+  toughness: 0.0
+
+zombie_pigman:
+  physical: 2.0
+  magical: 0.0
+  toughness: 0.0
+
+zombie_villager:
+  physical: 2.0
+  magical: 0.0
+  toughness: 0.0
+
+husk:
+  physical: 2.0
+  magical: 0.0
+  toughness: 0.0
+
+magma_cube:
+  physical: 6.0
+  magical: 0.0
+  toughness: 0.0
+
+wither:
+  physical: 4.0
+  magical: 0.0
+  toughness: 0.0

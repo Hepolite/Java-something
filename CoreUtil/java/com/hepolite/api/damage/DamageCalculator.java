@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
@@ -30,6 +31,7 @@ import com.hepolite.api.event.events.DamageEvent;
 public final class DamageCalculator
 {
 	private final JavaPlugin plugin;
+	private final IConfig configED;		// Entity data
 	private final IConfig configAR;		// Armor rating
 	private final IConfig configEPF;	// Enchantment protection factor
 	private final IConfig configPR;		// Potion rating
@@ -40,6 +42,7 @@ public final class DamageCalculator
 	public DamageCalculator(final JavaPlugin plugin)
 	{
 		this.plugin = plugin;
+		configED = ConfigFactory.create(plugin, "Damage/EntityData");
 		configAR = ConfigFactory.create(plugin, "Damage/ArmorRating");
 		configEPF = ConfigFactory.create(plugin, "Damage/EnchantmentRating");
 		configPR = ConfigFactory.create(plugin, "Damage/PotionRating");
@@ -48,6 +51,7 @@ public final class DamageCalculator
 
 	public void reloadConfigs()
 	{
+		configED.loadFromDisk();
 		configAR.loadFromDisk();
 		configEPF.loadFromDisk();
 		configPR.loadFromDisk();
@@ -61,6 +65,7 @@ public final class DamageCalculator
 
 		plugin.getLogger().info("Loaded damage calculation configs...");
 	}
+
 	// ...
 
 	/**
@@ -78,7 +83,7 @@ public final class DamageCalculator
 		final Collection<PotionEffect> effects = target.getActivePotionEffects();
 
 		calculateBlockReduction(target, event);
-		calculateArmorReduction(armor, event);
+		calculateArmorReduction(target.getType(), armor, event);
 		calculateResistanceReduction(effects, event);
 		calculateEnchantmentReduction(armor, event);
 
@@ -88,8 +93,13 @@ public final class DamageCalculator
 		event.setDamage(DamageModifier.MAGIC, type.getMagicFactor() * event.getDamage(DamageModifier.MAGIC));
 		event.setDamage(DamageModifier.POTION, type.getPotionFactor() * event.getDamage(DamageModifier.POTION));
 	}
-	public void calculateArmorReduction(final ItemStack[] armor, final DamageEvent event)
+
+	// ...
+
+	private void calculateArmorReduction(final EntityType type, final ItemStack[] armor, final DamageEvent event)
 	{
+		final String variant = event.getVariant().toString().toLowerCase();
+
 		double rating = 0.0f;
 		double toughness = 0.0f;
 		for (final ItemStack item : armor)
@@ -97,10 +107,15 @@ public final class DamageCalculator
 			if (item == null)
 				continue;
 			final IProperty property = new Property(item.getType().toString().toLowerCase());
-			final String variant = event.getVariant().toString().toLowerCase();
 
 			rating += configAR.getDouble(property.child(variant));
 			toughness += configAR.getDouble(property.child("toughness"));
+		}
+		{
+			final IProperty property = new Property(type.toString().toLowerCase());
+
+			rating += configED.getDouble(property.child(variant));
+			toughness += configED.getDouble(property.child("toughness"));
 		}
 
 		final double tot = event.getFinalDamage();
@@ -108,7 +123,7 @@ public final class DamageCalculator
 				* (1.0 - Math.min(20.0, Math.max(rating / 5.0, rating - tot / (toughness / 4.0 + 2.0))) / 25.0);
 		event.setDamage(DamageModifier.ARMOR, dmg - tot);
 	}
-	public void calculateEnchantmentReduction(final ItemStack[] armor, final DamageEvent event)
+	private void calculateEnchantmentReduction(final ItemStack[] armor, final DamageEvent event)
 	{
 		double epf = 0.0;
 		for (final ItemStack item : armor)
@@ -130,7 +145,7 @@ public final class DamageCalculator
 		final double dmg = tot * (1.0 - Math.min(20.0, epf) / 25.0);
 		event.setDamage(DamageModifier.MAGIC, dmg - tot);
 	}
-	public void calculateResistanceReduction(final Collection<PotionEffect> effects, final DamageEvent event)
+	private void calculateResistanceReduction(final Collection<PotionEffect> effects, final DamageEvent event)
 	{
 		for (final PotionEffect effect : effects)
 		{
@@ -145,7 +160,7 @@ public final class DamageCalculator
 			break;
 		}
 	}
-	public void calculateBlockReduction(final LivingEntity target, final DamageEvent event)
+	private void calculateBlockReduction(final LivingEntity target, final DamageEvent event)
 	{
 		if (!(target instanceof Player))
 			return;
