@@ -12,7 +12,7 @@ import com.hepolite.api.plugin.PluginCore;
 import com.hepolite.api.task.SynchronizedTask;
 import com.hepolite.api.units.Time;
 import com.hepolite.coreutil.cmd.CmdCoreUtil;
-import com.hepolite.coreutil.hunger.HungerHandler;
+import com.hepolite.coreutil.hunger.HungerSystem;
 import com.hepolite.coreutil.movement.MovementHandler;
 import com.hepolite.coreutil.util.reflection.ReflectionHandler;
 
@@ -21,7 +21,7 @@ public final class CoreUtilPlugin extends PluginCore implements IPlugin
 	private final Collection<IPlugin> plugins = new ArrayList<>();
 
 	private static CoreUtilPlugin instance;
-	private HungerHandler hungerHandler;
+	private HungerSystem hungerHandler;
 	private MovementHandler movementHandler;
 
 	private int currentTick = 0;
@@ -32,7 +32,7 @@ public final class CoreUtilPlugin extends PluginCore implements IPlugin
 	{
 		return instance;
 	}
-	public static final HungerHandler getHungerHandler()
+	public static final HungerSystem getHungerHandler()
 	{
 		return instance.hungerHandler;
 	}
@@ -75,7 +75,7 @@ public final class CoreUtilPlugin extends PluginCore implements IPlugin
 		handler.register(new DamageAPI(this));
 
 		// Ensure that all sub-systems are ready to roll
-		hungerHandler = handler.register(new HungerHandler(this));
+		hungerHandler = handler.register(new HungerSystem(this));
 		movementHandler = handler.register(new MovementHandler(this));
 	}
 

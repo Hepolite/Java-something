@@ -9,11 +9,16 @@ Message:
 
 # Sounds that are played for various events
 Sound:
-  eat:               # The sound that plays whenever the player eats something
-    enable: true
-    sound:  entity_generic_eat
-    volume: 1.0
-    pitch:  1.0
+  chew:               # The sound that plays whenever the player chews on something
+    enabled: true
+    sound:   entity_parrot_eat
+    volume:  1.0
+    pitch:   0.55
+  eat:               # The sound that plays whenever the player swallows something
+    enabled: true
+    sound:   entity_llama_eat
+    volume:  1.0
+    pitch:   1.0
 
 # Base amount of food consumed by players; the player will have consumed a full
 # hunger bar when the specified amount of time has elapsed while in that state

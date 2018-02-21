@@ -14,7 +14,7 @@ import com.hepolite.api.user.IUser;
 import com.hepolite.coreutil.CoreUtilPlugin;
 import com.hepolite.coreutil.hunger.FoodData;
 import com.hepolite.coreutil.hunger.GroupRegistry;
-import com.hepolite.coreutil.hunger.HungerHandler;
+import com.hepolite.coreutil.hunger.HungerSystem;
 
 public class CmdDebugFood extends Cmd
 {
@@ -34,7 +34,7 @@ public class CmdDebugFood extends Cmd
 	@Override
 	public boolean execute(final IUser user, final ICmdContext context) throws CommandException
 	{
-		final HungerHandler hungerHandler = CoreUtilPlugin.getHungerHandler();
+		final HungerSystem hungerHandler = CoreUtilPlugin.getHungerHandler();
 
 		final Optional<Player> player = context.get("player");
 		final Optional<String> item = context.get("item");

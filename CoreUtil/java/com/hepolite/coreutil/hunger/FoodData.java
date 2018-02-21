@@ -5,10 +5,15 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.bukkit.inventory.ItemStack;
+
+import com.hepolite.api.config.CommonValues.ItemStackValue;
 import com.hepolite.api.config.CommonValues.PotionEffectValue;
+import com.hepolite.api.config.CommonValues.TimeValue;
 import com.hepolite.api.config.IConfig;
 import com.hepolite.api.config.IProperty;
 import com.hepolite.api.config.IValue;
+import com.hepolite.api.units.Time;
 
 public final class FoodData implements IValue
 {
@@ -20,6 +25,8 @@ public final class FoodData implements IValue
 	public float food = 0.0f;
 	public float ratio = 0.0f;
 	public boolean alwaysConsumable = false;
+	public Time time;
+	public ItemStack result;
 
 	@Override
 	public void save(final IConfig config, final IProperty property)
@@ -31,6 +38,8 @@ public final class FoodData implements IValue
 		food = config.getFloat(property.child("food"));
 		ratio = config.getFloat(property.child("ratio"));
 		alwaysConsumable = config.getBool(property.child("alwaysConsumable"));
+		time = config.getValue(property.child("time"), new TimeValue()).time;
+		result = config.getValue(property.child("result"), new ItemStackValue()).item;
 
 		for (final String category : config.getString(property.child("categories")).split(" "))
 			categories.add(category);

@@ -3,6 +3,7 @@ package com.hepolite.coreutil.hunger;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.hepolite.api.config.CommonValues.SoundValue;
 import com.hepolite.api.config.CommonValues.TimeValue;
 import com.hepolite.api.config.IConfig;
 import com.hepolite.api.config.IProperty;
@@ -14,6 +15,8 @@ public class GroupData implements IValue
 	public float hungerMax = 0.0f;
 	public Set<String> forbiddenCategories = new HashSet<>();
 	public Set<String> forbiddenIngredients = new HashSet<>();
+	public final SoundValue chewingSound = new SoundValue();
+	public final SoundValue eatingSound = new SoundValue();
 
 	public float consumptionChange = 0.0f;
 	public float consumptionFloating = 0.0f;
@@ -46,6 +49,7 @@ public class GroupData implements IValue
 		loadConsumption(config, property.child("Consumption"));
 		loadHealing(config, property.child("Healing"));
 		loadStarvation(config, property.child("Starvation"));
+		loadMisc(config, property);
 	}
 	private void loadHunger(final IConfig config, final IProperty property)
 	{
@@ -84,6 +88,12 @@ public class GroupData implements IValue
 		starvationEnable = config.getBool(property.child("enable"));
 		starvationFrequency = config.getValue(property.child("frequency"), new TimeValue()).time;
 		starvationDamage = config.getDouble(property.child("damage"));
+	}
+	private void loadMisc(final IConfig config, final IProperty property)
+	{
+		final IProperty sound = property.child("Sound");
+		config.getValue(sound.child("chew"), chewingSound);
+		config.getValue(sound.child("eat"), eatingSound);
 	}
 
 	private float convert(final Time time)

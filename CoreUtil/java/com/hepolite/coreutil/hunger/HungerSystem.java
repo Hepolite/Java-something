@@ -2,19 +2,8 @@ package com.hepolite.coreutil.hunger;
 
 import java.util.Optional;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,55 +11,36 @@ import com.hepolite.api.attribute.Attribute;
 import com.hepolite.api.attribute.AttributeDatabase;
 import com.hepolite.api.attribute.AttributeType;
 import com.hepolite.api.config.CommonValues.PotionEffectValue;
-import com.hepolite.api.damage.Damage;
-import com.hepolite.api.damage.DamageAPI;
-import com.hepolite.api.damage.DamageType;
-import com.hepolite.api.damage.Heal;
-import com.hepolite.api.damage.HealType;
 import com.hepolite.api.event.HandlerCore;
 import com.hepolite.api.event.events.PlayerHungerChange;
 import com.hepolite.api.event.events.PlayerSaturationChange;
 import com.hepolite.api.units.Time;
 import com.hepolite.api.user.IUser;
 import com.hepolite.api.user.UserFactory;
-import com.hepolite.coreutil.CoreUtilPlugin;
+import com.hepolite.api.util.InventoryHelper;
 
-public final class HungerHandler extends HandlerCore
+public final class HungerSystem extends HandlerCore
 {
 	private final FoodRegistry foodRegistry;
 	private final HungerRegistry hungerRegistry;
 	private final GroupRegistry groupRegistry;
+	private final HungerListener hungerListener;
 
-	private boolean ignoreDamageEvent = false;
-	private boolean ignoreHealingEvent = false;
-
-	public HungerHandler(final JavaPlugin plugin)
+	public HungerSystem(final JavaPlugin plugin)
 	{
 		super(plugin);
 		foodRegistry = new FoodRegistry(plugin);
 		hungerRegistry = new HungerRegistry(plugin);
 		groupRegistry = new GroupRegistry(plugin);
+		hungerListener = register(new HungerListener(this));
 	}
 
 	@Override
 	public void onTick(final int tick)
 	{
-		for (final Player player : Bukkit.getOnlinePlayers())
-		{
-			if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR)
-				continue;
+		hungerListener.onTick(tick);
 
-			final HungerData data = getHungerData(player);
-			final GroupData group = groupRegistry.getGroupData(data.group);
-
-			if (tick % Time.TICKS_PER_SECOND == 0)
-				consumeHunger(player, data, group);
-			if (group.healingEnable && tick % group.healingFrequency.asTicks() == 0)
-				handleHealing(player, data, group);
-			if (group.starvationEnable && tick % group.starvationFrequency.asTicks() == 0)
-				handleStarvation(player, data, group);
-		}
-
+		// Be sure to make backups every now and then!
 		if (tick % Time.TICKS_PER_HOUR == 0)
 			hungerRegistry.saveData();
 	}
@@ -88,129 +58,21 @@ public final class HungerHandler extends HandlerCore
 
 	// ...
 
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-	public void onPlayerJoin(final PlayerJoinEvent event)
-	{
-		final Player player = event.getPlayer();
-		if (!hungerRegistry.hasHungerData(player))
-			resetHunger(player);
-		setPlayerGroup(player, hungerRegistry.getHungerData(player).group);
-	}
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-	public void onPlayerRespawn(final PlayerRespawnEvent event)
-	{
-		resetHunger(event.getPlayer());
-	}
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-	public void onPlayerTakeDamage(final EntityDamageEvent event)
-	{
-		if (ignoreDamageEvent || event.getCause() != DamageCause.STARVATION)
-			return;
-		event.setCancelled(true);
-	}
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-	public void onPlayerHealDamage(final EntityRegainHealthEvent event)
-	{
-		if (ignoreHealingEvent || event.getRegainReason() != RegainReason.SATIATED)
-			return;
-		event.setCancelled(true);
-	}
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
-	public void onPlayerInteract(final PlayerInteractEvent event)
-	{
-		final Player player = event.getPlayer();
-		final ItemStack item = player.getInventory().getItemInMainHand();
-
-		if (canPlayerEat(player, item))
-			consumeItem(player, item);
-	}
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-	public void onPlayerConsumeItem(final PlayerItemConsumeEvent event)
-	{
-
-	}
-
-	// ...
-
-	private void resetHunger(final Player player)
-	{
-		final HungerData data = hungerRegistry.getHungerData(player);
-		final GroupData group = groupRegistry.getGroupData(data.group);
-
-		data.hunger = data.saturation = group.hungerMax;
-		data.consumption = 0.0f;
-	}
-	private void updateHunger(final Player player)
-	{
-		final IUser user = UserFactory.fromPlayer(player);
-		final Attribute maxHunger = AttributeDatabase.get(user, AttributeType.HUNGER_MAX);
-		final HungerData data = hungerRegistry.getHungerData(player);
-
-		player.setFoodLevel(Math.round(20.0f * data.hunger / maxHunger.getValue()));
-		player.setSaturation(20.0f * data.saturation / maxHunger.getValue());
-	}
-
-	private void consumeHunger(final Player player, final HungerData data, final GroupData group)
-	{
-		float targetConsumption = 0.0f;
-		switch (CoreUtilPlugin.getMovementHandler().getMovementType(player))
-		{
-		case FLOATING:
-			targetConsumption = group.consumptionFloating;
-			break;
-		case FLYING:
-			targetConsumption = group.consumptionFlying;
-			break;
-		case GLIDING:
-			targetConsumption = group.consumptionGliding;
-			break;
-		case HOVERING:
-			targetConsumption = group.consumptionHovering;
-			break;
-		case RUNNING:
-			targetConsumption = group.consumptionRunning;
-			break;
-		case SNEAKING:
-			targetConsumption = group.consumptionSneaking;
-			break;
-		case STANDING:
-			targetConsumption = group.consumptionStanding;
-			break;
-		case SWIMMING:
-			targetConsumption = group.consumptionSwimming;
-			break;
-		case WALKING:
-			targetConsumption = group.consumptionWalking;
-			break;
-		default:
-			CoreUtilPlugin.WARN("[HungerHandler] Illegal movement type");
-		}
-
-		data.consumption += group.consumptionChange * (targetConsumption - data.consumption);
-		changeSaturation(player, -data.consumption);
-	}
-	private void handleStarvation(final Player player, final HungerData data, final GroupData group)
-	{
-		if (data.hunger > 0.0f)
-			return;
-		ignoreDamageEvent = true;
-		DamageAPI.damage(player, new Damage(DamageType.HUNGER, group.starvationDamage));
-		ignoreDamageEvent = false;
-	}
-	private void handleHealing(final Player player, final HungerData data, final GroupData group)
-	{
-		if (data.hunger <= group.healingStart)
-			return;
-		ignoreHealingEvent = true;
-		if (DamageAPI.heal(player, player, new Heal(HealType.SATIATED_REGEN, group.healingAmount)))
-			changeSaturation(player, -group.healingCost);
-		ignoreHealingEvent = false;
-	}
-
-	// ...
-
 	/**
-	 * Returns true iff the player is allowed to eat the given item
+	 * Returns true iff the player has a full hunger bar
+	 * 
+	 * @param player The player to check
+	 * @return True iff the player is full of food
+	 */
+	public boolean isPlayerFull(final Player player)
+	{
+		final Attribute maxHunger = AttributeDatabase.get(UserFactory.fromPlayer(player), AttributeType.HUNGER_MAX);
+		final HungerData hunger = hungerRegistry.getHungerData(player);
+
+		return hunger.hunger >= maxHunger.getValue();
+	}
+	/**
+	 * Returns true iff the player is capable to eat the given item
 	 * 
 	 * @param player The player that want to eat the item
 	 * @param item The item the player wants to eat
@@ -218,20 +80,20 @@ public final class HungerHandler extends HandlerCore
 	 */
 	public boolean canPlayerEat(final Player player, final ItemStack item)
 	{
+		if (item == null)
+			return false;
 		final String group = getPlayerGroup(player);
 		final Optional<FoodData> opFood = foodRegistry.getFoodData(item, group);
 		if (!opFood.isPresent())
 			return false;
 
-		final Attribute maxHunger = AttributeDatabase.get(UserFactory.fromPlayer(player), AttributeType.HUNGER_MAX);
-		final HungerData hunger = hungerRegistry.getHungerData(player);
 		final FoodData food = opFood.get();
 		final GroupData data = groupRegistry.getGroupData(group);
 
 		// If the food contains no nourishment or the player is full, eating cannot commence
 		if (!food.alwaysConsumable)
 		{
-			if (food.food == 0.0f || hunger.hunger >= maxHunger.getValue())
+			if (food.food == 0.0f || isPlayerFull(player))
 				return false;
 		}
 
@@ -245,23 +107,27 @@ public final class HungerHandler extends HandlerCore
 		return !data.forbiddenCategories.contains(food.name);
 	}
 	/**
-	 * Forces the player to consume the specified item
+	 * Forces the player to consume the specified item. The itemstack that is passed in will be
+	 * changed, if there are more than one item in the stack the amount is reduced by one, otherwise
+	 * the type is set to air. If the item is not a food to the player, nothing happens.
 	 * 
 	 * @param player The player that is to eat the item
 	 * @param item The item to be eaten
 	 */
 	public void consumeItem(final Player player, final ItemStack item)
 	{
+		// Just to be *somewhat* nice to other plugins; we don't care what they change items to,
+		// however. The hunger system is ours and ours alone, they don't get to muddy up our system!
+		final PlayerItemConsumeEvent event = post(new PlayerItemConsumeEvent(player, item));
+		if (event.isCancelled())
+			return;
+
 		final String group = getPlayerGroup(player);
 		final Optional<FoodData> opFood = foodRegistry.getFoodData(item, group);
 		if (!opFood.isPresent())
 			return;
 		final FoodData food = opFood.get();
 
-		for (final PotionEffectValue effect : food.effects)
-			effect.apply(player);
-
-		// When food takes hunger points, take saturation first
 		if (food.food > 0.0f)
 		{
 			changeHunger(player, food.food);
@@ -269,6 +135,12 @@ public final class HungerHandler extends HandlerCore
 		}
 		else
 			changeSaturation(player, food.food * (1.0f + food.ratio));
+
+		for (final PotionEffectValue effect : food.effects)
+			effect.apply(player);
+
+		if (food.result != null)
+			InventoryHelper.add(player, food.result, player.getEyeLocation());
 	}
 
 	/**
@@ -353,20 +225,6 @@ public final class HungerHandler extends HandlerCore
 	// ...
 
 	/**
-	 * Retrieves the raw hunger data for the given player. Consider the returned object as
-	 * immutable; use {@link HungerHandler} itself to modify any of the fields in the hunger data.
-	 * 
-	 * @param player The player to look up
-	 * @return The hunger data associated with the given player
-	 */
-	public HungerData getHungerData(final Player player)
-	{
-		return hungerRegistry.getHungerData(player);
-	}
-
-	// ...
-
-	/**
 	 * Attempts to retrieve the food data associated with the given item, under the given group. The
 	 * the food is not a valid food under the give group, the food will be checked against the
 	 * default group. If the food has a custom name, the custom name will be prioritized, then the
@@ -392,5 +250,48 @@ public final class HungerHandler extends HandlerCore
 	public Optional<FoodData> getFoodData(final String item, final String group)
 	{
 		return foodRegistry.getFoodData(item, group);
+	}
+
+	/**
+	 * Retrieves the group data for the given player. Consider the returned object as immutable, it
+	 * is global for all players who belong to the same group as the given player. This method
+	 * should never return null.
+	 * 
+	 * @param player The player to look up
+	 * @return The group data associated with the given player
+	 */
+	public GroupData getGroupData(final Player player)
+	{
+		return groupRegistry.getGroupData(getPlayerGroup(player));
+	}
+
+	/**
+	 * Retrieves the raw hunger data for the given player. Consider the returned object as
+	 * immutable; use {@link HungerSystem} itself to modify any of the fields in the hunger data. If
+	 * there is no hunger data associated with the player, the hunger data will be created.
+	 * 
+	 * @param player The player to look up
+	 * @return The hunger data associated with the given player
+	 */
+	public HungerData getHungerData(final Player player)
+	{
+		return hungerRegistry.getHungerData(player);
+	}
+
+	// ...
+
+	/**
+	 * Updates the player's hunger bar, displaying how much hunger they have left
+	 * 
+	 * @param player The player to update
+	 */
+	private void updateHunger(final Player player)
+	{
+		final IUser user = UserFactory.fromPlayer(player);
+		final Attribute maxHunger = AttributeDatabase.get(user, AttributeType.HUNGER_MAX);
+		final HungerData data = hungerRegistry.getHungerData(player);
+
+		player.setFoodLevel(Math.round(20.0f * data.hunger / maxHunger.getValue()));
+		player.setSaturation(20.0f * data.saturation / maxHunger.getValue());
 	}
 }

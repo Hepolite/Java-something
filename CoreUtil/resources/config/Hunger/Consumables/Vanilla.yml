@@ -1,68 +1,99 @@
+
+# By default all vanilla foods have the same food amounts
+# and effects. The time required to eat the foods have been
+# changed, however. The convention for how long it takes to
+# eat food is <food amount> / 10 + 0.5 seconds.
 Default:
   apple:
     categories: fruit
     food: 20.0
     ratio: 0.6
+    time: 2s 10t
   baked_potato:
     ingredients: potato_item
     food: 25.0
     ratio: 1.2
+    time: 3s
   beetroot:
     categories: vegetable
     food: 5.0
     ratio: 1.2
+    time: 1s
   beetroot_soup:
     ingredients: beetroot
     food: 30.0
     ratio: 1.2
+    time: 3s 10t
   bread:
     ingredients: wheat
     food: 25.0
     ratio: 1.2
-  cake_slice:
-    ingredients: egg wheat sugar milk_bucket
+    time: 3s
+  cake_block: # cake_slice (Slice)
+    ingredients: cake
     food: 10.0
     ratio: 0.2
-  carrot_item:
+    time: 1s 10t
+  cake: # (Whole cake)
+    ingredients: egg wheat sugar milk_bucket
+    food: 70.0
+    ratio: 0.2
+    time: 7s 10t
+  carrot_item: # carrot
     categories: vegetable
     food: 15.0
     ratio: 1.2
+    time: 2s 10t
   chorus_fruit:
     categories: fruit
     food: 20.0
     ratio: 0.6
-  cooked_beef:
-    ingredients: raw_beef
-    food: 40.0
-    ratio: 1.6
+    time: 2s
+  raw_fish-2: # clownfish
+    categories: meat
+    food: 5.0
+    ratio: 0.2
+    time: 1s
   cooked_chicken:
     ingredients: raw_chicken
     food: 30.0
     ratio: 1.2
+    time: 3s 10t
   cooked_fish:
     ingredients: raw_fish
     food: 25.0
     ratio: 1.2
-  cooked_fish-1:
-    ingredients: raw_fish-1
-    food: 30.0
-    ratio: 1.6
+    time: 3s
   cooked_mutton:
     ingredients: mutton
     food: 30.0
     ratio: 1.6
+    time: 3s 10t
+  grilled_pork:
+    ingredients: porks
+    food: 40.0
+    ratio: 1.6
+    time: 4s 10t
   cooked_rabbit:
     ingredients: rabbit
     food: 30.0
     ratio: 1.2
+    time: 3s
+  cooked_fish-1: # cooked_salmon
+    ingredients: raw_fish-1
+    food: 30.0
+    ratio: 1.6
+    time: 3s 10t
   cookie:
     ingredients: wheat sugar
     food: 10.0
     ratio: 0.2
+    time: 1s
   golden_apple:
     categories: fruit
     food: 20.0
     ratio: 2.4
+    time: 2s 10t
     alwaysConsumable: true
     effects:
       Effect 0:
@@ -79,6 +110,7 @@ Default:
     categories: fruit
     food: 20.0
     ratio: 2.4
+    time: 2s 10t
     alwaysConsumable: true
     effects:
       Effect 0:
@@ -105,88 +137,41 @@ Default:
     categories: vegetable
     food: 20.0
     ratio: 2.4
-  grilled_pork:
-    ingredients: porks
-    food: 40.0
-    ratio: 1.6
+    time: 3s 10t
   melon:
     categories: berry
     food: 10.0
     ratio: 0.6
-  milk_bucket:
+    time: 1s 10t
+  milk_bucket: # Milk is one of the special items, not much to modify here
     categories: dairy
     alwaysConsumable: true
   mushroom_soup:
     ingredients: brown_mushroom
     food: 30.0
     ratio: 1.2
-  mutton:
-    categories: meat
-    food: 10.0
-    ratio: 0.6
+    time: 3s 10t
   poisonous_potato:
     ingredients: potato_item
     food: 10.0
     ratio: 0.6
+    time: 1s 10t
     effects:
       Effect 0:
         type: poison
         duration: 4s
         amplifier: 1
         chance: 0.6
-  pork:
-    categories: meat
-    food: 15.0
-    ratio: 0.6
-  potato_item:
+  potato_item: # potato
     categories: vegetable
     food: 5.0
     ratio: 0.6
-  potion:
-    categories: potion
-    alwaysConsumable: true
-  pumpkin_pie:
-    ingredients: egg pumpkin sugar
-    food: 40.0
-    ratio: 0.6
-  rabbit:
-    categories: meat
-    food: 15.0
-    ratio: 0.6
-  rabbit_stew:
-    ingredients: cooked_rabbit carrot_item baked_potato brown_mushroom
-    food: 50.0
-    ratio: 1.2
-  raw_beef:
-    categories: meat
-    food: 15.0
-    ratio: 0.6
-  raw_chicken:
-    categories: meat
-    food: 10.0
-    ratio: 0.6
-    effects:
-      Effect 0:
-        type: hunger
-        duration: 30s
-        amplifier: 1
-        chance: 0.3
-  raw_fish:
-    categories: meat
-    food: 10.0
-    ratio: 0.2
-  raw_fish-1:
-    categories: meat
-    food: 10.0
-    ratio: 0.2
-  raw_fish-2:
+    time: 1s
+  raw_fish-3: # pufferfish
     categories: meat
     food: 5.0
     ratio: 0.2
-  raw_fish-3:
-    categories: meat
-    food: 5.0
-    ratio: 0.2
+    time: 1s
     effects:
       Effect 0:
         type: hunger
@@ -203,10 +188,65 @@ Default:
         duration: 1m
         amplifier: 4
         chance: 1.0
+  potion: # Another special drink, seriously, don't even try to change the settings here
+    categories: potion
+    alwaysConsumable: true
+  pumpkin_pie:
+    ingredients: egg pumpkin sugar
+    food: 40.0
+    ratio: 0.6
+    time: 4s 10t
+  rabbit_stew:
+    ingredients: cooked_rabbit carrot_item baked_potato brown_mushroom
+    food: 50.0
+    ratio: 1.2
+    time: 5s 10t
+  raw_beef:
+    categories: meat
+    food: 15.0
+    ratio: 0.6
+    time: 2s
+  raw_chicken:
+    categories: meat
+    food: 10.0
+    ratio: 0.6
+    time: 1s 10t
+    effects:
+      Effect 0:
+        type: hunger
+        duration: 30s
+        amplifier: 1
+        chance: 0.3
+  raw_fish:
+    categories: meat
+    food: 10.0
+    ratio: 0.2
+    time: 1s
+  mutton: # raw_mutton
+    categories: meat
+    food: 10.0
+    ratio: 0.6
+    time: 1s 10t
+  pork: # raw_porkchop
+    categories: meat
+    food: 15.0
+    ratio: 0.6
+    time: 2s
+  rabbit: # raw_rabbit
+    categories: meat
+    food: 15.0
+    ratio: 0.6
+    time: 2s
+  raw_fish-1: # raw_salmon
+    categories: meat
+    food: 10.0
+    ratio: 0.2
+    time: 1s 10t
   rotten_flesh:
     categories: meat
     food: 20.0
     ratio: 0.2
+    time: 2s 10t
     effects:
       Effect 0:
         type: hunger
@@ -217,9 +257,15 @@ Default:
     categories: meat
     food: 10.0
     ratio: 1.6
+    time: 1s 10t
     effects:
       Effect 0:
         type: poison
         duration: 4s
         amplifier: 1
         chance: 1.0
+  cooked_beef: # steak
+    ingredients: raw_beef
+    food: 40.0
+    ratio: 1.6
+    time: 4s 10t

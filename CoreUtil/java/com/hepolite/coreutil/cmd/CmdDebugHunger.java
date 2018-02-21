@@ -10,7 +10,7 @@ import com.hepolite.api.cmd.ICmdContext;
 import com.hepolite.api.user.IUser;
 import com.hepolite.coreutil.CoreUtilPlugin;
 import com.hepolite.coreutil.hunger.HungerData;
-import com.hepolite.coreutil.hunger.HungerHandler;
+import com.hepolite.coreutil.hunger.HungerSystem;
 
 public class CmdDebugHunger extends Cmd
 {
@@ -22,7 +22,7 @@ public class CmdDebugHunger extends Cmd
 	@Override
 	public boolean execute(final IUser user, final ICmdContext context) throws CommandException
 	{
-		final HungerHandler hungerHandler = CoreUtilPlugin.getHungerHandler();
+		final HungerSystem hungerHandler = CoreUtilPlugin.getHungerHandler();
 
 		final Player player = context.<Player> get("player").get();
 		final HungerData data = hungerHandler.getHungerData(player);
