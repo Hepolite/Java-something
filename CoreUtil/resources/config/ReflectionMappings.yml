@@ -8,6 +8,12 @@ v1_12_R1:
       maxX: d
       maxY: e
       maxZ: f
+  BaseBlockPosition:
+    class: BaseBlockPosition
+    method:
+      getX: getX
+      getY: getY
+      getZ: getZ
   Entity:
     class: Entity
     method:
@@ -22,6 +28,8 @@ v1_12_R1:
       hasTag: hasTag
   MovingObjectPosition:
     class: MovingObjectPosition
+    method:
+      getBlockPos: a
     field:
       pos: pos
   NBTBase:
@@ -117,6 +125,12 @@ v1_11_R1:
       maxX: d
       maxY: e
       maxZ: f
+  BaseBlockPosition:
+    class: BaseBlockPosition
+    method:
+      getX: getX
+      getY: getY
+      getZ: getZ
   Entity:
     class: Entity
     method:
@@ -131,6 +145,8 @@ v1_11_R1:
       hasTag: hasTag
   MovingObjectPosition:
     class: MovingObjectPosition
+    method:
+      getBlockPos: a
     field:
       pos: pos
   NBTBase:
@@ -226,6 +242,12 @@ default:
       maxX: maxX
       maxY: maxY
       maxZ: maxZ
+  BaseBlockPosition:
+    class: BaseBlockPosition
+    method:
+      getX: getX
+      getY: getY
+      getZ: getZ
   Entity:
     class: Entity
     method:
@@ -240,6 +262,8 @@ default:
       hasTag: hasTag
   MovingObjectPosition:
     class: MovingObjectPosition
+    method:
+      getBlockPos: getBlockPos
     field:
       pos: pos
   NBTBase:

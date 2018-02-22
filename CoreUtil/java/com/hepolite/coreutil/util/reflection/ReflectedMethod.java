@@ -31,7 +31,8 @@ public final class ReflectedMethod
 		}
 		catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
 		{
-			CoreUtilPlugin.WARN(String.format("Failed to invoke '%s' using signature '%s'", name, signature(args)));
+			CoreUtilPlugin.WARN(
+					String.format("[ReflectUtil] Failed to invoke '%s' using signature '%s'", name, signature(args)));
 			return null;
 		}
 	}

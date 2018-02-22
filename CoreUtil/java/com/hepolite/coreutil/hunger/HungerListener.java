@@ -263,15 +263,18 @@ public final class HungerListener implements IListener
 			event.setCancelled(!isCake);
 			if (startChewing(player, item))
 			{
-				if (item.getAmount() <= 1)
-					item.setType(Material.AIR);
-				else
-					item.setAmount(item.getAmount() - 1);
+				if (!isCake)
+				{
+					if (item.getAmount() <= 1)
+						item.setType(Material.AIR);
+					else
+						item.setAmount(item.getAmount() - 1);
 
-				if (event.getHand() == EquipmentSlot.HAND)
-					inv.setItemInMainHand(item);
-				else
-					inv.setItemInOffHand(item);
+					if (event.getHand() == EquipmentSlot.HAND)
+						inv.setItemInMainHand(item);
+					else
+						inv.setItemInOffHand(item);
+				}
 			}
 			else if (isCake) // BLASTED CAKE MESSING UP GOOD CODE! RAAAA
 				event.setCancelled(true);

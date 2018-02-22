@@ -26,7 +26,7 @@ public final class ReflectedClass
 		}
 		catch (InstantiationException | IllegalAccessException e)
 		{
-			CoreUtilPlugin.WARN("Failed to instantiate class " + name);
+			CoreUtilPlugin.WARN("[ReflectUtil] Failed to instantiate class " + name);
 			return null;
 		}
 	}

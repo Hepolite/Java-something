@@ -9,6 +9,7 @@ import com.hepolite.api.config.IConfig;
 import com.hepolite.api.config.Property;
 import com.hepolite.api.event.HandlerCore;
 import com.hepolite.coreutil.util.reflection.reflected.RAxisAlignedBB;
+import com.hepolite.coreutil.util.reflection.reflected.RBaseBlockPosition;
 import com.hepolite.coreutil.util.reflection.reflected.REntity;
 import com.hepolite.coreutil.util.reflection.reflected.RItemStack;
 import com.hepolite.coreutil.util.reflection.reflected.RMovingObjectPosition;
@@ -36,6 +37,7 @@ public final class ReflectionHandler extends HandlerCore
 		plugin.getLogger().info("Loading reflection utilities for " + version + "...");
 
 		initializeVec3D();
+		initializeBaseBlockPosition();
 		initializeMovingObjectPosition();
 		initializeAxisAlignedBB();
 		initializeWorld();
@@ -55,6 +57,15 @@ public final class ReflectionHandler extends HandlerCore
 		RAxisAlignedBB.nmsMaxX = getNMSField(RAxisAlignedBB.nmsClass, "maxX");
 		RAxisAlignedBB.nmsMaxY = getNMSField(RAxisAlignedBB.nmsClass, "maxY");
 		RAxisAlignedBB.nmsMaxZ = getNMSField(RAxisAlignedBB.nmsClass, "maxZ");
+		/// @formatter:on
+	}
+	private void initializeBaseBlockPosition()
+	{
+		/// @formatter:off
+		RBaseBlockPosition.nmsClass = getNMSClass("BaseBlockPosition");
+		RBaseBlockPosition.nmsGetX = getNMSMethod(RBaseBlockPosition.nmsClass, "getX");
+		RBaseBlockPosition.nmsGetY = getNMSMethod(RBaseBlockPosition.nmsClass, "getY");
+		RBaseBlockPosition.nmsGetZ = getNMSMethod(RBaseBlockPosition.nmsClass, "getZ");
 		/// @formatter:on
 	}
 	private void initializeEntity()
@@ -147,6 +158,7 @@ public final class ReflectionHandler extends HandlerCore
 	{
 		/// @formatter:off
 		RMovingObjectPosition.nmsClass = getNMSClass("MovingObjectPosition");
+		RMovingObjectPosition.nmsGetBlockPos = getNMSMethod(RMovingObjectPosition.nmsClass, "getBlockPos");
 		RMovingObjectPosition.nmsPos = getNMSField(RMovingObjectPosition.nmsClass, "pos");
 		/// @formatter:on
 	}

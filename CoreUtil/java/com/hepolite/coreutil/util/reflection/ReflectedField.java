@@ -29,7 +29,7 @@ public final class ReflectedField
 		}
 		catch (IllegalArgumentException | IllegalAccessException e)
 		{
-			CoreUtilPlugin.WARN("Failed to read field " + name);
+			CoreUtilPlugin.WARN("[ReflectUtil] Failed to read field " + name);
 			return null;
 		}
 	}
@@ -47,7 +47,7 @@ public final class ReflectedField
 		}
 		catch (IllegalArgumentException | IllegalAccessException e)
 		{
-			CoreUtilPlugin.WARN(String.format("Failed to set field '%s' to '%s'", name, value));
+			CoreUtilPlugin.WARN(String.format("[ReflectUtil] Failed to set field '%s' to '%s'", name, value));
 		}
 	}
 
