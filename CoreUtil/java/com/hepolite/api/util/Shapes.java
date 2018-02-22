@@ -4,7 +4,7 @@ import org.apache.commons.lang.NotImplementedException;
 
 public final class Shapes
 {
-	private static abstract class Shape
+	public static abstract class Shape
 	{
 		/**
 		 * Returns true if the current shape intersects with the provided point
@@ -149,16 +149,13 @@ public final class Shapes
 		@Override
 		public boolean intersects(final Cone cone)
 		{
+			// cos A = ||dp * d|| / (||dp|| * ||dr||)
 			final float dx = x - cone.x;
 			final float dy = y - cone.y;
 			final float dz = z - cone.z;
 			final float d1l = dx * dx + dy * dy + dz * dz;
 			final float d2l = cone.dx * cone.dx + cone.dy * cone.dy + cone.dz * cone.dz;
 			final float cos = (dx * cone.dx + dy * cone.dy + dz * cone.dz) / (float) Math.sqrt(d1l * d2l);
-
-			System.out.println(String.format("[%.2f, %.2f, %.2f] (%.2f, %.2f) {%.2f, %.2f}", dx, dy, dz, d1l, d2l, cos,
-					cone.angle));
-
 			return cos >= cone.angle && d1l <= d2l;
 		}
 
