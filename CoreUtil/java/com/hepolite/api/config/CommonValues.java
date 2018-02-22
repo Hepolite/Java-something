@@ -60,7 +60,7 @@ public final class CommonValues
 			item = null;
 			final String type = config.getString(property.child("type"));
 			final short meta = config.getShort(property.child("meta"));
-			final int amount = config.getInt(property.child("amount"));
+			final int amount = config.getInt(property.child("amount"), 1);
 			final String name = config.getString(property.child("name"));
 			final List<String> lore = config.getStrings(property.child("lore"));
 			if (type.isEmpty())

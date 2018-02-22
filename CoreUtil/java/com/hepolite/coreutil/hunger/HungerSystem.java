@@ -12,6 +12,7 @@ import com.hepolite.api.attribute.AttributeDatabase;
 import com.hepolite.api.attribute.AttributeType;
 import com.hepolite.api.config.CommonValues.PotionEffectValue;
 import com.hepolite.api.event.HandlerCore;
+import com.hepolite.api.event.events.PlayerAllowEatCheck;
 import com.hepolite.api.event.events.PlayerHungerChange;
 import com.hepolite.api.event.events.PlayerSaturationChange;
 import com.hepolite.api.units.Time;
@@ -104,7 +105,11 @@ public final class HungerSystem extends HandlerCore
 		for (final String category : food.ingredients)
 			if (data.forbiddenIngredients.contains(category))
 				return false;
-		return !data.forbiddenCategories.contains(food.name);
+		if (data.forbiddenCategories.contains(food.name))
+			return false;
+
+		// Check that there are no other special reasons for why the player cannot eat
+		return post(new PlayerAllowEatCheck(player, item)).getAllow();
 	}
 	/**
 	 * Forces the player to consume the specified item. The itemstack that is passed in will be
