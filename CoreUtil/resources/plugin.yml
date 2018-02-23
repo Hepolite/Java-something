@@ -1,7 +1,7 @@
 name: CoreUtil
 authors: [Hepolite]
 main: com.hepolite.coreutil.CoreUtilPlugin
-version: 0.0.1
+version: 1.0.0
 depend: [PermissionsEx]
 description: >
              Provides core utility functions for various stuff

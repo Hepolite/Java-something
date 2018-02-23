@@ -16,7 +16,14 @@ public class CmdDebugHunger extends Cmd
 {
 	public CmdDebugHunger()
 	{
-		super("hunger", GenericArgs.playerOrUser("player"));
+		/// @formatter:off
+		super("hunger",
+			GenericArgs.firstParsing(
+				GenericArgs.children(new CmdDebugHungerSet()),
+				GenericArgs.playerOrUser("player")
+			)
+		);
+		/// @formatter:on
 	}
 
 	@Override

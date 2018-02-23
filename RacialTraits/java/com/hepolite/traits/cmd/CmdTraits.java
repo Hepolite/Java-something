@@ -14,7 +14,6 @@ public class CmdTraits extends Cmd
 		/// @formatter:off
 		super("race",
 			GenericArgs.children(
-				// Add child commands here
 		));
 		/// @formatter:on
 	}

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.hepolite.api.cmd.CmdArgs;
-import com.hepolite.api.cmd.CmdArgsSnapshot;
 import com.hepolite.api.cmd.ICmd;
 import com.hepolite.api.cmd.ICmdContext;
 import com.hepolite.api.exception.ArgumentParseException;
@@ -23,16 +22,12 @@ public class CmdCommandElement implements ICmdElement
 	@Override
 	public void parse(final IUser user, final CmdArgs args, final ICmdContext context) throws ArgumentParseException
 	{
-		final CmdArgsSnapshot snapshot = args.getSnapshot();
 		final String arg = args.consumeArg();
+		if (!commands.containsKey(arg))
+			throw new ArgumentParseException(String.format("No child command match '%s'", arg));
 
-		if (commands.containsKey(arg))
-		{
-			context.setCommand(commands.get(arg));
-			context.getCommand().getCommandElement().parse(user, args, context);
-		}
-		else
-			args.restoreSnapshot(snapshot);
+		context.setCommand(commands.get(arg));
+		context.getCommand().getCommandElement().parse(user, args, context);
 	}
 	@Override
 	public Object parseValue(final IUser user, final CmdArgs args) throws ArgumentParseException

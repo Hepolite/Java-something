@@ -11,12 +11,12 @@ import com.hepolite.api.user.IUser;
 import com.hepolite.coreutil.CoreUtilPlugin;
 import com.hepolite.coreutil.hunger.HungerData;
 
-public class CmdSetHunger extends Cmd
+public class CmdDebugHungerSet extends Cmd
 {
-	public CmdSetHunger()
+	public CmdDebugHungerSet()
 	{
 		/// @formatter:off
-		super("hunger",
+		super("set",
 			GenericArgs.playerOrUser("player"),
 			GenericArgs.floatNum("hunger"),
 			GenericArgs.floatNum("saturation")

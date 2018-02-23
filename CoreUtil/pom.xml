@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.hepolite.coreutil</groupId>
 	<artifactId>CoreUtil</artifactId>
-	<version>0.0.1</version>
+	<version>1.0.0</version>
 	<name>CoreUtil</name>
 	<description>Provides core utility functions for various stuff</description>
 
