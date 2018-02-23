@@ -30,7 +30,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
 import com.hepolite.api.attribute.Attribute;
 import com.hepolite.api.attribute.AttributeDatabase;
@@ -247,7 +246,8 @@ public final class HungerListener implements IListener
 		if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)
 			return;
 		final Player player = event.getPlayer();
-		final PlayerInventory inv = player.getInventory();
+		if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR)
+			return;
 		final ItemStack item = isCake ? new ItemStack(Material.CAKE_BLOCK) : event.getItem();
 		if (item == null)
 			return;
@@ -271,9 +271,9 @@ public final class HungerListener implements IListener
 						item.setAmount(item.getAmount() - 1);
 
 					if (event.getHand() == EquipmentSlot.HAND)
-						inv.setItemInMainHand(item);
+						player.getInventory().setItemInMainHand(item);
 					else
-						inv.setItemInOffHand(item);
+						player.getInventory().setItemInOffHand(item);
 				}
 			}
 			else if (isCake) // BLASTED CAKE MESSING UP GOOD CODE! RAAAA
@@ -348,12 +348,9 @@ public final class HungerListener implements IListener
 		if (event.isCancelled())
 			return false;
 
-		// TODO: Check if there are any entity interactions that are problematic, too...
-
 		// Blocks against blocks
 		if (block.getType().isBlock() && event.isBlockInHand())
 			return true;
-
 		// Cocoa beans
 		if (block.getType() == Material.LOG && item.getType() == Material.COCOA)
 			return true;

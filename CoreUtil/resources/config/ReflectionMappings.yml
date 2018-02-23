@@ -21,10 +21,6 @@ v1_12_R1:
       getBoundingBox: getBoundingBox
       save: save
       load: f
-    field:
-      posX: locX
-      posY: locY
-      posZ: locZ
   ItemStack:
     class: ItemStack
     method:
@@ -36,7 +32,6 @@ v1_12_R1:
     method:
       getBlockPos: a
     field:
-      entity: entity
       pos: pos
   NBTBase:
     class: NBTBase
@@ -144,10 +139,6 @@ v1_11_R1:
       getBoundingBox: getBoundingBox
       save: e
       load: f
-    field:
-      posX: locX
-      posY: locY
-      posZ: locZ
   ItemStack:
     class: ItemStack
     method:
@@ -159,7 +150,6 @@ v1_11_R1:
     method:
       getBlockPos: a
     field:
-      entity: entity
       pos: pos
   NBTBase:
     class: NBTBase
@@ -267,10 +257,6 @@ default:
       getBoundingBox: getBoundingBox
       save: save
       load: load
-    field:
-      posX: locX
-      posY: locY
-      posZ: locZ
   ItemStack:
     class: ItemStack
     method:
@@ -282,7 +268,6 @@ default:
     method:
       getBlockPos: getBlockPos
     field:
-      entity: entity
       pos: pos
   NBTBase:
     class: NBTBase

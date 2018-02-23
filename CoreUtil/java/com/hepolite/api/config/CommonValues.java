@@ -1,11 +1,13 @@
 package com.hepolite.api.config;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -25,13 +27,52 @@ import com.hepolite.coreutil.CoreUtilPlugin;
 
 public final class CommonValues
 {
+	private static final Random random = new Random();
+
+	// ...
+
 	/**
 	 * Allows a single item stack to be loaded and stored to a config. The item will be loaded with
-	 * type, meta, amount, name, lore and NBT data.
+	 * type, meta, amount, name, lore and NBT data.<br>
+	 * <br>
+	 * Properties:<br>
+	 * type (type: Material, def: N/A)<br>
+	 * meta (type: short, def: 0)<br>
+	 * amount (type: int, def: 1)<br>
+	 * name (type: String, def: empty)<br>
+	 * lore (type: StringList, def: empty)<br>
+	 * chance (type: float, def: 1.0f)
 	 */
 	public static final class ItemStackValue implements IValue
 	{
-		public ItemStack item;
+		private ItemStack item;
+		public float chance = 1.0f;
+
+		/**
+		 * Tests the chance of getting the item, if passed the item is returned, otherwise an empty
+		 * item is returned
+		 * 
+		 * @return The resulting item associated with this value
+		 */
+		public ItemStack get()
+		{
+			if (item != null && random.nextFloat() < chance)
+				return item.clone();
+			return new ItemStack(Material.AIR);
+		}
+		/**
+		 * Sets the item associated with this value
+		 * 
+		 * @param item The value to store
+		 * @return The same value for convenience
+		 */
+		public ItemStackValue set(final ItemStack item)
+		{
+			this.item = item.clone();
+			return this;
+		}
+
+		// ...
 
 		@Override
 		public void save(final IConfig config, final IProperty property)
@@ -86,11 +127,102 @@ public final class CommonValues
 				CoreUtilPlugin.WARN("Failed loading ItemStack: " + type + " under " + property.getPath());
 			}
 		}
+
+		@Override
+		public String toString()
+		{
+			return String.format("Type: %s, meta: %d, amount: %d, chance: %.0f%%", item.getType(), item.getDurability(),
+					item.getAmount(), 100.0f * chance);
+		}
+	}
+	/**
+	 * Allows a collection of item stacks to be loaded and stored to a config. The items will be
+	 * loaded with type, meta, amount, name, lore and NBT data. Each item may additional specify a
+	 * chance to be obtained from the value.<br>
+	 * <br>
+	 * Properties: <br>
+	 * items (type: ItemStackList, def: empty)
+	 */
+	public static final class ItemStacksValue implements IValue
+	{
+		private final ArrayList<ItemStackValue> items = new ArrayList<>();
+
+		/**
+		 * Clears out all items associated with this value
+		 */
+		public void clear()
+		{
+			items.clear();
+		}
+		/**
+		 * Adds the given item to the collection
+		 * 
+		 * @param item The item to add
+		 */
+		public void add(final ItemStack item)
+		{
+			items.add(new ItemStackValue().set(item));
+		}
+		/**
+		 * Sets the items associated with this value
+		 * 
+		 * @param items The items to store
+		 */
+		public void set(final Collection<ItemStack> items)
+		{
+			clear();
+			for (final ItemStack item : items)
+				this.items.add(new ItemStackValue().set(item));
+		}
+		/**
+		 * Attempts to retrieve the collection of ItemStacks associated with this value
+		 * 
+		 * @return The collection of the resulting items
+		 */
+		public Collection<ItemStack> get()
+		{
+			final Collection<ItemStack> result = new ArrayList<>();
+			for (final ItemStackValue value : items)
+			{
+				final ItemStack i = value.get();
+				if (i.getType() != Material.AIR)
+					result.add(i);
+			}
+			return result;
+		}
+
+		// ...
+
+		@Override
+		public void save(final IConfig config, final IProperty property)
+		{
+			for (int i = 0; i < items.size(); ++i)
+				config.set(property.child(Integer.toString(i)), items.get(i));
+		}
+		@Override
+		public void load(final IConfig config, final IProperty property)
+		{
+			clear();
+			for (final IProperty p : config.getProperties(property))
+				items.add(config.getValue(p, new ItemStackValue()));
+		}
+
+		@Override
+		public String toString()
+		{
+			return items.isEmpty() ? "none" : StringUtils.join(items, "\n");
+		}
 	}
 
 	/**
 	 * Allows a single sound to be loaded and stored to a config. Provides a handy method for
-	 * playing the sound either globally or locally at a specific location.
+	 * playing the sound either globally or locally at a specific location.<br>
+	 * <br>
+	 * Properties:<br>
+	 * sound (type: Sound, def: N/A)<br>
+	 * volume (type: float, def: 1.0f)<br>
+	 * pitch (type: float, def: 1.0f)<br>
+	 * enabled (type: boolean, def: true)
 	 */
 	public static final class SoundValue implements IValue
 	{
@@ -141,9 +273,9 @@ public final class CommonValues
 		public void load(final IConfig config, final IProperty property)
 		{
 			final String sound = config.getString(property.child("sound"));
-			volume = config.getFloat(property.child("volume"));
-			pitch = config.getFloat(property.child("pitch"));
-			enabled = config.getBool(property.child("enabled"));
+			volume = config.getFloat(property.child("volume"), 1.0f);
+			pitch = config.getFloat(property.child("pitch"), 1.0f);
+			enabled = config.getBool(property.child("enabled"), true);
 
 			try
 			{
@@ -182,41 +314,20 @@ public final class CommonValues
 		}
 	}
 
-	public static final class PotionEffectTypeValue implements IValue
-	{
-		public PotionEffectType type;
-
-		public PotionEffectTypeValue()
-		{}
-		public PotionEffectTypeValue(final PotionEffectType type)
-		{
-			this.type = type;
-		}
-
-		@Override
-		public void save(final IConfig config, final IProperty property)
-		{
-			config.set(property, type.getName());
-		}
-		@Override
-		public void load(final IConfig config, final IProperty property)
-		{
-			type = PotionEffectType.getByName(config.getString(property).toUpperCase());
-			if (type == null)
-				CoreUtilPlugin.WARN("Failed loading PotionEffectType: " + property.getPath());
-		}
-
-		@Override
-		public String toString()
-		{
-			return type.getName();
-		}
-	}
-
+	/**
+	 * Allows a single potion effect to be loaded and stored to a config. The potion effect will be
+	 * stored with type, amplifier, duration and other minor data.<br>
+	 * <br>
+	 * Properties:<br>
+	 * type (type: PotionEffectType, def: N/A)<br>
+	 * amplifier (type: int, def: 1)<br>
+	 * duration (type: Time, def: N/A)<br>
+	 * ambient (type: boolean, def: false)<br>
+	 * particles (type: boolean, def: false)<br>
+	 * chance (type: float, def: 1.0f)
+	 */
 	public static final class PotionEffectValue implements IValue
 	{
-		private static final Random random = new Random();
-
 		public PotionEffectType type;
 		public int amplifier;
 		public Time duration;
@@ -253,10 +364,10 @@ public final class CommonValues
 		{
 			type = config.getValue(property.child("type"), new PotionEffectTypeValue()).type;
 			duration = config.getValue(property.child("duration"), new TimeValue()).time;
-			amplifier = config.getInt(property.child("amplifier"));
+			amplifier = config.getInt(property.child("amplifier"), 1);
 			ambient = config.getBool(property.child("ambient"));
 			particles = config.getBool(property.child("particles"));
-			chance = config.getFloat(property.child("chance"));
+			chance = config.getFloat(property.child("chance"), 1.0f);
 		}
 
 		@Override
@@ -264,6 +375,39 @@ public final class CommonValues
 		{
 			return String.format("Type: %s, amplifier: %d, duration: %s, chance: %.0f%%", type.getName(), amplifier,
 					duration.toString(), 100.0f * chance);
+		}
+	}
+
+
+
+	public static final class PotionEffectTypeValue implements IValue
+	{
+		public PotionEffectType type;
+
+		public PotionEffectTypeValue()
+		{}
+		public PotionEffectTypeValue(final PotionEffectType type)
+		{
+			this.type = type;
+		}
+
+		@Override
+		public void save(final IConfig config, final IProperty property)
+		{
+			config.set(property, type.getName());
+		}
+		@Override
+		public void load(final IConfig config, final IProperty property)
+		{
+			type = PotionEffectType.getByName(config.getString(property).toUpperCase());
+			if (type == null)
+				CoreUtilPlugin.WARN("Failed loading PotionEffectType: " + property.getPath());
+		}
+
+		@Override
+		public String toString()
+		{
+			return type.getName();
 		}
 	}
 

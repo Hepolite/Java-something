@@ -8,6 +8,5 @@ public class RMovingObjectPosition
 {
 	public static ReflectedClass nmsClass;
 	public static ReflectedMethod nmsGetBlockPos;
-	public static ReflectedField nmsEntity;
 	public static ReflectedField nmsPos;
 }

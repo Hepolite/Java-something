@@ -24,8 +24,9 @@ Default:
     food: 30.0
     ratio: 1.2
     time: 3s 10t
-    result:
-      type: bowl
+    results:
+      0:
+        type: bowl
   bread:
     ingredients: wheat
     food: 25.0
@@ -102,12 +103,10 @@ Default:
         type: regeneration
         duration: 5s
         amplifier: 2
-        chance: 1.0
       Effect 1:
         type: absorption
         duration: 2m
         amplifier: 4
-        chance: 1.0
   golden_apple-1:
     categories: fruit
     food: 20.0
@@ -119,22 +118,18 @@ Default:
         type: regeneration
         duration: 20s
         amplifier: 2
-        chance: 1.0
       Effect 1:
         type: absorption
         duration: 2m
         amplifier: 4
-        chance: 1.0
       Effect 2:
         type: damage_resistance
         duration: 5m
         amplifier: 1
-        chance: 1.0
       Effect 3:
         type: fire_resistance
         duration: 5m
         amplifier: 1
-        chance: 1.0
   golden_carrot:
     categories: vegetable
     food: 20.0
@@ -148,13 +143,14 @@ Default:
   milk_bucket: # Milk is one of the special items, not much to modify here
     categories: dairy
     alwaysConsumable: true
-  mushroom_soup:
+  mushroom_soup: # mushroom_stew
     ingredients: brown_mushroom
     food: 30.0
     ratio: 1.2
     time: 3s 10t
-    result:
-      type: bowl
+    results:
+      0:
+        type: bowl
   poisonous_potato:
     ingredients: potato_item
     food: 10.0
@@ -181,17 +177,14 @@ Default:
         type: hunger
         duration: 15s
         amplifier: 3
-        chance: 1.0
       Effect 1:
         type: confusion
         duration: 15s
         amplifier: 2
-        chance: 1.0
       Effect 2:
         type: poison
         duration: 1m
         amplifier: 4
-        chance: 1.0
   potion: # Another special drink, seriously, don't even try to change the settings here
     categories: potion
     alwaysConsumable: true
@@ -205,8 +198,9 @@ Default:
     food: 50.0
     ratio: 1.2
     time: 5s 10t
-    result:
-      type: bowl
+    results:
+      0:
+        type: bowl
   raw_beef:
     categories: meat
     food: 15.0
@@ -269,7 +263,6 @@ Default:
         type: poison
         duration: 4s
         amplifier: 1
-        chance: 1.0
   cooked_beef: # steak
     ingredients: raw_beef
     food: 40.0

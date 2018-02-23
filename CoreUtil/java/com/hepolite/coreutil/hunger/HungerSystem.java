@@ -144,8 +144,7 @@ public final class HungerSystem extends HandlerCore
 		for (final PotionEffectValue effect : food.effects)
 			effect.apply(player);
 
-		if (food.result != null)
-			InventoryHelper.add(player, food.result, player.getEyeLocation());
+		InventoryHelper.add(player, food.results.get(), player.getEyeLocation());
 	}
 
 	/**
