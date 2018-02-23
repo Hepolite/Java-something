@@ -65,14 +65,13 @@ public class CmdDebugFood extends Cmd
 	{
 		final String categories = data.categories.isEmpty() ? "none" : StringUtils.join(data.categories, ", ");
 		final String ingredients = data.ingredients.isEmpty() ? "none" : StringUtils.join(data.ingredients, ", ");
-		final String effects = data.effects.isEmpty() ? "none" : StringUtils.join(data.effects, "\n");
 
 		final Builder builder = new Builder("");
 		builder.addText(String.format("&bFood &9'%s'&b contains &9'%.1f/%.1f (%.1f)'&b hunger/saturation (ratio)",
 				data.name, data.food, data.ratio * data.food, data.ratio));
 		builder.addHover(String.format(
 				"&bGroup: &9%s\n&bCategories: &f%s\n&bIngredients: &f%s\n&bEffects:\n&f%s\n&bResults:\n&f%s", group,
-				categories, ingredients, effects, data.results));
+				categories, ingredients, data.effects, data.results));
 		user.sendMessage(builder.build());
 	}
 }

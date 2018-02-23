@@ -10,7 +10,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.hepolite.api.attribute.Attribute;
 import com.hepolite.api.attribute.AttributeDatabase;
 import com.hepolite.api.attribute.AttributeType;
-import com.hepolite.api.config.CommonValues.PotionEffectValue;
 import com.hepolite.api.event.HandlerCore;
 import com.hepolite.api.event.events.PlayerAllowEatCheck;
 import com.hepolite.api.event.events.PlayerHungerChange;
@@ -140,10 +139,7 @@ public final class HungerSystem extends HandlerCore
 		}
 		else
 			changeSaturation(player, food.food * (1.0f + food.ratio));
-
-		for (final PotionEffectValue effect : food.effects)
-			effect.apply(player);
-
+		food.effects.apply(player);
 		InventoryHelper.add(player, food.results.get(), player.getEyeLocation());
 	}
 

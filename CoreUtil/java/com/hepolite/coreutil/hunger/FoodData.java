@@ -1,12 +1,11 @@
 package com.hepolite.coreutil.hunger;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
 import com.hepolite.api.config.CommonValues.ItemStacksValue;
-import com.hepolite.api.config.CommonValues.PotionEffectValue;
+import com.hepolite.api.config.CommonValues.PotionEffectsValue;
 import com.hepolite.api.config.CommonValues.TimeValue;
 import com.hepolite.api.config.IConfig;
 import com.hepolite.api.config.IProperty;
@@ -19,11 +18,12 @@ public final class FoodData implements IValue
 	public String name = "";
 	public final Set<String> categories = new TreeSet<>();
 	public final Set<String> ingredients = new TreeSet<>();
-	public final Collection<PotionEffectValue> effects = new ArrayList<>();
+	public boolean alwaysConsumable = false;
+
 	public float food = 0.0f;
 	public float ratio = 0.0f;
-	public boolean alwaysConsumable = false;
 	public Time time;
+	public PotionEffectsValue effects = new PotionEffectsValue();
 	public ItemStacksValue results = new ItemStacksValue();
 
 	@Override
@@ -33,17 +33,14 @@ public final class FoodData implements IValue
 	public void load(final IConfig config, final IProperty property)
 	{
 		name = property.getName();
+		alwaysConsumable = config.getBool(property.child("alwaysConsumable"));
+		categories.addAll(Arrays.asList(config.getString(property.child("categories")).split(" ")));
+		ingredients.addAll(Arrays.asList(config.getString(property.child("ingredients")).split(" ")));
+
 		food = config.getFloat(property.child("food"));
 		ratio = config.getFloat(property.child("ratio"));
-		alwaysConsumable = config.getBool(property.child("alwaysConsumable"));
 		time = config.getValue(property.child("time"), new TimeValue()).time;
 		results = config.getValue(property.child("results"), new ItemStacksValue());
-
-		for (final String category : config.getString(property.child("categories")).split(" "))
-			categories.add(category);
-		for (final String ingredient : config.getString(property.child("ingredients")).split(" "))
-			ingredients.add(ingredient);
-		for (final IProperty effectProperty : config.getProperties(property.child("effects")))
-			effects.add(config.getValue(effectProperty, new PotionEffectValue()));
+		effects = config.getValue(property.child("effects"), new PotionEffectsValue());
 	}
 }

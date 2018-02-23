@@ -32,6 +32,77 @@ public final class CommonValues
 	// ...
 
 	/**
+	 * Allows loading up a single DamageType to be loaded and stored to a config file.<br>
+	 * <br>
+	 * Property (type: String, def: N/A)
+	 */
+	public static final class DamageTypeValue implements IValue
+	{
+		public DamageType type;
+
+		// ...
+
+		@Override
+		public void save(final IConfig config, final IProperty property)
+		{
+			config.set(property, type == null ? "invalid" : type.toString().toLowerCase());
+		}
+		@Override
+		public void load(final IConfig config, final IProperty property)
+		{
+			final String type = config.getString(property);
+
+			try
+			{
+				this.type = DamageType.valueOf(type.toUpperCase());
+			}
+			catch (final Exception e)
+			{
+				CoreUtilPlugin.WARN("Failed loading DamageType: " + type + " under " + property.getPath());
+			}
+		}
+
+		@Override
+		public String toString()
+		{
+			return type.toString();
+		}
+	}
+	/**
+	 * Allows loading up a set of DamageType to be loaded and stored to a config file.<br>
+	 * <br>
+	 * Property (type: StringList, def: empty)
+	 */
+	public static final class DamageTypeSetValue implements IValue
+	{
+		public final Set<DamageType> types = new HashSet<>();
+
+		// ...
+
+		@Override
+		public void save(final IConfig config, final IProperty property)
+		{
+			config.set(property, types == null ? "invalid" : StringUtils.join(types, '\n'));
+		}
+		@Override
+		public void load(final IConfig config, final IProperty property)
+		{
+			types.clear();
+			for (final String cause : config.getStrings(property))
+			{
+				try
+				{
+					types.add(DamageType.valueOf(cause.toUpperCase()));
+				}
+				catch (final Exception e)
+				{
+					CoreUtilPlugin.WARN("Failed loading DamageType: " + cause + " under " + property.getPath());
+				}
+			}
+		}
+	}
+
+	/**
 	 * Allows a single item stack to be loaded and stored to a config. The item will be loaded with
 	 * type, meta, amount, name, lore and NBT data.<br>
 	 * <br>
@@ -215,6 +286,151 @@ public final class CommonValues
 	}
 
 	/**
+	 * Allows a single potion effect to be loaded and stored to a config. The potion effect will be
+	 * stored with type, amplifier, duration and other minor data.<br>
+	 * <br>
+	 * Properties:<br>
+	 * type (type: PotionEffectType, def: N/A)<br>
+	 * amplifier (type: int, def: 1)<br>
+	 * duration (type: Time, def: N/A)<br>
+	 * ambient (type: boolean, def: false)<br>
+	 * particles (type: boolean, def: false)<br>
+	 * chance (type: float, def: 1.0f)
+	 */
+	public static final class PotionEffectValue implements IValue
+	{
+		public PotionEffectType type;
+		public int amplifier;
+		public Time duration;
+		public boolean ambient = false;
+		public boolean particles = true;
+		public float chance = 1.0f;
+
+		/**
+		 * Applies the potion effect stored in this value to the specified entity
+		 * 
+		 * @param entity The entity to apply the effect to
+		 */
+		public void apply(final LivingEntity entity)
+		{
+			if (random.nextFloat() < chance)
+			{
+				entity.addPotionEffect(new PotionEffect(type, (int) duration.asTicks(),
+						amplifier > 0 ? amplifier - 1 : amplifier, ambient, particles), true);
+			}
+		}
+
+		@Override
+		public void save(final IConfig config, final IProperty property)
+		{
+			config.set(property.child("type"), type.getName());
+			config.set(property.child("duration"), duration.toString());
+			config.set(property.child("amplifier"), amplifier);
+			config.set(property.child("ambient"), ambient);
+			config.set(property.child("particles"), particles);
+			config.set(property.child("chance"), chance);
+		}
+		@Override
+		public void load(final IConfig config, final IProperty property)
+		{
+			type = config.getValue(property.child("type"), new PotionEffectTypeValue()).type;
+			duration = config.getValue(property.child("duration"), new TimeValue()).time;
+			amplifier = config.getInt(property.child("amplifier"), 1);
+			ambient = config.getBool(property.child("ambient"));
+			particles = config.getBool(property.child("particles"));
+			chance = config.getFloat(property.child("chance"), 1.0f);
+		}
+
+		@Override
+		public String toString()
+		{
+			return String.format("Type: %s, amplifier: %d, duration: %s, chance: %.0f%%", type.getName(), amplifier,
+					duration.toString(), 100.0f * chance);
+		}
+	}
+	/**
+	 * Allows a collection of potion effects to be loaded and stored to a config. The potion effects
+	 * will be stored with type, amplifier, duration and other minor data.<br>
+	 * <br>
+	 * Properties:<br>
+	 * effcts (type: PotionEffectList, def: empty)
+	 */
+	public static final class PotionEffectsValue implements IValue
+	{
+		public ArrayList<PotionEffectValue> effects;
+
+		/**
+		 * Applies the potion effect stored in this value to the specified entity
+		 * 
+		 * @param entity The entity to apply the effect to
+		 */
+		public void apply(final LivingEntity entity)
+		{
+			if (effects != null)
+			{
+				for (final PotionEffectValue effect : effects)
+					effect.apply(entity);
+			}
+		}
+
+		// ...
+
+		@Override
+		public void save(final IConfig config, final IProperty property)
+		{
+			if (effects != null)
+			{
+				for (int i = 0; i < effects.size(); ++i)
+					config.set(property.child(Integer.toString(i)), effects.get(i));
+			}
+		}
+		@Override
+		public void load(final IConfig config, final IProperty property)
+		{
+			effects = new ArrayList<>();
+			for (final IProperty p : config.getProperties(property))
+				effects.add(config.getValue(p, new PotionEffectValue()));
+		}
+
+		@Override
+		public String toString()
+		{
+			return effects.isEmpty() ? "none" : StringUtils.join(effects, "\n");
+		}
+	}
+	/**
+	 * Allows loading up a single PotionEffectType to be loaded and stored to a config file.<br>
+	 * <br>
+	 * Property (type: String, def: N/A)
+	 */
+	public static final class PotionEffectTypeValue implements IValue
+	{
+		public PotionEffectType type;
+
+		// ...
+
+		@Override
+		public void save(final IConfig config, final IProperty property)
+		{
+			config.set(property, type == null ? "invalid" : type.getName());
+		}
+		@Override
+		public void load(final IConfig config, final IProperty property)
+		{
+			type = PotionEffectType.getByName(config.getString(property).toUpperCase());
+			if (type == null)
+				CoreUtilPlugin.WARN("Failed loading PotionEffectType: " + property.getPath());
+		}
+
+		@Override
+		public String toString()
+		{
+			return type.getName();
+		}
+	}
+
+
+	/**
 	 * Allows a single sound to be loaded and stored to a config. Provides a handy method for
 	 * playing the sound either globally or locally at a specific location.<br>
 	 * <br>
@@ -311,133 +527,6 @@ public final class CommonValues
 		public void load(final IConfig config, final IProperty property)
 		{
 			time = Time.fromString(config.getString(property));
-		}
-	}
-
-	/**
-	 * Allows a single potion effect to be loaded and stored to a config. The potion effect will be
-	 * stored with type, amplifier, duration and other minor data.<br>
-	 * <br>
-	 * Properties:<br>
-	 * type (type: PotionEffectType, def: N/A)<br>
-	 * amplifier (type: int, def: 1)<br>
-	 * duration (type: Time, def: N/A)<br>
-	 * ambient (type: boolean, def: false)<br>
-	 * particles (type: boolean, def: false)<br>
-	 * chance (type: float, def: 1.0f)
-	 */
-	public static final class PotionEffectValue implements IValue
-	{
-		public PotionEffectType type;
-		public int amplifier;
-		public Time duration;
-		public boolean ambient = false;
-		public boolean particles = true;
-		public float chance = 1.0f;
-
-		/**
-		 * Applies the potion effect stored in this value to the specified entity
-		 * 
-		 * @param entity The entity to apply the effect to
-		 */
-		public void apply(final LivingEntity entity)
-		{
-			if (random.nextFloat() < chance)
-			{
-				entity.addPotionEffect(new PotionEffect(type, (int) duration.asTicks(),
-						amplifier > 0 ? amplifier - 1 : amplifier, ambient, particles), true);
-			}
-		}
-
-		@Override
-		public void save(final IConfig config, final IProperty property)
-		{
-			config.set(property.child("type"), type.getName());
-			config.set(property.child("duration"), duration.toString());
-			config.set(property.child("amplifier"), amplifier);
-			config.set(property.child("ambient"), ambient);
-			config.set(property.child("particles"), particles);
-			config.set(property.child("chance"), chance);
-		}
-		@Override
-		public void load(final IConfig config, final IProperty property)
-		{
-			type = config.getValue(property.child("type"), new PotionEffectTypeValue()).type;
-			duration = config.getValue(property.child("duration"), new TimeValue()).time;
-			amplifier = config.getInt(property.child("amplifier"), 1);
-			ambient = config.getBool(property.child("ambient"));
-			particles = config.getBool(property.child("particles"));
-			chance = config.getFloat(property.child("chance"), 1.0f);
-		}
-
-		@Override
-		public String toString()
-		{
-			return String.format("Type: %s, amplifier: %d, duration: %s, chance: %.0f%%", type.getName(), amplifier,
-					duration.toString(), 100.0f * chance);
-		}
-	}
-
-
-
-	public static final class PotionEffectTypeValue implements IValue
-	{
-		public PotionEffectType type;
-
-		public PotionEffectTypeValue()
-		{}
-		public PotionEffectTypeValue(final PotionEffectType type)
-		{
-			this.type = type;
-		}
-
-		@Override
-		public void save(final IConfig config, final IProperty property)
-		{
-			config.set(property, type.getName());
-		}
-		@Override
-		public void load(final IConfig config, final IProperty property)
-		{
-			type = PotionEffectType.getByName(config.getString(property).toUpperCase());
-			if (type == null)
-				CoreUtilPlugin.WARN("Failed loading PotionEffectType: " + property.getPath());
-		}
-
-		@Override
-		public String toString()
-		{
-			return type.getName();
-		}
-	}
-
-	public static final class DamageTypeSetValue implements IValue
-	{
-		public Set<DamageType> types = new HashSet<>();
-
-		@Override
-		public void save(final IConfig config, final IProperty property)
-		{
-			final Set<String> strings = new HashSet<>();
-			for (final DamageType cause : types)
-				strings.add(cause.toString().toLowerCase());
-			config.set(property, strings);
-		}
-		@Override
-		public void load(final IConfig config, final IProperty property)
-		{
-			types.clear();
-			for (final String cause : config.getStrings(property))
-			{
-				try
-				{
-					types.add(DamageType.valueOf(cause.toUpperCase()));
-				}
-				catch (final Exception e)
-				{
-					CoreUtilPlugin.WARN("Failed loading DamageType: " + cause + " under " + property.getPath());
-				}
-			}
 		}
 	}
 }

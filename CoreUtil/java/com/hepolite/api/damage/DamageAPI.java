@@ -170,7 +170,7 @@ public final class DamageAPI extends HandlerCore
 		if (delta.lengthSquared() > 0.001)
 			delta.normalize();
 		delta.multiply(0.05 * strength);
-		delta.setY(delta.getY() + 0.05 * lift);
+		delta.setY(0.05 * lift);
 		target.setVelocity(target.getVelocity().add(delta));
 	}
 
