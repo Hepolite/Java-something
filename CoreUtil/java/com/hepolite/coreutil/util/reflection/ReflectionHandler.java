@@ -72,9 +72,13 @@ public final class ReflectionHandler extends HandlerCore
 	{
 		/// @formatter:off
 		REntity.nmsClass = getNMSClass("Entity");
+		REntity.nmsGetCraftHandle = getNMSMethod(REntity.nmsClass, "getCraftHandle");
 		REntity.nmsGetBoundingBox = getNMSMethod(REntity.nmsClass, "getBoundingBox");
 		REntity.nmsSave = getNMSMethod(REntity.nmsClass, "save", RNBTTag.Compound.nmsClass.handle);
 		REntity.nmsLoad = getNMSMethod(REntity.nmsClass, "load", RNBTTag.Compound.nmsClass.handle);
+		REntity.nmsPosX = getNMSField(REntity.nmsClass, "posX");
+		REntity.nmsPosY = getNMSField(REntity.nmsClass, "posY");
+		REntity.nmsPosZ = getNMSField(REntity.nmsClass, "posZ");
 		REntity.cbClass = getCBClass("entity.Entity");
 		REntity.cbGetHandle = getCBMethod(REntity.cbClass, "getHandle");
 		/// @formatter:on
@@ -159,6 +163,7 @@ public final class ReflectionHandler extends HandlerCore
 		/// @formatter:off
 		RMovingObjectPosition.nmsClass = getNMSClass("MovingObjectPosition");
 		RMovingObjectPosition.nmsGetBlockPos = getNMSMethod(RMovingObjectPosition.nmsClass, "getBlockPos");
+		RMovingObjectPosition.nmsEntity = getNMSField(RMovingObjectPosition.nmsClass, "entity");
 		RMovingObjectPosition.nmsPos = getNMSField(RMovingObjectPosition.nmsClass, "pos");
 		/// @formatter:on
 	}

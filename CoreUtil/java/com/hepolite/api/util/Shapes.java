@@ -55,16 +55,16 @@ public final class Shapes
 		 * @param z The z-coordinate
 		 * @return The point with the given coordinate
 		 */
-		public static Point fromCoord(final float x, final float y, final float z)
+		public static Point fromCoord(final double x, final double y, final double z)
 		{
 			return new Point(x, y, z);
 		}
 
 		// ...
 
-		private float x, y, z;
+		private double x, y, z;
 
-		private Point(final float x, final float y, final float z)
+		private Point(final double x, final double y, final double z)
 		{
 			setCoord(x, y, z);
 		}
@@ -76,7 +76,7 @@ public final class Shapes
 		 * @param y The y-coordinate
 		 * @param z The z-coordinate
 		 */
-		public void setCoord(final float x, final float y, final float z)
+		public void setCoord(final double x, final double y, final double z)
 		{
 			this.x = x;
 			this.y = y;
@@ -86,21 +86,21 @@ public final class Shapes
 		/**
 		 * @return x-coordinate
 		 */
-		public float getX()
+		public double getX()
 		{
 			return x;
 		}
 		/**
 		 * @return y-coordinate
 		 */
-		public float getY()
+		public double getY()
 		{
 			return y;
 		}
 		/**
 		 * @return z-coordinate
 		 */
-		public float getZ()
+		public double getZ()
 		{
 			return z;
 		}
@@ -115,9 +115,9 @@ public final class Shapes
 		@Override
 		public boolean intersects(final Sphere sphere)
 		{
-			final float dx = sphere.x - x;
-			final float dy = sphere.y - y;
-			final float dz = sphere.z - z;
+			final double dx = sphere.x - x;
+			final double dy = sphere.y - y;
+			final double dz = sphere.z - z;
 			return dx * dx + dy * dy + dz * dz < sphere.r * sphere.r;
 		}
 		@Override
@@ -126,20 +126,20 @@ public final class Shapes
 			// Point: p
 			// Line: a + t * u
 			// d = ||AP x u|| / ||u|| = 0 during intersection
-			final float apx = x - line.x;
-			final float apy = y - line.y;
-			final float apz = z - line.z;
-			final float cx = apy * line.dz - apz * line.dy;
-			final float cy = apz * line.dx - apx * line.dz;
-			final float cz = apx * line.dy - apy * line.dx;
+			final double apx = x - line.x;
+			final double apy = y - line.y;
+			final double apz = z - line.z;
+			final double cx = apy * line.dz - apz * line.dy;
+			final double cy = apz * line.dx - apx * line.dz;
+			final double cz = apx * line.dy - apy * line.dx;
 
 			// P = a + t * u, solve for t
-			final float tx = (line.dx == 0.0f ? 0.0f : apx / line.dx);
-			final float ty = (line.dy == 0.0f ? 0.0f : apy / line.dy);
-			final float tz = (line.dz == 0.0f ? 0.0f : apz / line.dz);
+			final double tx = (line.dx == 0.0 ? 0.0 : apx / line.dx);
+			final double ty = (line.dy == 0.0 ? 0.0 : apy / line.dy);
+			final double tz = (line.dz == 0.0 ? 0.0 : apz / line.dz);
 
-			return cx * cx + cy * cy + cz * cz == 0.0f && tx >= 0.0f && ty >= 0.0f && tz >= 0.0f && tx <= 1.0f
-					&& ty <= 1.0f && tz <= 1.0f;
+			return cx * cx + cy * cy + cz * cz == 0.0 && tx >= 0.0 && ty >= 0.0 && tz >= 0.0 && tx <= 1.0 && ty <= 1.0
+					&& tz <= 1.0;
 		}
 		@Override
 		public boolean intersects(final Box box)
@@ -150,12 +150,12 @@ public final class Shapes
 		public boolean intersects(final Cone cone)
 		{
 			// cos A = ||dp * d|| / (||dp|| * ||dr||)
-			final float dx = x - cone.x;
-			final float dy = y - cone.y;
-			final float dz = z - cone.z;
-			final float d1l = dx * dx + dy * dy + dz * dz;
-			final float d2l = cone.dx * cone.dx + cone.dy * cone.dy + cone.dz * cone.dz;
-			final float cos = (dx * cone.dx + dy * cone.dy + dz * cone.dz) / (float) Math.sqrt(d1l * d2l);
+			final double dx = x - cone.x;
+			final double dy = y - cone.y;
+			final double dz = z - cone.z;
+			final double d1l = dx * dx + dy * dy + dz * dz;
+			final double d2l = cone.dx * cone.dx + cone.dy * cone.dy + cone.dz * cone.dz;
+			final double cos = (dx * cone.dx + dy * cone.dy + dz * cone.dz) / Math.sqrt(d1l * d2l);
 			return cos >= cone.angle && d1l <= d2l;
 		}
 
@@ -179,16 +179,16 @@ public final class Shapes
 		 * @param r The radius
 		 * @return The sphere with the given center coordinate and radius
 		 */
-		public static Sphere fromCoordAndRadius(final float x, final float y, final float z, final float r)
+		public static Sphere fromCoordAndRadius(final double x, final double y, final double z, final double r)
 		{
 			return new Sphere(x, y, z, r);
 		}
 
 		// ...
 
-		private float x, y, z, r;
+		private double x, y, z, r;
 
-		private Sphere(final float x, final float y, final float z, final float r)
+		private Sphere(final double x, final double y, final double z, final double r)
 		{
 			setCoordAndRadius(x, y, z, r);
 		}
@@ -200,7 +200,7 @@ public final class Shapes
 		 * @param y The center y-coordinate
 		 * @param z The center z-coordinate
 		 */
-		public void setCoordAndRadius(final float x, final float y, final float z, final float r)
+		public void setCoordAndRadius(final double x, final double y, final double z, final double r)
 		{
 			this.x = x;
 			this.y = y;
@@ -211,28 +211,28 @@ public final class Shapes
 		/**
 		 * @return center x-coordinate
 		 */
-		public float getX()
+		public double getX()
 		{
 			return x;
 		}
 		/**
 		 * @return center y-coordinate
 		 */
-		public float getY()
+		public double getY()
 		{
 			return y;
 		}
 		/**
 		 * @return center z-coordinate
 		 */
-		public float getZ()
+		public double getZ()
 		{
 			return z;
 		}
 		/**
 		 * @return radius
 		 */
-		public float getRadius()
+		public double getRadius()
 		{
 			return r;
 		}
@@ -247,10 +247,10 @@ public final class Shapes
 		@Override
 		public boolean intersects(final Sphere sphere)
 		{
-			final float dx = sphere.x - x;
-			final float dy = sphere.y - y;
-			final float dz = sphere.z - z;
-			final float dr = sphere.r + r;
+			final double dx = sphere.x - x;
+			final double dy = sphere.y - y;
+			final double dz = sphere.z - z;
+			final double dr = sphere.r + r;
 			return dx * dx + dy * dy + dz * dz < dr * dr;
 		}
 		@Override
@@ -259,32 +259,32 @@ public final class Shapes
 			// Point: p
 			// Line: a + t * u
 			// d = ||AP x u|| / ||u|| = 0 during intersection
-			final float apx = x - line.x;
-			final float apy = y - line.y;
-			final float apz = z - line.z;
-			final float cx = apy * line.dz - apz * line.dy;
-			final float cy = apz * line.dx - apx * line.dz;
-			final float cz = apx * line.dy - apy * line.dx;
+			final double apx = x - line.x;
+			final double apy = y - line.y;
+			final double apz = z - line.z;
+			final double cx = apy * line.dz - apz * line.dy;
+			final double cy = apz * line.dx - apx * line.dz;
+			final double cz = apx * line.dy - apy * line.dx;
 
 			// P = a + t * u, solve for t
-			final float tx = (line.dx == 0.0f ? 0.0f : apx / line.dx);
-			final float ty = (line.dy == 0.0f ? 0.0f : apy / line.dy);
-			final float tz = (line.dz == 0.0f ? 0.0f : apz / line.dz);
+			final double tx = (line.dx == 0.0 ? 0.0 : apx / line.dx);
+			final double ty = (line.dy == 0.0 ? 0.0 : apy / line.dy);
+			final double tz = (line.dz == 0.0 ? 0.0 : apz / line.dz);
 
-			return cx * cx + cy * cy + cz * cz <= r * r && tx >= 0.0f && ty >= 0.0f && tz >= 0.0f && tx <= 1.0f
-					&& ty <= 1.0f && tz <= 1.0f;
+			return cx * cx + cy * cy + cz * cz <= r * r && tx >= 0.0 && ty >= 0.0 && tz >= 0.0 && tx <= 1.0 && ty <= 1.0
+					&& tz <= 1.0;
 		}
 		@Override
 		public boolean intersects(final Box box)
 		{
 			// Source:
 			// https://studiofreya.com/3d-math-and-physics/sphere-vs-aabb-collision-detection-test/
-			final TriFunction<Float, Float, Float, Float> fun = (pn, bmin, bmax) -> {
+			final TriFunction<Double, Double, Double, Double> fun = (pn, bmin, bmax) -> {
 				if (pn < bmin)
 					return (bmin - pn) * (bmin - pn);
 				if (pn > bmax)
 					return (pn - bmax) * (pn - bmax);
-				return 0.0f;
+				return 0.0;
 			};
 			return fun.apply(x, box.x1, box.x2) + fun.apply(y, box.y1, box.y2) + fun.apply(z, box.z1, box.z2) <= r * r;
 		}
@@ -316,8 +316,8 @@ public final class Shapes
 		 * @param ze The ending z-coordinate
 		 * @return The line spanning between the two coordinates
 		 */
-		public static Line fromSpan(final float xs, final float ys, final float zs, final float xe, final float ye,
-				final float ze)
+		public static Line fromSpan(final double xs, final double ys, final double zs, final double xe, final double ye,
+				final double ze)
 		{
 			return new Line(xs, ys, zs, xe - xs, ye - ys, ze - zs);
 		}
@@ -332,18 +332,18 @@ public final class Shapes
 		 * @param dz The direction z-coordinate
 		 * @return The line spanning from the starting coordinate in the given direction
 		 */
-		public static Line fromDirection(final float x, final float y, final float z, final float dx, final float dy,
-				final float dz)
+		public static Line fromDirection(final double x, final double y, final double z, final double dx,
+				final double dy, final double dz)
 		{
 			return new Line(x, y, z, dx, dy, dz);
 		}
 
 		// ...
 
-		private float x, y, z;
-		private float dx, dy, dz;
+		private double x, y, z;
+		private double dx, dy, dz;
 
-		private Line(final float x, final float y, final float z, final float xd, final float dy, final float dz)
+		private Line(final double x, final double y, final double z, final double xd, final double dy, final double dz)
 		{
 			setSpan(x, y, z, xd, dy, dz);
 		}
@@ -358,8 +358,8 @@ public final class Shapes
 		 * @param ye The ending y-coordinate
 		 * @param ze The ending z-coordinate
 		 */
-		public void setSpan(final float xs, final float ys, final float zs, final float xe, final float ye,
-				final float ze)
+		public void setSpan(final double xs, final double ys, final double zs, final double xe, final double ye,
+				final double ze)
 		{
 			setDirection(xs, ys, zs, xe - xs, ye - ys, ze - zs);
 		}
@@ -373,8 +373,8 @@ public final class Shapes
 		 * @param ye The ending y-coordinate
 		 * @param ze The ending z-coordinate
 		 */
-		public void setDirection(final float x, final float y, final float z, final float dx, final float dy,
-				final float dz)
+		public void setDirection(final double x, final double y, final double z, final double dx, final double dy,
+				final double dz)
 		{
 			this.x = x;
 			this.y = y;
@@ -387,42 +387,42 @@ public final class Shapes
 		/**
 		 * @return x-coordinate
 		 */
-		public float getX()
+		public double getX()
 		{
 			return x;
 		}
 		/**
 		 * @return y-coordinate
 		 */
-		public float getY()
+		public double getY()
 		{
 			return y;
 		}
 		/**
 		 * @return z-coordinate
 		 */
-		public float getZ()
+		public double getZ()
 		{
 			return z;
 		}
 		/**
 		 * @return x-direction
 		 */
-		public float deltaX()
+		public double deltaX()
 		{
 			return dx;
 		}
 		/**
 		 * @return y-direction
 		 */
-		public float deltaY()
+		public double deltaY()
 		{
 			return dy;
 		}
 		/**
 		 * @return z-direction
 		 */
-		public float deltaZ()
+		public double deltaZ()
 		{
 			return dz;
 		}
@@ -448,17 +448,17 @@ public final class Shapes
 		public boolean intersects(final Box box)
 		{
 			// Formula missing
-			final float t1x = (box.x1 - x) / dx;
-			final float t1y = (box.y1 - y) / dy;
-			final float t1z = (box.z1 - z) / dz;
-			final float t2x = (box.x2 - x) / dx;
-			final float t2y = (box.y2 - y) / dy;
-			final float t2z = (box.z2 - z) / dz;
+			final double t1x = (box.x1 - x) / dx;
+			final double t1y = (box.y1 - y) / dy;
+			final double t1z = (box.z1 - z) / dz;
+			final double t2x = (box.x2 - x) / dx;
+			final double t2y = (box.y2 - y) / dy;
+			final double t2z = (box.z2 - z) / dz;
 
 			// Explanation missing
-			final float min = Math.max(Math.max(Math.min(t1x, t2x), Math.min(t1y, t2y)), Math.min(t1z, t2z));
-			final float max = Math.min(Math.min(Math.max(t1x, t2x), Math.max(t1y, t2y)), Math.max(t1z, t2z));
-			return max >= min && max >= 0.0f && min <= 1.0f;
+			final double min = Math.max(Math.max(Math.min(t1x, t2x), Math.min(t1y, t2y)), Math.min(t1z, t2z));
+			final double max = Math.min(Math.min(Math.max(t1x, t2x), Math.max(t1y, t2y)), Math.max(t1z, t2z));
+			return max >= min && max >= 0.0 && min <= 1.0;
 		}
 		@Override
 		public boolean intersects(final Cone cone)
@@ -488,8 +488,8 @@ public final class Shapes
 		 * @param z2 The second z-coordinate
 		 * @return The box spanning between the two coordinates
 		 */
-		public static Box fromSpan(final float x1, final float y1, final float z1, final float x2, final float y2,
-				final float z2)
+		public static Box fromSpan(final double x1, final double y1, final double z1, final double x2, final double y2,
+				final double z2)
 		{
 			return new Box(x1, y1, z1, x2, y2, z2);
 		}
@@ -504,21 +504,22 @@ public final class Shapes
 		 * @param z2 The z size
 		 * @return The box located at the center coordinate with the given size
 		 */
-		public static Box fromSize(final float cx, final float cy, final float cz, final float sx, final float sy,
-				final float sz)
+		public static Box fromSize(final double cx, final double cy, final double cz, final double sx, final double sy,
+				final double sz)
 		{
-			final float hx = 0.5f * sx;
-			final float hy = 0.5f * sy;
-			final float hz = 0.5f * sz;
+			final double hx = 0.5 * sx;
+			final double hy = 0.5 * sy;
+			final double hz = 0.5 * sz;
 			return fromSpan(cx - hx, cy - hy, cz - hz, cx + hx, cy + hy, cz + hz);
 		}
 
 		// ...
 
-		private float x1, y1, z1;
-		private float x2, y2, z2;
+		private double x1, y1, z1;
+		private double x2, y2, z2;
 
-		private Box(final float x1, final float y1, final float z1, final float x2, final float y2, final float z2)
+		private Box(final double x1, final double y1, final double z1, final double x2, final double y2,
+				final double z2)
 		{
 			setSpan(x1, y1, z1, x2, y2, z2);
 		}
@@ -533,8 +534,8 @@ public final class Shapes
 		 * @param y2 The second y-coordinate
 		 * @param z2 The second z-coordinate
 		 */
-		public void setSpan(final float x1, final float y1, final float z1, final float x2, final float y2,
-				final float z2)
+		public void setSpan(final double x1, final double y1, final double z1, final double x2, final double y2,
+				final double z2)
 		{
 			this.x1 = Math.min(x1, x2);
 			this.x2 = Math.max(x1, x2);
@@ -553,54 +554,54 @@ public final class Shapes
 		 * @param y2 The y size
 		 * @param z2 The z size
 		 */
-		public void setSize(final float cx, final float cy, final float cz, final float sx, final float sy,
-				final float sz)
+		public void setSize(final double cx, final double cy, final double cz, final double sx, final double sy,
+				final double sz)
 		{
-			final float hx = 0.5f * sx;
-			final float hy = 0.5f * sy;
-			final float hz = 0.5f * sz;
+			final double hx = 0.5 * sx;
+			final double hy = 0.5 * sy;
+			final double hz = 0.5 * sz;
 			setSpan(cx - hx, cy - hy, cz - hz, cx + hx, cy + hy, cz + hz);
 		}
 
 		/**
 		 * @return Minimum x-coordinate
 		 */
-		public float minX()
+		public double minX()
 		{
 			return x1;
 		}
 		/**
 		 * @return Minimum y-coordinate
 		 */
-		public float minY()
+		public double minY()
 		{
 			return y1;
 		}
 		/**
 		 * @return Minimum z-coordinate
 		 */
-		public float minZ()
+		public double minZ()
 		{
 			return z1;
 		}
 		/**
 		 * @return Maximum x-coordinate
 		 */
-		public float maxX()
+		public double maxX()
 		{
 			return x2;
 		}
 		/**
 		 * @return Maximum y-coordinate
 		 */
-		public float maxY()
+		public double maxY()
 		{
 			return y2;
 		}
 		/**
 		 * @return Maximum z-coordinate
 		 */
-		public float maxZ()
+		public double maxZ()
 		{
 			return z2;
 		}
@@ -640,7 +641,7 @@ public final class Shapes
 				Point.fromCoord(x2, y1, z2),
 				Point.fromCoord(x2, y2, z1),
 				Point.fromCoord(x2, y2, z2),
-				Point.fromCoord(0.5f * (x1 + x2), 0.5f * (y1 + y2), 0.5f * (z1 + z2))
+				Point.fromCoord(0.5 * (x1 + x2), 0.5 * (y1 + y2), 0.5 * (z1 + z2))
 			})
 				if (point.intersects(cone))
 					return true;
@@ -670,20 +671,20 @@ public final class Shapes
 		 * @param angle The cone angle
 		 * @return The cone spanning from the starting coordinate in the given direction
 		 */
-		public static Cone fromDirection(final float x, final float y, final float z, final float dx, final float dy,
-				final float dz, final float angle)
+		public static Cone fromDirection(final double x, final double y, final double z, final double dx,
+				final double dy, final double dz, final double angle)
 		{
 			return new Cone(x, y, z, dx, dy, dz, angle);
 		}
 
 		// ...
 
-		private float x, y, z;
-		private float dx, dy, dz;
-		private float angle;
+		private double x, y, z;
+		private double dx, dy, dz;
+		private double angle;
 
-		private Cone(final float x, final float y, final float z, final float dx, final float dy, final float dz,
-				final float angle)
+		private Cone(final double x, final double y, final double z, final double dx, final double dy, final double dz,
+				final double angle)
 		{
 			setDirection(x, y, z, dx, dy, dz, angle);
 		}
@@ -699,8 +700,8 @@ public final class Shapes
 		 * @param dz The direction z-coordinate
 		 * @param angle The cone angle
 		 */
-		public void setDirection(final float x, final float y, final float z, final float dx, final float dy,
-				final float dz, final float angle)
+		public void setDirection(final double x, final double y, final double z, final double dx, final double dy,
+				final double dz, final double angle)
 		{
 			this.x = x;
 			this.y = y;
@@ -708,57 +709,57 @@ public final class Shapes
 			this.dx = dx;
 			this.dy = dy;
 			this.dz = dz;
-			this.angle = (float) Math.cos(0.5 * angle * Math.PI / 180.0);
+			this.angle = Math.cos(0.5 * angle * Math.PI / 180.0);
 		}
 
 		/**
 		 * @return center x-coordinate
 		 */
-		public float getX()
+		public double getX()
 		{
 			return x;
 		}
 		/**
 		 * @return center y-coordinate
 		 */
-		public float getY()
+		public double getY()
 		{
 			return y;
 		}
 		/**
 		 * @return center z-coordinate
 		 */
-		public float gettZ()
+		public double gettZ()
 		{
 			return z;
 		}
 		/**
 		 * @return x-direction
 		 */
-		public float deltaX()
+		public double deltaX()
 		{
 			return dx;
 		}
 		/**
 		 * @return y-direction
 		 */
-		public float deltaY()
+		public double deltaY()
 		{
 			return dy;
 		}
 		/**
 		 * @return z-direction
 		 */
-		public float deltaZ()
+		public double deltaZ()
 		{
 			return dz;
 		}
 		/**
 		 * @return angle
 		 */
-		public float getAngle()
+		public double getAngle()
 		{
-			return (float) (2.0 * Math.acos(angle) * 180.0 / Math.PI);
+			return 2.0 * Math.acos(angle) * 180.0 / Math.PI;
 		}
 
 		// ...

@@ -24,6 +24,8 @@ Default:
     food: 30.0
     ratio: 1.2
     time: 3s 10t
+    result:
+      type: bowl
   bread:
     ingredients: wheat
     food: 25.0
@@ -151,6 +153,8 @@ Default:
     food: 30.0
     ratio: 1.2
     time: 3s 10t
+    result:
+      type: bowl
   poisonous_potato:
     ingredients: potato_item
     food: 10.0
@@ -201,6 +205,8 @@ Default:
     food: 50.0
     ratio: 1.2
     time: 5s 10t
+    result:
+      type: bowl
   raw_beef:
     categories: meat
     food: 15.0

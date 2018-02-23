@@ -21,15 +21,6 @@ public final class Raytracer
 		/** The side of the block the ray impacted with or null (Not implemented) */
 		@Deprecated
 		public BlockFace face;
-
-		// ...
-
-		@Override
-		public String toString()
-		{
-			return String.format("{location: %s, block: %s, face: %s}", location == null ? "none" : location.toString(),
-					block == null ? "none" : block.toString(), face == null ? "none" : face.toString());
-		}
 	}
 
 	// ...
@@ -59,8 +50,7 @@ public final class Raytracer
 	 * 
 	 * @param start The starting point of the ray trace
 	 * @param end The ending point of the ray trace
-	 * @param hitWater Whether stationary fluids should count as solid and that the raytracer should
-	 *            stop when hitting a stationary fluid
+	 * @param hitWater Whether water blocks should be hit by the ray or not
 	 * @return The result of the raytrace
 	 */
 	public static RaytraceResult rayTrace(final Location start, final Location end, final boolean hitWater)
@@ -74,25 +64,37 @@ public final class Raytracer
 	/**
 	 * Performs a ray trace against the blocks in the world specified along the ray from start to
 	 * end. If the raytracer finds any block along the ray, it will return the location of the
-	 * impact point
+	 * impact point. How this function works with the parameter booleans if almost pure magic. Have
+	 * a look here and cry: https://imgur.com/a/brutE <br>
+	 * <br>
+	 * Suggested uses:<br>
+	 * false, true, false: Hit only solids<br>
+	 * false, false, false: Hit solids and blocks without collision boxes<br>
+	 * true, false, false: Hit solids, blocks without collision boxes and water<br>
+	 * false, false, true: Hit anything, even the last air block<br>
+	 * Trial and error show that there are no other combinations that work... Note that only
+	 * stationary fluids can be picked up, flowing fluids will not register! One just *have* to love
+	 * Minecraft code, eh...? *Sigh*
 	 * 
 	 * @param start The starting point of the ray trace
 	 * @param end The ending point of the ray trace
-	 * @param hitWater Whether stationary fluids should count as solid and that the raytracer should
-	 *            stop when hitting a stationary fluid
-	 * @param hitNonsolidBlocks Whether blocks such as torches and other blocks with no bbox should
-	 *            be hit or not. If {@code unknown} is true, this flag seems to not work.
+	 * @param hitWater Whether stationary water blocks should count as solid
+	 * @param skipNonsolidBlocks Whether blocks with no collision box should be skipped. If this is
+	 *            true, all other boolean values appear to be completely ignored. Both water and air
+	 *            are treated as blocks without no collision box.
+	 * @param hitAir Whether the last block checked should be returned whether no other blocks where
+	 *            found along the ray. If skipNonsolidBlocks is false, is hitAir is true, water
+	 *            blocks will also be picked up.
 	 * @return The result of the raytrace
 	 */
 	public static RaytraceResult rayTrace(final Location start, final Location end, final boolean hitWater,
-			final boolean hitNonsolidBlocks)
+			final boolean skipNonsolidBlocks, final boolean hitAir)
 	{
-		// TODO: The second boolean raytracer parameter has a unclear meaning
 		final Object vec3Start = RVec3D.nmsConstructor.instantiate(start.getX(), start.getY(), start.getZ());
 		final Object vec3End = RVec3D.nmsConstructor.instantiate(end.getX(), end.getY(), end.getZ());
 		final Object worldHandle = RWorld.cbGetHandle.invoke(start.getWorld());
-		final Object movingObjPos = RWorld.nmsRayTraceTertiary.invoke(worldHandle, vec3Start, vec3End, hitWater, false,
-				!hitNonsolidBlocks);
+		final Object movingObjPos = RWorld.nmsRayTraceTertiary.invoke(worldHandle, vec3Start, vec3End, hitWater,
+				skipNonsolidBlocks, hitAir);
 		return convert(start.getWorld(), movingObjPos);
 	}
 

@@ -16,9 +16,9 @@ class ShapesTest
 	@Test
 	void testPointPointIntersection()
 	{
-		final Point pointA = Point.fromCoord(3.0f, 1.0f, 4.0f);
-		final Point pointB = Point.fromCoord(0.0f, 0.0f, 0.0f);
-		final Point pointC = Point.fromCoord(3.0f, 1.0f, 4.0f);
+		final Point pointA = Point.fromCoord(3.0, 1.0, 4.0);
+		final Point pointB = Point.fromCoord(0.0, 0.0, 0.0);
+		final Point pointC = Point.fromCoord(3.0, 1.0, 4.0);
 
 		assertTrue(pointA.intersects(pointC));
 		assertFalse(pointB.intersects(pointC));
@@ -26,9 +26,9 @@ class ShapesTest
 	@Test
 	void testPointSphereIntersection()
 	{
-		final Point pointA = Point.fromCoord(0.5f, 0.0f, 0.0f);
-		final Point pointB = Point.fromCoord(3.0f, 1.0f, 4.0f);
-		final Sphere sphere = Sphere.fromCoordAndRadius(0.0f, 0.0f, 0.0f, 1.0f);
+		final Point pointA = Point.fromCoord(0.5, 0.0, 0.0);
+		final Point pointB = Point.fromCoord(3.0, 1.0, 4.0);
+		final Sphere sphere = Sphere.fromCoordAndRadius(0.0, 0.0, 0.0, 1.0);
 
 		assertTrue(pointA.intersects(sphere));
 		assertFalse(pointB.intersects(sphere));
@@ -36,9 +36,9 @@ class ShapesTest
 	@Test
 	void testPointLineIntersection()
 	{
-		final Point pointA = Point.fromCoord(0.5f, 0.0f, 0.0f);
-		final Point pointB = Point.fromCoord(3.0f, 0.0f, 0.0f);
-		final Line line = Line.fromSpan(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+		final Point pointA = Point.fromCoord(0.5, 0.0, 0.0);
+		final Point pointB = Point.fromCoord(3.0, 0.0, 0.0);
+		final Line line = Line.fromSpan(1.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
 		assertTrue(pointA.intersects(line));
 		assertFalse(pointB.intersects(line));
@@ -46,9 +46,9 @@ class ShapesTest
 	@Test
 	void testPointBoxIntersection()
 	{
-		final Point pointA = Point.fromCoord(0.5f, 0.0f, 0.0f);
-		final Point pointB = Point.fromCoord(3.0f, 1.0f, 4.0f);
-		final Box box = Box.fromSize(0.0f, 0.0f, 0.0f, 2.0f, 2.0f, 2.0f);
+		final Point pointA = Point.fromCoord(0.5, 0.0, 0.0);
+		final Point pointB = Point.fromCoord(3.0, 1.0, 4.0);
+		final Box box = Box.fromSize(0.0, 0.0, 0.0, 2.0, 2.0, 2.0);
 
 		assertTrue(pointA.intersects(box));
 		assertFalse(pointB.intersects(box));
@@ -56,9 +56,9 @@ class ShapesTest
 	@Test
 	void testPointConeIntersection()
 	{
-		final Point pointA = Point.fromCoord(0.0f, 0.0f, 0.5f);
-		final Point pointB = Point.fromCoord(0.75f, 0.0f, 0.5f);
-		final Cone cone = Cone.fromDirection(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 90.0f);
+		final Point pointA = Point.fromCoord(0.0, 0.0, 0.5);
+		final Point pointB = Point.fromCoord(0.75, 0.0, 0.5);
+		final Cone cone = Cone.fromDirection(0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 90.0);
 
 		assertTrue(pointA.intersects(cone));
 		assertFalse(pointB.intersects(cone));
@@ -67,9 +67,9 @@ class ShapesTest
 	@Test
 	void testSphereSphereIntersection()
 	{
-		final Sphere sphereA = Sphere.fromCoordAndRadius(0.0f, 0.0f, 0.0f, 1.0f);
-		final Sphere sphereB = Sphere.fromCoordAndRadius(1.25f, 0.0f, 0.0f, 1.0f);
-		final Sphere sphereC = Sphere.fromCoordAndRadius(2.5f, 0.0f, 0.0f, 1.0f);
+		final Sphere sphereA = Sphere.fromCoordAndRadius(0.0, 0.0, 0.0, 1.0);
+		final Sphere sphereB = Sphere.fromCoordAndRadius(1.25, 0.0, 0.0, 1.0);
+		final Sphere sphereC = Sphere.fromCoordAndRadius(2.5, 0.0, 0.0, 1.0);
 
 		assertTrue(sphereA.intersects(sphereB));
 		assertTrue(sphereB.intersects(sphereC));
@@ -78,9 +78,9 @@ class ShapesTest
 	@Test
 	void testSphereLineIntersection()
 	{
-		final Sphere sphereA = Sphere.fromCoordAndRadius(0.0f, 0.0f, 0.0f, 1.0f);
-		final Sphere sphereB = Sphere.fromCoordAndRadius(3.0f, 0.0f, 0.0f, 1.0f);
-		final Line line = Line.fromSpan(0.5f, 0.0f, 0.0f, 0.0f, 0.5f, 0.0f);
+		final Sphere sphereA = Sphere.fromCoordAndRadius(0.0, 0.0, 0.0, 1.0);
+		final Sphere sphereB = Sphere.fromCoordAndRadius(3.0, 0.0, 0.0, 1.0);
+		final Line line = Line.fromSpan(0.5, 0.0, 0.0, 0.0, 0.5, 0.0);
 
 		assertTrue(sphereA.intersects(line));
 		assertFalse(sphereB.intersects(line));
@@ -88,9 +88,9 @@ class ShapesTest
 	@Test
 	void testSphereBoxIntersection()
 	{
-		final Sphere sphereA = Sphere.fromCoordAndRadius(0.0f, 0.0f, 1.5f, 1.0f);
-		final Sphere sphereB = Sphere.fromCoordAndRadius(3.0f, 0.0f, 0.0f, 1.0f);
-		final Box box = Box.fromSize(0.0f, 0.0f, 0.0f, 1.0f, 4.0f, 2.0f);
+		final Sphere sphereA = Sphere.fromCoordAndRadius(0.0, 0.0, 1.5, 1.0);
+		final Sphere sphereB = Sphere.fromCoordAndRadius(3.0, 0.0, 0.0, 1.0);
+		final Box box = Box.fromSize(0.0, 0.0, 0.0, 1.0, 4.0, 2.0);
 
 		assertTrue(sphereA.intersects(box));
 		assertFalse(sphereB.intersects(box));
@@ -98,9 +98,9 @@ class ShapesTest
 	@Test
 	void testSphereConeIntersection()
 	{
-		final Sphere sphereA = Sphere.fromCoordAndRadius(0.0f, 0.0f, 0.0f, 1.0f);
-		final Sphere sphereB = Sphere.fromCoordAndRadius(0.0f, 0.0f, 0.0f, 1.0f);
-		final Cone cone = Cone.fromDirection(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 90.0f);
+		final Sphere sphereA = Sphere.fromCoordAndRadius(0.0, 0.0, 0.0, 1.0);
+		final Sphere sphereB = Sphere.fromCoordAndRadius(0.0, 0.0, 0.0, 1.0);
+		final Cone cone = Cone.fromDirection(0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 90.0);
 
 		// TODO: Implement intersection
 		assertThrows(NotImplementedException.class, () -> sphereA.intersects(cone));
@@ -110,9 +110,9 @@ class ShapesTest
 	@Test
 	void testLineLineIntersection()
 	{
-		final Line lineA = Line.fromSpan(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-		final Line lineB = Line.fromSpan(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-		final Line lineC = Line.fromSpan(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+		final Line lineA = Line.fromSpan(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+		final Line lineB = Line.fromSpan(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+		final Line lineC = Line.fromSpan(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
 		// TODO: Implement intersection
 		assertThrows(NotImplementedException.class, () -> lineA.intersects(lineB));
@@ -122,9 +122,9 @@ class ShapesTest
 	@Test
 	void testLineBoxIntersection()
 	{
-		final Line lineA = Line.fromSpan(-1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
-		final Line lineB = Line.fromSpan(1.0f, -2.0f, 0.0f, 1.0f, 5.0f, 0.0f);
-		final Box box = Box.fromSize(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+		final Line lineA = Line.fromSpan(-1.0, 0.0, 0.0, 1.0, 0.0, 0.0);
+		final Line lineB = Line.fromSpan(1.0, -2.0, 0.0, 1.0, 5.0, 0.0);
+		final Box box = Box.fromSize(0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
 
 		assertTrue(lineA.intersects(box));
 		assertFalse(lineB.intersects(box));
@@ -132,9 +132,9 @@ class ShapesTest
 	@Test
 	void testLineConeIntersection()
 	{
-		final Line lineA = Line.fromSpan(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-		final Line lineB = Line.fromSpan(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-		final Cone cone = Cone.fromDirection(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 90.0f);
+		final Line lineA = Line.fromSpan(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+		final Line lineB = Line.fromSpan(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+		final Cone cone = Cone.fromDirection(0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 90.0);
 
 		// TODO: Implement intersection
 		assertThrows(NotImplementedException.class, () -> lineA.intersects(cone));
@@ -144,9 +144,9 @@ class ShapesTest
 	@Test
 	void testBoxBoxIntersection()
 	{
-		final Box boxA = Box.fromSpan(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
-		final Box boxB = Box.fromSpan(-0.75f, 0.0f, 0.5f, 0.25f, 1.0f, 1.5f);
-		final Box boxC = Box.fromSpan(-1.5f, 0.0f, 0.0f, -0.5f, 1.0f, 1.0f);
+		final Box boxA = Box.fromSpan(0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+		final Box boxB = Box.fromSpan(-0.75, 0.0, 0.5, 0.25, 1.0, 1.5);
+		final Box boxC = Box.fromSpan(-1.5, 0.0, 0.0, -0.5, 1.0, 1.0);
 
 		assertTrue(boxA.intersects(boxB));
 		assertTrue(boxB.intersects(boxC));
@@ -155,9 +155,9 @@ class ShapesTest
 	@Test
 	void testBoxConeIntersection()
 	{
-		final Box boxA = Box.fromSize(0.75f, 0.75f, 0.0f, 1.0f, 1.0f, 1.0f);
-		final Box boxB = Box.fromSize(0.75f, 0.0f, 0.25f, 0.1f, 0.1f, 0.1f);
-		final Cone cone = Cone.fromDirection(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 90.0f);
+		final Box boxA = Box.fromSize(0.75, 0.75, 0.0, 1.0, 1.0, 1.0);
+		final Box boxB = Box.fromSize(0.75, 0.0, 0.25, 0.1f, 0.1f, 0.1f);
+		final Cone cone = Cone.fromDirection(0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 90.0);
 
 		assertTrue(boxA.intersects(cone));
 		assertFalse(boxB.intersects(cone));
@@ -166,9 +166,9 @@ class ShapesTest
 	@Test
 	void testConeConeIntersection()
 	{
-		final Cone coneA = Cone.fromDirection(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 90.0f);
-		final Cone coneB = Cone.fromDirection(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 90.0f);
-		final Cone coneC = Cone.fromDirection(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 90.0f);
+		final Cone coneA = Cone.fromDirection(0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 90.0);
+		final Cone coneB = Cone.fromDirection(0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 90.0);
+		final Cone coneC = Cone.fromDirection(0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 90.0);
 
 		// TODO: Implement intersection
 		assertThrows(NotImplementedException.class, () -> coneA.intersects(coneB));

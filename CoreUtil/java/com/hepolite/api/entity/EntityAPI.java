@@ -1,6 +1,7 @@
 package com.hepolite.api.entity;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.util.Vector;
 
 import com.hepolite.api.util.Shapes.Box;
 import com.hepolite.coreutil.util.reflection.reflected.RAxisAlignedBB;
@@ -8,6 +9,21 @@ import com.hepolite.coreutil.util.reflection.reflected.REntity;
 
 public final class EntityAPI
 {
+	/**
+	 * Attempts to retrieve the exact world position of the entity
+	 * 
+	 * @param entity The entity to work with
+	 * @return The vector representing the entity's position
+	 */
+	public static Vector getPos(final Entity entity)
+	{
+		final Object entityHandle = REntity.cbGetHandle.invoke(entity);
+
+		final double x = (double) REntity.nmsPosX.get(entityHandle);
+		final double y = (double) REntity.nmsPosY.get(entityHandle);
+		final double z = (double) REntity.nmsPosZ.get(entityHandle);
+		return new Vector(x, y, z);
+	}
 	/**
 	 * Attempts to retrieve the bounding box for the given entity
 	 * 
