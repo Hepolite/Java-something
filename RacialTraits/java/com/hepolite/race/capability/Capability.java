@@ -1,20 +1,28 @@
-package com.hepolite.traits.capabilities;
+package com.hepolite.race.capability;
 
 import org.bukkit.entity.Player;
 
 import com.hepolite.api.config.ConfigFactory;
 import com.hepolite.api.config.IConfig;
-import com.hepolite.traits.TraitsPlugin;
+import com.hepolite.race.RacialTraitsPlugin;
+import com.hepolite.race.race.Race;
 
 public abstract class Capability
 {
 	private final String name;
-	protected final IConfig config;
+	private final CapabilityType type;
 
-	public Capability(final String name)
+	protected final IConfig config;
+	private final Class<? extends CapabilityData> dataClass;
+
+	public Capability(final Race race, final CapabilityType type, final String name,
+			final Class<? extends CapabilityData> dataClass)
 	{
 		this.name = name;
-		this.config = ConfigFactory.create(TraitsPlugin.getInstance(), name);
+		this.type = type;
+
+		this.config = ConfigFactory.create(RacialTraitsPlugin.getInstance(), race.getName() + "/" + name);
+		this.dataClass = dataClass;
 	}
 
 	/**
@@ -23,6 +31,29 @@ public abstract class Capability
 	public final String getName()
 	{
 		return name;
+	}
+	/**
+	 * @return The type of the capability
+	 */
+	public final CapabilityType getType()
+	{
+		return type;
+	}
+
+	/**
+	 * @return The data of the capability
+	 */
+	public final CapabilityData createData()
+	{
+		try
+		{
+			return dataClass.newInstance();
+		}
+		catch (InstantiationException | IllegalAccessException e)
+		{
+			RacialTraitsPlugin.WARN(String.format("Could not create capability data for '%s'", name));
+			return null;
+		}
 	}
 
 	// ...

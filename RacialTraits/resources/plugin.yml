@@ -1,7 +1,17 @@
-name: Traits
+name: RacialTraits
 authors: [Hepolite]
-main: com.hepolite.traits.TraitsPlugin
+main: com.hepolite.race.RacialTraitsPlugin
 version: 0.0.1
+depend: [CoreUtil]
 description: >
              Provides various abilities and traits to players
 
+commands:
+  race:
+    description: The base entry point to all RacialTraits commands
+    usage: /race <arguments>
+    permission: racialtraits
+    permission-message: Sorry, you don't have permission to use this command
+permissions:
+  racialtraits:
+    description: Gives access to the Racial Traits commands

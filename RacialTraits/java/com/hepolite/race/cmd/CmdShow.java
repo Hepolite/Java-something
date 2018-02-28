@@ -1,4 +1,4 @@
-package com.hepolite.traits.cmd;
+package com.hepolite.race.cmd;
 
 import org.bukkit.command.CommandException;
 
@@ -7,13 +7,15 @@ import com.hepolite.api.cmd.GenericArgs;
 import com.hepolite.api.cmd.ICmdContext;
 import com.hepolite.api.user.IUser;
 
-public class CmdTraits extends Cmd
+public class CmdShow extends Cmd
 {
-	public CmdTraits()
+	public CmdShow()
 	{
 		/// @formatter:off
-		super("race",
+		super("show",
 			GenericArgs.children(
+				new CmdShowInfo(),
+				new CmdShowRaces()
 		));
 		/// @formatter:on
 	}

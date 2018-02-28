@@ -1,4 +1,4 @@
-package com.hepolite.traits.capabilities;
+package com.hepolite.race.capability;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import com.hepolite.api.config.Config;
 import com.hepolite.api.config.Property;
-import com.hepolite.traits.config.Field;
+import com.hepolite.race.capability.CapabilityData;
+import com.hepolite.race.config.Field;
 
 class CapabilityDataTest
 {

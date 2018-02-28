@@ -1,6 +1,8 @@
 package com.hepolite.api.util;
 
 import org.apache.commons.lang.NotImplementedException;
+import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 public final class Shapes
 {
@@ -660,7 +662,7 @@ public final class Shapes
 	public static final class Cone extends Shape
 	{
 		/**
-		 * Creates a new sphere from the given center coordinate and radius
+		 * Creates a new cone from the given center coordinate and radius
 		 * 
 		 * @param x The x-coordinate
 		 * @param y The y-coordinate
@@ -675,6 +677,19 @@ public final class Shapes
 				final double dy, final double dz, final double angle)
 		{
 			return new Cone(x, y, z, dx, dy, dz, angle);
+		}
+		/**
+		 * Creates a new cone from the given location, extending in the direction of the location
+		 * 
+		 * @param origin The position and direction of the cone
+		 * @param length The length of the cone
+		 * @param angle The cone angle
+		 * @return The cone spanning from the starting coordinate in the given direction
+		 */
+		public static Cone fromDirection(final Location origin, final double length, final double angle)
+		{
+			final Vector dir = origin.getDirection().multiply(length);
+			return new Cone(origin.getX(), origin.getY(), origin.getZ(), dir.getX(), dir.getY(), dir.getZ(), angle);
 		}
 
 		// ...

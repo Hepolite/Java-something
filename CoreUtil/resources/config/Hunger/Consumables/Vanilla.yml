@@ -25,7 +25,7 @@ Default:
     ratio: 1.2
     time: 3s 10t
     results:
-      0:
+      Result 0:
         type: bowl
   bread:
     ingredients: wheat
@@ -149,7 +149,7 @@ Default:
     ratio: 1.2
     time: 3s 10t
     results:
-      0:
+      Result 0:
         type: bowl
   poisonous_potato:
     ingredients: potato_item
@@ -199,7 +199,7 @@ Default:
     ratio: 1.2
     time: 5s 10t
     results:
-      0:
+      Result 0:
         type: bowl
   raw_beef:
     categories: meat

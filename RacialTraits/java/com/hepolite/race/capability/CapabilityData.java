@@ -1,10 +1,10 @@
-package com.hepolite.traits.capabilities;
+package com.hepolite.race.capability;
 
 import com.hepolite.api.config.IConfig;
 import com.hepolite.api.config.IProperty;
 import com.hepolite.api.config.IValue;
-import com.hepolite.traits.config.Field;
-import com.hepolite.traits.config.FieldMap;
+import com.hepolite.race.config.Field;
+import com.hepolite.race.config.FieldMap;
 
 public abstract class CapabilityData implements IValue
 {
@@ -13,14 +13,13 @@ public abstract class CapabilityData implements IValue
 	public int xp = 0;
 
 	public final Field COOLDOWN = createField("cooldown");
-	public final Field COST_RESOURCE = createField("cost_resource");
 
 	/**
 	 * Creates a new field and tracks it. The field will take a default value of 0.0
 	 * 
 	 * @param name The identifier of the new field
 	 */
-	protected final Field createField(final String name)
+	public final Field createField(final String name)
 	{
 		return createField(name, 0.0);
 	}
@@ -30,7 +29,7 @@ public abstract class CapabilityData implements IValue
 	 * @param name The identifier of the new field
 	 * @param def The initial value of the field
 	 */
-	protected final Field createField(final String name, final double def)
+	public final Field createField(final String name, final double def)
 	{
 		fields.put(name, new Field(def));
 		return getField(name);

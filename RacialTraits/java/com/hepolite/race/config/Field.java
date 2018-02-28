@@ -1,9 +1,9 @@
-package com.hepolite.traits.config;
+package com.hepolite.race.config;
 
 import com.hepolite.api.config.IConfig;
 import com.hepolite.api.config.IProperty;
 import com.hepolite.api.config.IValue;
-import com.hepolite.traits.capabilities.CapabilityData;
+import com.hepolite.race.capability.CapabilityData;
 
 /**
  * Stores a single value for a {@link CapabilityData} data element

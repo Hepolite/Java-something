@@ -1,4 +1,4 @@
-package com.hepolite.traits.config;
+package com.hepolite.race.config;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import com.hepolite.api.config.Config;
 import com.hepolite.api.config.IProperty;
 import com.hepolite.api.config.Property;
+import com.hepolite.race.config.Field;
+import com.hepolite.race.config.FieldMap;
 
 class FieldMapTest
 {

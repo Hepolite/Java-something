@@ -65,7 +65,7 @@ public final class DamageAPI extends HandlerCore
 	 */
 	public static boolean damage(final LivingEntity target, final LivingEntity attacker, final Damage damage)
 	{
-		if (!target.isValid() || damage.getAmount() <= 0.0)
+		if (target == null || !target.isValid() || damage.getAmount() <= 0.0)
 			return false;
 		instance.adapter.injectDamage(damage);
 		if (attacker == null)

@@ -1,11 +1,11 @@
-package com.hepolite.traits.config;
+package com.hepolite.race.config;
 
 import java.util.HashMap;
 
 import com.hepolite.api.config.IConfig;
 import com.hepolite.api.config.IProperty;
 import com.hepolite.api.config.IValue;
-import com.hepolite.traits.capabilities.Capability;
+import com.hepolite.race.capability.Capability;
 
 /**
  * Groups a collection of {@link Field}s together, used to track the various attributes associated

@@ -300,7 +300,7 @@ public final class HungerListener implements IListener
 		final UUID uuid = player.getUniqueId();
 		if (chewing.containsKey(uuid))
 			return false;
-		final long chewTime = Time.TICKS_PER_SECOND * Math.min(15, food.get().time.asSeconds());
+		final long chewTime = Time.TICKS_PER_SECOND * Math.min(60, food.get().time.asSeconds());
 		chewing.put(uuid, new AbstractMap.SimpleEntry<>(currentTime + chewTime, item.clone()));
 		return true;
 	}

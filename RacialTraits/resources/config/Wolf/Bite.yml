@@ -1,22 +1,26 @@
 # Global data applies to all possible variations of progress
 property:
-  max_targets: 1
   effects:
-  - fatigue
-  - blindness
+    0:
+      type: fatigue
+      duration: 10s
+    1:
+      type: blindness
+      duration: 1s
+      chance: 0.1
 
 # When leveling up, the values are *added* to the fields
-Level:
-  1:
-  	cooldown: 8.0
+level:
+  1: # The values specified here are the base values
+    cooldown: 8.0
     damage: 2.5
     range: 4.0
-  2:
+  2: # Change from level 1
     cooldown: -1.0
     damage: 1.5
-  ...
+  # ...
   N:
-    damage 0.5
+    damage: 0.5
     range: 1.0
 
 # Using a capability a lot may lead to some fields gaining value, values are *added* to the fields
@@ -26,6 +30,6 @@ xp:
     range: 0.5
   15:
     damage: 0.25
-  ...
+  # ...
   N:
     damage: 0.5
